@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+/* Brand Colors (Light Mode) */
+:root {
+  --primary: #b88d5b;        /* Warm gold for branding */
+  --secondary: #6c757d;      /* Neutral secondary */
+  
+  --background: #f8f9fa;     /* Light background */
+  --foreground: #212529;     /* Dark text for readability */
+  --muted: #6c757d;           /* Muted gray text */
+  
+  --accent-light: #e9ecef;
+  --accent-medium: #ced4da;
+}
+
+/* Fonts (Variable) */
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/RedHatText-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/fonts/RedHatDisplay-VariableFont_wght.ttf") format("truetype");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Tailwind Theme Inline */
+@theme inline {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+
+  --font-sans: "Inter", Arial, Helvetica, sans-serif;
+  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+/* Dark Mode Colors */
+.dark {
+  --primary: #cd9c20;        /* A richer gold for contrast in dark mode */
+  --secondary: #adb5bd;      /* Lighter gray for secondary text */
+  --background: #121212;     /* Dark background */
+  --foreground: #e9ecef;     /* Light text */
+  --muted: #6c757d;           /* Muted gray text */
+}
+
+/* Global Defaults */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Headings use Playfair Display */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+}
+
+/* Buttons and Links */
+button, a {
+  cursor: pointer !important;
+  font-family: var(--font-serif);
+  text-transform: uppercase;
+}
+
+/* Utilities */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.no-scroll {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
