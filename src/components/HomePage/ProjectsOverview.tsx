@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
+import LinkButton from "../common/LinkButton";
+import { motion, Variants, Transition } from "framer-motion";
 
 import HomeProjects01 from "@/assets/images/Home/HomeProjects01.webp";
 import HomeProjects02 from "@/assets/images/Home/HomeProjects02.webp";
@@ -30,36 +32,126 @@ const projects = [
 ];
 
 export default function ProjectsOverview() {
+  // Animation variants
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 100
+      }
+    }
+  };
+
+  const cardVariants: Variants = {
+    hidden: { y: 60, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        damping: 15,
+        stiffness: 100
+      }
+    }
+  };
+
+  const buttonVariants: Variants = {
+    hidden: { scale: 0.9, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        damping: 10,
+        stiffness: 100,
+        delay: 0.8
+      }
+    }
+  };
+
+  const imageHoverVariants = {
+    hover: {
+      scale: 1.1,
+      transition: {
+        duration: 0.7,
+        ease: "easeOut" as Transition["ease"], // cast to satisfy TypeScript
+      },
+    }
+  };
+
   return (
-    <section className="container mx-auto px-6 py-24">
-      <div className="max-w-3xl mx-auto text-center mb-20">
-        <h2 className="text-3xl md:text-4xl font-normal text-foreground mb-6">
+    <motion.section
+      className="mx-auto px-6 py-24"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={containerVariants}
+    >
+      <motion.div
+        className="max-w-3xl mx-auto text-center mb-12"
+        variants={containerVariants}
+      >
+        <motion.h2
+          variants={itemVariants}
+          className="text-3xl md:text-4xl font-normal text-foreground mb-6"
+        >
           Projects Overview
-        </h2>
-        <p className="text-sm text-muted leading-relaxed">
+        </motion.h2>
+        <motion.p
+          variants={itemVariants}
+          className="text-sm text-muted leading-relaxed"
+        >
           From busy railway stations to India&apos;s first digital lounge, Ten 11
           Hospitality is redefining the waiting experience — blending comfort,
           convenience, and warm service.
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
-      <div className="flex justify-center">
+      <motion.div
+        className="flex justify-center"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
         <div className="grid gap-8 md:grid-cols-3 max-w-5xl">
           {projects.map((project, idx) => (
-            <div
+            <motion.div
               key={idx}
               className="group relative bg-white shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-500"
+              variants={cardVariants}
+              whileHover={{ y: -10 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
-              <div className="relative h-64 overflow-hidden">
+              <motion.div
+                className="relative h-64 overflow-hidden"
+                variants={imageHoverVariants}
+                whileHover="hover"
+              >
                 <Image
                   src={project.imgSrc}
                   alt={project.alt}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="object-cover transition-transform duration-700"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
-              </div>
+              </motion.div>
 
               <div className="p-5">
                 <h3 className="text-lg font-normal text-foreground group-hover:text-primary transition-colors duration-500">
@@ -67,19 +159,25 @@ export default function ProjectsOverview() {
                 </h3>
                 <p className="mt-2 text-sm text-muted">{project.description}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
-      <div className="mt-16 text-center">
-        <Link
+      <motion.div
+        className="mt-6 text-center"
+        variants={buttonVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <LinkButton
           href="/projects"
-          className="inline-block px-10 py-4 bg-background text-primary hover:bg-primary hover:text-background font-semibold shadow-md transition-colors duration-500 border border-primary"
+          variant="outline"
         >
           View All Projects
-        </Link>
-      </div>
-    </section>
+        </LinkButton>
+      </motion.div>
+    </motion.section>
   );
 }

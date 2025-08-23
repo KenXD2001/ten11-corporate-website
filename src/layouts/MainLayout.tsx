@@ -6,6 +6,7 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import CookieConsent from "@/components/layout/CookieConsent";
 import WhiteLogoScreen from "@/components/layout/WhiteScreenLogo";
+import LoadingScreen from "@/components/layout/loading_screen";
 
 export default function MainLayout({
   children,
@@ -16,6 +17,7 @@ export default function MainLayout({
   const [showLogoScreen, setShowLogoScreen] = useState(false);
   const [showCookieConsent, setShowCookieConsent] = useState(false);
   const [hasRespondedToCookies, setHasRespondedToCookies] = useState(false);
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -33,22 +35,15 @@ export default function MainLayout({
 
   useEffect(() => {
     if (hasRespondedToCookies) {
-      let logoTimer: NodeJS.Timeout | null = null;
-      const websiteTimer: NodeJS.Timeout | null = null;
+      const logoTimer = setTimeout(() => {
+        setShowLogoScreen(false);
+        setIsPageLoaded(true);
+        setShowWebsite(true);
+      }, 2000);
 
-      if (showLogoScreen) {
-        logoTimer = setTimeout(() => {
-          setShowLogoScreen(false);
-          setShowWebsite(true);
-        }, 2000);
-      }
-
-      return () => {
-        if (logoTimer) clearTimeout(logoTimer);
-        if (websiteTimer) clearTimeout(websiteTimer);
-      };
+      return () => clearTimeout(logoTimer);
     }
-  }, [hasRespondedToCookies, showLogoScreen]);
+  }, [hasRespondedToCookies]);
 
   useEffect(() => {
     if (hasRespondedToCookies && pathname) {
@@ -77,10 +72,13 @@ export default function MainLayout({
 
       {showCookieConsent && <CookieConsent onResponse={handleCookieResponse} />}
 
+      {!isPageLoaded && <LoadingScreen isLoading={true} />}
+
       <div
         style={{
-          opacity: showWebsite ? 1 : 0,
+          opacity: showWebsite && isPageLoaded ? 1 : 0,
           transition: "opacity 1s ease-in-out",
+          pointerEvents: showWebsite && isPageLoaded ? "auto" : "none",
         }}
         className="flex flex-col min-h-screen"
       >

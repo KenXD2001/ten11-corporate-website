@@ -55,7 +55,7 @@ export default function CoreHighlights() {
   useEffect(() => {
     if (!sectionRef.current || !pinRef.current) return;
 
-    const scrollPerHighlight = 800;
+    const scrollPerHighlight = 600;
     const totalScroll = highlights.length * scrollPerHighlight;
 
     gsap.set(sectionRef.current, { height: totalScroll });
@@ -80,7 +80,7 @@ export default function CoreHighlights() {
     return () => scrollTrigger.kill();
   }, []);
 
-  const activeHighlight = highlights[activeIndex];
+  const activeHighlight = highlights[activeIndex]
 
   return (
     <>
@@ -89,7 +89,7 @@ export default function CoreHighlights() {
           ref={pinRef}
           className="relative h-screen flex items-center justify-center"
         >
-          <div className="container mx-auto px-6 grid grid-cols-[10%_45%_45%] h-[500px] md:h-[600px] w-[80%] overflow relative">
+          <div className="absolute -left-[2%] mx-auto px-6 grid grid-cols-[10%_45%_45%] h-[400px] md:h-[500px] w-[60%] overflow-hidden relative">
             {highlights.map((h, i) => (
               <div
                 key={i}
@@ -122,30 +122,25 @@ export default function CoreHighlights() {
                 {activeHighlight.location}
               </p>
             </div>
+          </div>
 
-            <div className="absolute top-1/2 -translate-y-1/2 -right-[5%] h-[400px] md:h-[500px] w-1/4 overflow-hidden shadow-2xl">
-              {highlights.map((h, i) => (
-                <div
-                  key={i}
-                  className="absolute inset-0 transition-all duration-700 ease-out"
-                  style={{
-                    backgroundImage: `url(${h.imgSrc2.src})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    opacity: activeIndex === i ? 1 : 0,
-                    transform: `scale(${activeIndex === i ? 1 : 1.1})`,
-                  }}
-                />
-              ))}
-            </div>
+          <div className="absolute top-1/2 -translate-y-1/2 right-[16%] h-[300px] md:h-[400px] w-1/6 overflow-hidden shadow-2xl">
+            {highlights.map((h, i) => (
+              <div
+                key={i}
+                className="absolute inset-0 transition-all duration-700 ease-out"
+                style={{
+                  backgroundImage: `url(${h.imgSrc2.src})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  opacity: activeIndex === i ? 1 : 0,
+                  transform: `scale(${activeIndex === i ? 1 : 1.1})`,
+                }}
+              />
+            ))}
           </div>
         </div>
       </section>
-
-      <div
-        style={{ height: "800px" }}
-        className="relative z-0 opacity-0 pointer-events-none"
-      />
     </>
   );
 }

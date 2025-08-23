@@ -1,7 +1,7 @@
 // components/layout/WhiteLogoScreen.tsx
 import { motion, Transition } from 'framer-motion';
 import Image from 'next/image';
-import Ten11Logo from "@/assets/images/Logos/Ten11-LOGO-removebg.png";
+import Ten11Logo from "@/assets/images/Logos/Ten11-LOGO.svg";
 
 export default function WhiteLogoScreen() {
   const logoVariants = {

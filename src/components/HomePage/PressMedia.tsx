@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import LinkButton from "../common/LinkButton";
 
@@ -57,20 +57,53 @@ const newsCards = [
   },
 ];
 
+// Motion variants
+const containerVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 14 } },
+};
+
+// const imageHoverVariants: Variants = {
+//   hover: { scale: 1.1, transition: { duration: 0.7, ease: "easeOut" } },
+// };
+
 export default function PressMedia() {
   return (
-    <section className="py-20 bg-background relative">
-      <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
-        <h2 className="text-3xl md:text-4xl font-normal text-foreground mb-6">
-          Press & Media
-        </h2>
+    <section className="py-16 sm:py-20 bg-background relative">
+      <div className="max-w-7xl mx-4 sm:mx-6 md:mx-auto px-4 sm:px-6 md:px-12 text-center relative z-10">
 
-        <p className="text-sm text-muted mb-12 max-w-3xl mx-auto">
+        {/* Heading */}
+        <motion.h2
+          className="text-2xl sm:text-3xl md:text-4xl font-normal text-foreground mb-6"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5 }}
+        >
+          Press & Media
+        </motion.h2>
+
+        {/* Description */}
+        <motion.p
+          className="text-sm sm:text-base text-muted mb-12 max-w-3xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           Our innovation and excellence have gained recognition in the media,
           from India&apos;s first all-digital lounge to our growing national
           presence.
-        </p>
+        </motion.p>
 
+        {/* Swiper */}
         <div className="relative">
           <Swiper
             modules={[Navigation]}
@@ -82,20 +115,27 @@ export default function PressMedia() {
             spaceBetween={24}
             slidesPerView={1}
             breakpoints={{
+              640: { slidesPerView: 1 },
               768: { slidesPerView: 2 },
               1024: { slidesPerView: 3 },
             }}
             className="pb-12"
           >
             {newsCards.map((card) => (
-              <SwiperSlide key={card.id} className="px-2 pb-4">
+              <SwiperSlide key={card.id} className="px-2 sm:px-3 pb-4 flex">
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="bg-white shadow-md overflow-hidden flex flex-col text-left hover:shadow-lg transition"
+                  className="group bg-white shadow-md overflow-hidden flex flex-col text-left hover:shadow-lg transition flex-grow"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  variants={containerVariants}
                 >
-                  <div className="relative w-full h-48">
+                  {/* Image */}
+                  <motion.div
+                    className="relative w-full h-40 sm:h-48 md:h-56 overflow-hidden flex-shrink-0"
+                    variants={cardVariants}
+                    whileHover={{ scale: 1.05 }}
+                  >
                     <Image
                       src={card.img}
                       alt={card.title}
@@ -103,38 +143,49 @@ export default function PressMedia() {
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
-                  </div>
+                  </motion.div>
 
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-lg font-semibold text-foreground line-clamp-3 mb-3">
+                  {/* Card content */}
+                  <motion.div className="p-4 sm:p-6 flex flex-col flex-grow" variants={cardVariants}>
+                    <h3 className="text-base sm:text-lg md:text-lg font-semibold text-foreground line-clamp-2 mb-2 sm:mb-3">
                       {card.title}
                     </h3>
-                    <p className="text-sm text-muted line-clamp-5 mb-4">
+                    <p className="text-sm sm:text-base text-muted line-clamp-3 mb-3 sm:mb-4">
                       {card.desc}
                     </p>
                     <Link
                       href="/press-coverage"
-                      className="mt-auto text-primary font-medium hover:underline"
+                      className="mt-auto text-primary font-medium hover:underline text-sm sm:text-base"
                     >
                       Read More →
                     </Link>
-                  </div>
+                  </motion.div>
                 </motion.div>
-              </SwiperSlide>
+              </SwiperSlide>            
             ))}
           </Swiper>
 
-          <button className="swiper-button-prev-custom absolute top-1/2 -left-8 transform -translate-y-1/2 bg-primary text-background rounded-full w-12 h-12 flex items-center justify-center shadow-lg hover:bg-secondary transition z-20">
-            <ChevronLeft size={24} />
+          {/* Navigation buttons */}
+          <button className="swiper-button-prev-custom absolute top-1/2 -left-6 sm:-left-8 transform -translate-y-1/2 bg-primary text-background rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center shadow-lg hover:bg-secondary transition z-20">
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
-          <button className="swiper-button-next-custom absolute top-1/2 -right-8 transform -translate-y-1/2 bg-primary text-background rounded-full w-12 h-12 flex items-center justify-center shadow-lg hover:bg-secondary transition z-20">
-            <ChevronRight size={24} />
+
+          <button className="swiper-button-next-custom absolute top-1/2 -right-6 sm:-right-8 transform -translate-y-1/2 bg-primary text-background rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center shadow-lg hover:bg-secondary transition z-20">
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>
 
-        <LinkButton href="/press-coverage" className="mt-2">
-          Explore Coverage
-        </LinkButton>
+        {/* Explore Coverage Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <LinkButton href="/press-coverage" className="mt-4 sm:mt-6">
+            Explore Coverage
+          </LinkButton>
+        </motion.div>
       </div>
     </section>
   );
