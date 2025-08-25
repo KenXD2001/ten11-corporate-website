@@ -1,28 +1,27 @@
 "use client";
 
 import Image from "next/image";
-// import Link from "next/link";
-import LinkButton from "../common/LinkButton";
-import { motion, Variants, Transition } from "framer-motion";
-
 import HomeProjects01 from "@/assets/images/Home/HomeProjects01.webp";
 import HomeProjects02 from "@/assets/images/Home/HomeProjects02.webp";
 import HomeProjects03 from "@/assets/images/Home/HomeProjects03.webp";
 
 const projects = [
   {
+    location: "New Delhi",
     title: "New Delhi – IRCTC Executive Lounge",
     description: "Premium service and comfort in India's busiest station.",
     imgSrc: HomeProjects01,
     alt: "New Delhi IRCTC Executive Lounge",
   },
   {
+    location: "Chennai",
     title: "Chennai Central – INEJ Lounge",
     description: "Contemporary and spacious, crafted for today's travelers.",
     imgSrc: HomeProjects02,
     alt: "Chennai Central INEJ Lounge",
   },
   {
+    location: "Mumbai",
     title: "Mumbai Central – INEJ Digital Lounge",
     description:
       "India's first all-digital lounge, changing hospitality with technology.",
@@ -32,152 +31,70 @@ const projects = [
 ];
 
 export default function ProjectsOverview() {
-  // Animation variants
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
-  };
-
-  const itemVariants: Variants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        damping: 12,
-        stiffness: 100
-      }
-    }
-  };
-
-  const cardVariants: Variants = {
-    hidden: { y: 60, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        damping: 15,
-        stiffness: 100
-      }
-    }
-  };
-
-  const buttonVariants: Variants = {
-    hidden: { scale: 0.9, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        damping: 10,
-        stiffness: 100,
-        delay: 0.8
-      }
-    }
-  };
-
-  const imageHoverVariants = {
-    hover: {
-      scale: 1.1,
-      transition: {
-        duration: 0.7,
-        ease: "easeOut" as Transition["ease"], // cast to satisfy TypeScript
-      },
-    }
-  };
-
   return (
-    <motion.section
-      className="mx-auto px-6 py-24"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={containerVariants}
-    >
-      <motion.div
-        className="max-w-3xl mx-auto text-center mb-12"
-        variants={containerVariants}
-      >
-        <motion.h2
-          variants={itemVariants}
-          className="text-3xl md:text-4xl font-normal text-foreground mb-6"
-        >
-          Projects Overview
-        </motion.h2>
-        <motion.p
-          variants={itemVariants}
-          className="text-sm text-muted leading-relaxed"
-        >
-          From busy railway stations to India&apos;s first digital lounge, Ten 11
-          Hospitality is redefining the waiting experience — blending comfort,
-          convenience, and warm service.
-        </motion.p>
-      </motion.div>
+    <section className="w-full bg-[var(--background)] dark:bg-[var(--background)] text-[var(--foreground)] py-24 px-6">
+      <div className="max-w-7xl mx-auto space-y-20">
+        {/* Projects Grid */}
+        <div>
+          {/* Top Section */}
+          <div className="mb-20 w-5/6 mx-0">
+            <div className="flex items-center gap-10 mb-4">
+              <h2 className="text-lg uppercase tracking-widest text-[var(--foreground)]/90">
+                PROJECTS
+              </h2>
+              <div className="border-b-2 border-[var(--foreground)]/90 w-[100px]"></div>
+            </div>
 
-      <motion.div
-        className="flex justify-center"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        <div className="grid gap-8 md:grid-cols-3 max-w-5xl">
-          {projects.map((project, idx) => (
-            <motion.div
-              key={idx}
-              className="group relative bg-white shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-500"
-              variants={cardVariants}
-              whileHover={{ y: -10 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            >
-              <motion.div
-                className="relative h-64 overflow-hidden"
-                variants={imageHoverVariants}
-                whileHover="hover"
-              >
-                <Image
-                  src={project.imgSrc}
-                  alt={project.alt}
-                  fill
-                  className="object-cover transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
-              </motion.div>
+            <h3 className="text-4xl md:text-5xl font-light leading-tight text-[var(--foreground)]">
+              Discover our flagship lounges across India — where comfort,
+              design, and technology converge.
+            </h3>
+          </div>
 
-              <div className="p-5">
-                <h3 className="text-lg font-normal text-foreground group-hover:text-primary transition-colors duration-500">
-                  {project.title}
-                </h3>
-                <p className="mt-2 text-sm text-muted">{project.description}</p>
+          {/* Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projects.map((item, idx) => (
+              <div key={idx} className="flex flex-col space-y-8">
+                {/* Detail Section */}
+                <div className="text-center lg:text-left flex flex-col gap-2">
+                  <span className="text-sm text-[var(--primary)] block">
+                    {item.location}
+                  </span>
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-light text-[var(--foreground)]">
+                    {item.title}
+                  </h3>
+                </div>
+
+                {/* Card Section */}
+                <div className="relative overflow-hidden shadow-lg group cursor-pointer pl-15">
+                  {/* Image */}
+                  <div className="relative w-full h-80">
+                    <Image
+                      src={item.imgSrc}
+                      alt={item.title}
+                      fill
+                      className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+
+                  {/* Hover Overlay */}
+                  <div className="absolute bottom-0 left-[60px] right-0 bg-[var(--foreground)]/90 text-[var(--background)] p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                    <p className="text-[var(--accent-light)] mb-4">
+                      {item.description}
+                    </p>
+                    <a
+                      // href={item.link}
+                      className="text-[var(--primary)] font-semibold hover:underline"
+                    >
+                      Learn More
+                    </a>
+                  </div>
+                </div>
               </div>
-            </motion.div>
-          ))}
+            ))}
+          </div>
         </div>
-      </motion.div>
-
-      <motion.div
-        className="mt-6 text-center"
-        variants={buttonVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        <LinkButton
-          href="/projects"
-          variant="outline"
-        >
-          View All Projects
-        </LinkButton>
-      </motion.div>
-    </motion.section>
+      </div>
+    </section>
   );
 }

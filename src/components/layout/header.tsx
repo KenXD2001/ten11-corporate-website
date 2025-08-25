@@ -57,7 +57,7 @@ export default function Header() {
         <Link
           key={item.path}
           href={item.path}
-          className={`relative font-light group pb-0.5 transition-colors ${
+          className={`relative font-base group pb-0.5 transition-colors ${
             isActive ? "text-primary" : "text-foreground"
           }`}
         >

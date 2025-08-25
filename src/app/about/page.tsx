@@ -8,7 +8,7 @@ import OurPresence from "@/components/AboutPage/OurPresence";
 
 export default function AboutPage() {
   return (
-    <div className="container mx-auto px-6">
+    <div className="w-full">
       {/*About Hero Section*/}
       <AboutHero />
 

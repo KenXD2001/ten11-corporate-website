@@ -69,11 +69,14 @@ h1, h2, h3, h4, h5, h6 {
 button, a {
   cursor: pointer !important;
   font-family: var(--font-serif);
+}
+
+button {
   text-transform: uppercase;
 }
 
 /* Utilities */
-@keyframes fadeIn {
+/* @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
@@ -87,4 +90,46 @@ button, a {
   position: fixed;
   width: 100%;
   height: 100%;
+} */
+
+html {
+  scroll-behavior: smooth !important;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-fadeInRight {
+  animation: fadeInRight 0.8s ease-out forwards;
+}
+
+.animate-fadeIn {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.delay-1000 {
+  animation-delay: 1s;
 }

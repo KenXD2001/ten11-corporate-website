@@ -1,41 +1,81 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import CoreImage from "@/assets/images/Home/HomeCore0202.webp";
+
+const points = [
+  "Excellence in every detail",
+  "Innovation-led operations",
+  "Experiences tailored to guests’ needs",
+  "Modern, stylish lounge designs",
+  "Sustainable and scalable growth models",
+];
+
 export default function Differentiators() {
-  const points = [
-    "Excellence in every detail",
-    "Innovation-led operations",
-    "Experiences tailored to guests’ needs",
-    "Modern, stylish lounge designs",
-    "Sustainable and scalable growth models",
-  ];
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Auto-slide points every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % points.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <section className="py-24 bg-white">
-      <div className="container mx-auto px-6 md:px-12 text-center">
-        <h2 className="text-4xl font-bold text-primary mb-8">
-          What Makes Us Different
-        </h2>
+    <section className="w-full bg-primary text-white py-44 px-6 md:px-34">
+      <div className="mx-auto max-w-7xl">
+        {/* Top Section */}
+        <div className="mb-20 w-full md:w-5/6 mx-0">
+          <div className="flex items-center gap-10 mb-4">
+            <h2 className="text-lg uppercase tracking-widest text-background/90">
+              WHAT MAKES US DIFFERENT
+            </h2>
+            <div className="border-b-2 border-background/90 w-[100px]"></div>
+          </div>
 
-        {/* Intro Text */}
-        <p className="text-lg md:text-xl text-muted max-w-3xl mx-auto leading-relaxed mb-12">
-          We’re not just another service provider – we’re experience creators.
-          From innovative design to personalised service, everything we do is
-          built around making your journey better.
-        </p>
+          <h3 className="text-4xl md:text-5xl font-light leading-tight">
+            We’re not just another service provider — we’re experience creators.
+          </h3>
+        </div>
 
-        {/* Subheading */}
-        <h3 className="text-2xl font-semibold text-primary mb-6">
-          Why travellers choose Ten 11 Hospitality:
-        </h3>
-
-        {/* Points List */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto text-left">
-          {points.map((pt) => (
+        {/* Bottom Section: Image + Points */}
+        <div className="flex flex-col lg:flex-row gap-24 items-start justify-center mx-auto max-w-[1280px]">
+          {/* Left Image */}
+          <div className="lg:w-auto relative">
             <div
-              key={pt}
-              className="p-6 bg-gray-50 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="relative overflow-hidden"
+              style={{ width: "600px", height: "800px" }}
             >
-              <p className="text-lg font-medium text-muted">{pt}</p>
+              {/* <Image
+                src={CoreImage}
+                alt="Lounge interior with modern design"
+                fill
+                className="object-cover object-center transition-transform duration-700 ease-out hover:scale-105"
+                priority
+              /> */}
+              <div className="absolute inset-0 bg-background" />
             </div>
-          ))}
+          </div>
+
+          {/* Right Points */}
+          <div className="lg:w-1/2 flex flex-col justify-center space-y-12">
+            {points.map((point, index) => (
+              <div
+                key={index}
+                className={`transition-opacity duration-700 ease-in-out cursor-pointer ${
+                  index === activeIndex ? "opacity-100" : "opacity-60"
+                }`}
+                onMouseEnter={() => setActiveIndex(index)}
+              >
+                <h4 className="text-2xl md:text-3xl lg:text-4xl font-light mb-4">
+                  {point}
+                </h4>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

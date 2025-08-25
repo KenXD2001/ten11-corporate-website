@@ -2,33 +2,17 @@
 
 import { Icon } from "@iconify/react";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
 import Ten11Logo from "@/assets/images/Logos/Ten11-LOGO-BIG.svg";
 
 export default function Footer() {
-  // Motion variants
-  const containerVariants: Variants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.15, delayChildren: 0.2 } },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 14 } },
-  };
-
   return (
     <footer className="bg-foreground text-background">
+
       {/* Top Section */}
-      <motion.div
-        className="max-w-7xl mx-4 sm:mx-6 md:mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-8 sm:gap-12 py-12 border-b border-background/20"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={containerVariants}
-      >
+      <div className="max-w-7xl mx-4 sm:mx-6 md:mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-8 sm:gap-12 py-12 border-b border-background/20">
+
         {/* Logo & Description */}
-        <motion.div variants={itemVariants}>
+        <div>
           <div className="mb-4 sm:mb-6">
             <Image
               src={Ten11Logo}
@@ -43,10 +27,10 @@ export default function Footer() {
             hospitality ventures. We build experiences that inspire trust and
             long-term relationships.
           </p>
-        </motion.div>
+        </div>
 
         {/* Quick Links */}
-        <motion.div variants={itemVariants}>
+        <div>
           <h3 className="font-semibold mb-3 sm:mb-4 text-primary uppercase tracking-wide text-sm sm:text-base">
             Quick Links
           </h3>
@@ -60,10 +44,10 @@ export default function Footer() {
               </li>
             ))}
           </ul>
-        </motion.div>
+        </div>
 
         {/* Connect */}
-        <motion.div variants={itemVariants}>
+        <div>
           <h3 className="font-semibold mb-3 sm:mb-4 text-primary uppercase tracking-wide text-sm sm:text-base">
             Connect
           </h3>
@@ -86,35 +70,24 @@ export default function Footer() {
           <p className="text-sm sm:text-base text-background/70">
             123 Corporate Street, City, Country
           </p>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
       {/* Bottom Section */}
-      <motion.div
-        className="max-w-7xl mx-4 sm:mx-6 md:mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] items-center gap-2 sm:gap-4 py-6 text-xs sm:text-sm text-background/60"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={containerVariants}
-      >
-        <motion.p variants={itemVariants} className="mb-1 sm:mb-0">
+      <div className="max-w-7xl mx-4 sm:mx-6 md:mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] items-center gap-2 sm:gap-4 py-6 text-xs sm:text-sm text-background/60">
+        <p className="mb-1 sm:mb-0">
           © 2025 <span className="font-semibold text-background">Ten11 Hospitality</span>. All rights reserved.
-        </motion.p>
+        </p>
 
-        <motion.p
-          variants={itemVariants}
-          className="mb-1 sm:mb-0 hover:text-primary cursor-pointer transition"
-        >
+        <p className="mb-1 sm:mb-0 hover:text-primary cursor-pointer transition">
           Privacy Statement
-        </motion.p>
+        </p>
 
-        <motion.p
-          variants={itemVariants}
-          className="hover:text-primary cursor-pointer transition"
-        >
+        <p className="hover:text-primary cursor-pointer transition">
           Terms of Use
-        </motion.p>
-      </motion.div>
+        </p>
+      </div>
+
     </footer>
   );
 }

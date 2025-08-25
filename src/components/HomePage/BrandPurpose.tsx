@@ -1,134 +1,89 @@
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
 import HomePurposeBG from "@/assets/images/Home/HomePurposeBG.webp";
+import { useEffect, useRef, useState } from "react";
+import Button from "../common/Button";
+import { ArrowRight } from "lucide-react";
 
 export default function BrandPurposeSection() {
   const content = {
     title: "Beyond Transit, An Experience to Remember",
-    paragraphs: [
-      "Travel is more than moving from one place to another — it's a journey of moments.",
-      <>
-        At <span className="font-semibold text-primary">Ten11 Hospitality</span>, we
-        ensure every pause matters. Our lounges combine comfort, hygiene, and
-        innovation for a seamless experience.
-      </>,
-      "Elegant interiors, attentive service, and curated amenities make waiting a pleasure, turning moments into memories.",
-    ],
+    paragraph:
+      "At Ten11 Hospitality, every moment of your journey matters. Our lounges blend comfort, hygiene, and innovation, transforming waiting into a relaxing experience. With elegant interiors, attentive service, and thoughtful amenities, we turn pauses into memorable moments — creating spaces where travelers can unwind, recharge, and truly enjoy the journey.",
     button: "Our Story",
     alt: "Lounge ambience with warm lighting and staff serving",
-  };  
-
-  // Animation variants
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2
-      }
-    }
   };
 
-  const itemVariants: Variants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        damping: 12,
-        stiffness: 100
-      }
-    }
-  };
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
-  const imageVariants: Variants = {
-    hidden: { x: 50, opacity: 0 },
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        damping: 15,
-        stiffness: 100,
-        delay: 0.3
-      }
-    }
-  };
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
 
-  const buttonVariants: Variants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        damping: 10,
-        stiffness: 100,
-        delay: 0.8
-      }
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
-  };
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   return (
-    <motion.section
-      className="mx-4 sm:mx-6 md:mx-auto px-4 sm:px-6 md:px-12 py-12 sm:py-16 md:py-24 max-w-7xl"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={containerVariants}
-    >
-      <div className="bg-white shadow-xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
-
-        {/* Text Content */}
-        <motion.div
-          className="p-3 sm:p-4 md:p-6 space-y-3 flex flex-col justify-center"
-          variants={containerVariants}
-        >
-          <motion.h2
-            variants={itemVariants}
-            className="text-2xl sm:text-3xl md:text-4xl font-normal text-gray-900 leading-tight"
+    <section ref={sectionRef} className="w-full py-24 lg:py-32 overflow-hidden">
+      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Left Section - Content */}
+          <div
+            className={`space-y-8 text-center lg:text-left max-w-[640px] ${
+              isVisible ? "animate-fadeInUp" : "opacity-0"
+            }`}
           >
-            {content.title}
-          </motion.h2>
+            <div className="relative">
+              <div className="absolute -left-4 -top-4 w-24 h-24 bg-primary/5 mix-blend-multiply filter blur-xl animate-pulse"></div>
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-light text-gray-900 leading-tight relative">
+                {content.title}
+              </h3>
+            </div>
 
-          {content.paragraphs.map((paragraph, index) => (
-            <motion.p
-              key={index}
-              variants={itemVariants}
-              className="text-gray-600 text-base sm:text-lg leading-relaxed"
+            <p className="text-gray-600 text-lg md:text-xl lg:text-2xl leading-relaxed max-w-2xl mx-auto lg:mx-0">
+              {content.paragraph}
+            </p>
+
+            <Button
+              variant="outline"
+              className="group inline-flex items-center"
             >
-              {paragraph}
-            </motion.p>
-          ))}
+              <span>{content.button}</span>
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
 
-          <motion.button
-            variants={buttonVariants}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-4 px-6 sm:px-8 py-2 sm:py-3 bg-background border border-primary text-foreground font-semibold hover:text-background hover:bg-primary transition-all shadow-lg w-fit"
+          {/* Right Section - Image */}
+          <div
+            className={`relative max-w-[640px] mx-auto lg:mx-0 aspect-[3/4] overflow-hidden shadow-2xl ${
+              isVisible ? "animate-fadeInRight" : "opacity-0"
+            }`}
           >
-            {content.button}
-          </motion.button>
-        </motion.div>
-
-        {/* Image */}
-        <motion.div
-          className="relative h-64 sm:h-80 md:h-auto"
-          variants={imageVariants}
-        >
-          <Image
-            src={HomePurposeBG}
-            alt={content.alt}
-            fill
-            className="object-cover transition-transform duration-500 hover:scale-105"
-            priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 50vw"
-          />
-        </motion.div>
-
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10"></div>
+            <Image
+              src={HomePurposeBG}
+              alt={content.alt}
+              fill
+              className="object-cover object-center transition-all duration-700 ease-out hover:scale-110"
+              priority
+            />
+          </div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 }
