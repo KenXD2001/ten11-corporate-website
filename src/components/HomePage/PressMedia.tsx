@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../common/Button";
@@ -30,50 +31,93 @@ const newsCards = [
 ];
 
 export default function PressMedia() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [visibleIndexes, setVisibleIndexes] = useState<number[]>([]);
+
+  // Intersection Observer for staggered animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          newsCards.forEach((_, idx) => {
+            setTimeout(() => {
+              setVisibleIndexes((prev) => [...prev, idx]);
+            }, idx * 250); // stagger each card
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="w-full py-24 px-6 bg-background text-foreground">
+    <section
+      ref={sectionRef}
+      className="w-full py-24 px-6 bg-background text-foreground overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto">
         {/* Top Section */}
-        <div className="mb-20 w-5/6 mx-0">
+        <div
+          className={`mb-20 w-5/6 mx-0 transform transition-all duration-1000 ease-[cubic-bezier(0.42,0,0.58,1)]
+            ${visibleIndexes.length ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
+        >
           <div className="flex items-center gap-10 mb-4">
-            <h2 className="text-lg uppercase tracking-widest">
-              In The Spotlight
-            </h2>
+            <h2 className="text-lg uppercase tracking-widest">In The Spotlight</h2>
             <div className="border-b-2 w-[100px]"></div>
           </div>
 
           <h3 className="text-4xl md:text-5xl font-light leading-tight">
-            At Ten11 Hospitality, we redefine journeys with innovation,
-            efficiency, and passenger care.
+            At Ten11 Hospitality, we redefine journeys with innovation, efficiency, and passenger care.
           </h3>
         </div>
 
         {/* News Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {newsCards.map((card) => (
-            <div
-              key={card.id}
-              className="bg-white shadow-md flex flex-col overflow-hidden"
-            >
-              {/* Image Section */}
-              <div className="relative w-full h-56">
-                <Image
-                  src={card.img}
-                  alt={card.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
+          {newsCards.map((card, idx) => {
+            const isVisible = visibleIndexes.includes(idx);
 
-              {/* Content Section */}
-              <div className="p-6 flex flex-col flex-grow group">
-                <span className="text-sm text-muted mb-2">{card.date}</span>
-                <h3 className="text-lg md:text-xl lg:text-2xl font-light mb-3 group-hover:underline transition">
-                  <Link href="/press-coverage">{card.title}</Link>
-                </h3>
+            return (
+              <div
+                key={card.id}
+                className={`flex flex-col overflow-hidden transform transition-all duration-1000
+                  ${isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
+              >
+                {/* Image Section with Curtain Reveal */}
+                <div className="relative w-full h-56 overflow-hidden">
+                  {/* Curtain layers */}
+                  <div
+                    className={`absolute inset-0 bg-background z-30 transform transition-transform duration-600 ease-[cubic-bezier(0.65,0,0.35,1)]
+                      ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
+                    style={{ transitionDelay: `${idx * 150}ms` }}
+                  ></div>
+                  <div
+                    className={`absolute inset-0 bg-primary z-20 transform transition-transform duration-600 ease-[cubic-bezier(0.65,0,0.35,1)]
+                      ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
+                    style={{ transitionDelay: `${idx * 150 + 100}ms` }}
+                  ></div>
+
+                  <Image
+                    src={card.img}
+                    alt={card.title}
+                    fill
+                    className="object-cover object-center"
+                  />
+                </div>
+
+                {/* Content Section */}
+                <div className="p-6 flex flex-col flex-grow group">
+                  <span className="text-sm text-muted mb-2">{card.date}</span>
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-light mb-3 group-hover:underline transition">
+                    <Link href="/press-coverage">{card.title}</Link>
+                  </h3>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Explore Coverage Button */}

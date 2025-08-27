@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import HomePurposeBG from "@/assets/images/Home/HomePurposeBG.webp";
 import { useEffect, useRef, useState } from "react";
@@ -13,73 +15,84 @@ export default function AboutSnapshot() {
     alt: "Ten 11 Hospitality Founders",
   };
 
+  const sectionRef = useRef<HTMLElement | null>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          observer.disconnect();
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.6 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    if (sectionRef.current) observer.observe(sectionRef.current);
 
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (
     <section ref={sectionRef} className="w-full py-24 lg:py-32 overflow-hidden bg-primary">
       <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left Section - Image */}
-          <div
-            className={`relative max-w-[640px] mx-auto lg:mx-0 aspect-[3/4] overflow-hidden shadow-2xl ${
-              isVisible ? "animate-fadeInRight" : "opacity-0"
-            }`}
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10"></div>
-            <Image
-              src={HomePurposeBG}
-              alt={content.alt}
-              fill
-              className="object-cover object-center transition-all duration-700 ease-out hover:scale-110"
-              priority
-            />
+        <div className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12">
+          {/* Left Section - Image with Curtain Reveal */}
+          <div className="w-[440px] relative aspect-[3/4] overflow-hidden">
+            {/* White Curtain */}
+            <div
+              className={`absolute inset-0 bg-primary z-30 transform transition-transform duration-600 ease-[cubic-bezier(0.65,0,0.35,1)]
+                ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
+            ></div>
+
+            {/* Black Curtain */}
+            <div
+              className={`absolute inset-0 bg-background z-20 transform transition-transform duration-600 delay-600 ease-[cubic-bezier(0.65,0,0.35,1)]
+                ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
+            ></div>
+
+            {/* Image */}
+            <div className={`absolute inset-0 z-10 ${isVisible ? "" : "hidden"}`}>
+              <Image
+                src={HomePurposeBG}
+                alt={content.alt}
+                fill
+                className="object-cover object-center"
+                priority
+              />
+            </div>
           </div>
 
           {/* Right Section - Content */}
           <div
-            className={`space-y-8 text-center lg:text-left max-w-[640px] ${
-              isVisible ? "animate-fadeInUp" : "opacity-0"
-            }`}
+            className={`w-[640px] space-y-8 text-center lg:text-left transform transition-all duration-1000 ease-[cubic-bezier(0.42,0,0.58,1)]
+              ${isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
           >
             <div className="relative">
               <div className="absolute -left-4 -top-4 w-24 h-24 bg-primary/5 mix-blend-multiply filter blur-xl animate-pulse"></div>
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-light text-background leading-tight relative">
+              <h3
+                className={`text-2xl md:text-3xl lg:text-4xl font-light text-background leading-tight relative transition-transform duration-1000
+                  ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
+              >
                 {content.title}
               </h3>
             </div>
 
-            <p className="text-background/80 text-lg md:text-xl lg:text-2xl leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            <p
+              className={`text-background/80 text-lg md:text-xl lg:text-2xl leading-relaxed max-w-2xl mx-auto lg:mx-0 transition-transform duration-1000 delay-200
+                ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
+            >
               {content.paragraph}
             </p>
 
             <Button
               variant="outline"
-              className="group inline-flex items-center !border-1 !border-background !text-background !hover:bg-background !hover:text-primary"
+              className={`group inline-flex items-center transition-transform duration-1000 delay-400 !border-1 !border-background !text-background !hover:bg-background !hover:text-primary
+                ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
             >
               <span>{content.button}</span>
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
           </div>
         </div>

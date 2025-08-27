@@ -30,37 +30,20 @@ export default function HomePage() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 1000);
-
+    const timer = setTimeout(() => setIsLoaded(true), 1000);
     return () => clearTimeout(timer);
   }, []);
 
-  if (!isLoaded) {
-    return <LoadingScreen isLoading={true} />;
-  }
+  if (!isLoaded) return <LoadingScreen isLoading={true} />;
 
   return (
     <div className="w-full">
       <HeroSection />
-
-      {/* Brand Purpose Section */}
       <BrandPurposeSection />
-
-      {/* Core Highlights Section*/}
       <CoreHighlights />
-
-      {/* Projects Overview Section */}
       <ProjectsOverview />
-
-      {/* About Snapshot Section */}
       <AboutSnapshot />
-
-      {/* Press Media Section */}
       <PressMedia />
-
-      {/* Newsletter */}
       <NewsletterSection />
     </div>
   );
