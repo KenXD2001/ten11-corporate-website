@@ -3,8 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-// import { Icon } from "@iconify/react";
-// import useTheme from "@/hooks/useTheme";
 import { useEffect, useState, useCallback } from "react";
 import Ten11Logo from "@/assets/images/Logos/Ten11-LOGO.svg";
 
@@ -23,7 +21,6 @@ const navRight = [
 
 export default function Header() {
   const pathname = usePathname();
-  // const { theme, toggleTheme } = useTheme();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -73,8 +70,9 @@ export default function Header() {
 
   return (
     <header
-      className={`w-full bg-background text-foreground border-b border-primary shadow-sm fixed top-0 left-0 transition-transform duration-500 ease-in-out z-40 ${isVisible ? "translate-y-0" : "-translate-y-full"
-        }`}
+      className={`w-full bg-background text-foreground border-b border-primary shadow-sm fixed top-0 left-0 transition-transform duration-500 ease-in-out z-40 ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
     >
       <div className="container mx-auto flex justify-between items-center relative h-24 px-6">
         {/* Left Nav */}
@@ -82,7 +80,7 @@ export default function Header() {
           {renderNav(navLeft)}
         </nav>
 
-        {/* Logo - absolute centered */}
+        {/* Logo - centered */}
         <Image
           src={Ten11Logo}
           alt="TEN11 Logo"
@@ -94,20 +92,8 @@ export default function Header() {
         {/* Right Nav */}
         <div className="flex gap-10 items-center font-medium uppercase tracking-wider">
           {renderNav(navRight)}
-          {/* <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full bg-primary/20 hover:bg-primary/30 transition font-light text-lg"
-            aria-label="Toggle theme"
-          >
-            {theme === "light" ? (
-              <Icon icon="ph:moon-bold" className="text-foreground" />
-            ) : (
-              <Icon icon="ph:sun-bold" className="text-yellow-400" />
-            )}
-          </button> */}
         </div>
       </div>
     </header>
-
   );
 }

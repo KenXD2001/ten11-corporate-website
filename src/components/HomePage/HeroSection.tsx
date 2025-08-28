@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import HeroBG from "@/assets/images/Home/HomeHeroBG.webp";
+import { ArrowRight } from "lucide-react";
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLElement>(null);
@@ -32,7 +33,9 @@ export default function HeroSection() {
       setZoomLevel((prev) => (Math.abs(prev - newZoom) > 0.1 ? newZoom : prev));
 
       if (textRef.current) {
-        textRef.current.style.transform = `translateY(${scrollProgress * 40}px)`;
+        textRef.current.style.transform = `translateY(${
+          scrollProgress * 40
+        }px)`;
         textRef.current.style.opacity = `${1 - scrollProgress}`;
       }
 
@@ -89,7 +92,7 @@ export default function HeroSection() {
           transform: `scale(${1 + zoomLevel / 100})`,
         }}
       />
-      <div className="absolute inset-0 bg-black/30 z-0 animate-pulse-slow" />
+      <div className="absolute inset-0 bg-foreground/30 z-0 animate-pulse-slow" />
 
       {/* Text Content */}
       <div
@@ -102,19 +105,23 @@ export default function HeroSection() {
         </p>
 
         <p className="text-sm sm:text-base md:text-lg lg:text-xl mb-10">
-          From railways to airports, we are changing waiting into an unforgettable experience.
+          Beyond Transit, An Experience to Remember.
         </p>
 
-        <button className="px-[5vw] py-[2vw] sm:px-6 sm:py-3 md:px-8 md:py-4 bg-background text-foreground text-base uppercase hover:bg-primary hover:text-background transition duration-300">
-          Explore Projects
+        <button className="group px-[5vw] py-[2vw] sm:px-6 sm:py-3 md:px-8 md:py-4 bg-background text-foreground text-base uppercase hover:bg-primary hover:text-background transition duration-300">
+          <div className="flex items-center">
+            <span>Explore Projects</span>
+            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+          </div>
         </button>
       </div>
 
       {/* Scroll Indicator */}
-      <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 w-1.5 h-12 border border-background rounded-full overflow-hidden"
-      >
-        <div ref={scrollIndicatorRef} className="bg-background w-full h-0 transition-all duration-300" />
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 w-1.5 h-12 border border-foreground rounded-full overflow-hidden">
+        <div
+          ref={scrollIndicatorRef}
+          className="bg-foreground w-full h-0 transition-all duration-300"
+        />
       </div>
     </section>
   );

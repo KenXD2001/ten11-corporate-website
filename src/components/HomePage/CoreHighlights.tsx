@@ -1,134 +1,150 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import HomeCoreImage from "@/assets/images/Home/HomeCore0101.webp";
+import { ArrowRight } from "lucide-react";
+import Button from "../common/Button";
+import HomePillar01 from "@/assets/images/Home/HomePillars01.webp";
+import HomePillar02 from "@/assets/images/Home/HomePillars02.webp";
+import HomePillar03 from "@/assets/images/Home/HomePillars03.webp";
 
-const highlights = [
+const cards = [
   {
-    title: "Innovation in Design",
-    description:
-      "India’s first all-digital railway lounge sets new industry standards.",
+    id: 1,
+    img: HomePillar01,
+    title: "Lounge digital kiosk → Innovation in Design",
+    subtitle: "India’s first all-digital railway lounge sets new industry standards.",
   },
   {
-    title: "Operational Excellence",
-    description:
-      "Over 1,000,000 travelers served by 300+ trained professionals.",
+    id: 2,
+    img: HomePillar02,
+    title: "Smiling staff welcoming guests → Operational Excellence",
+    subtitle: "Over 1,000,000 travelers served by 300+ trained professionals.",
   },
   {
-    title: "Passenger-Centric Care",
-    description:
-      "Luxury, hygiene, and warmth are at the heart of every journey.",
+    id: 3,
+    img: HomePillar03,
+    title: "Traveler enjoying coffee and comfort → Passenger-Centric Care",
+    subtitle: "Luxury, hygiene, and warmth are at the heart of every journey.",
   },
 ];
 
-export default function CoreHighlights() {
-  const [activeIndex, setActiveIndex] = useState(0);
+export default function HighlightsGridModern() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [visibleIndexes, setVisibleIndexes] = useState<number[]>([]);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  // Auto slide highlights
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % highlights.length);
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // Intersection Observer for animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setIsVisible(true);
+          cards.forEach((_, idx) => {
+            setTimeout(() => {
+              setVisibleIndexes((prev) => [...prev, idx]);
+            }, idx * 200);
+          });
           observer.disconnect();
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
+
+  const middleIndex = Math.floor(cards.length / 2);
 
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-primary text-white py-44 px-34 overflow-hidden"
+      className="w-full py-24 px-6 bg-primary text-foreground overflow-hidden"
     >
-      <div className="mx-auto">
-        {/* Top Section */}
+      <div className="max-w-7xl mx-auto">
+        {/* Section Heading */}
         <div
-          className={`mb-20 w-5/6 mx-0 transform transition-all duration-1000 ease-[cubic-bezier(0.42,0,0.58,1)]
-            ${isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
+          className={` mb-16 text-center transform transition-all duration-1000 ease-[cubic-bezier(0.42,0,0.58,1)]
+            ${visibleIndexes.length ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
         >
-          <div className="flex items-center gap-10 mb-4">
-            <h2 className="text-lg uppercase tracking-widest text-background/90">
-              CORE HIGHLIGHTS
-            </h2>
-            <div className="border-b-2 border-background/90 w-[100px]"></div>
-          </div>
-
-          <h3 className="text-4xl md:text-5xl font-light leading-tight">
-            At Ten11 Hospitality, we excel in innovation, operations, and
-            passenger-centric care — redefining every journey experience.
-          </h3>
+          <h2 className="text-4xl md:text-5xl font-light text-white mb-4">
+            The Three Pillars of Excellence
+          </h2>
+          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
+            Travel isn’t just about where you’re going, it’s about how you feel along the way. At Ten 11 Hospitality, every moment matters. Comfort. Care. Convenience -redefined
+          </p>
         </div>
 
-        {/* Bottom Section: Image + Highlights */}
-        <div className="flex flex-col lg:flex-row gap-16 items-start justify-center mx-auto max-w-[1280px]">
-          {/* Right Image with Curtain Reveal */}
-          <div className="lg:w-auto relative">
-            <div
-              className="relative overflow-hidden shadow-2xl"
-              style={{ width: "600px", height: "800px" }}
-            >
-              {/* Curtain layers */}
-              <div
-                className={`absolute inset-0 bg-primary z-30 transform transition-transform duration-600 ease-[cubic-bezier(0.65,0,0.35,1)]
-                  ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
-              ></div>
-              <div
-                className={`absolute inset-0 bg-background z-20 transform transition-transform duration-600 delay-300 ease-[cubic-bezier(0.65,0,0.35,1)]
-                  ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
-              ></div>
+        {/* Modern Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+          {cards.map((card, idx) => {
+            const isVisible = visibleIndexes.includes(idx);
+            const isHovered = hoveredIndex === idx;
+            const isMiddle = idx === middleIndex;
 
-              {/* Image */}
-              <div className="absolute inset-0 z-10">
-                <Image
-                  src={HomeCoreImage}
-                  alt="Lounge interior with modern design"
-                  fill
-                  className="object-cover object-center"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
+            // Determine scale
+            const scaleClass =
+              isHovered
+                ? "scale-105" // hovered card grows
+                : isMiddle && hoveredIndex === null
+                ? "scale-105" // middle card is big if no other hovered
+                : "scale-100"; // normal
 
-          {/* Highlights */}
-          <div className="lg:w-1/2 flex flex-col justify-center space-y-12">
-            {highlights.map((highlight, index) => (
+            const shadowClass =
+              isHovered || (isMiddle && hoveredIndex === null)
+                ? "shadow-2xl"
+                : "shadow-lg";
+
+            return (
               <div
-                key={index}
-                onMouseEnter={() => setActiveIndex(index)}
-                className={`transition-all duration-1000 ease-[cubic-bezier(0.42,0,0.58,1)]
-                  ${isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}
-                  ${index === activeIndex ? "opacity-100" : "opacity-60"}`}
+                key={card.id}
+                onMouseEnter={() => setHoveredIndex(idx)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className={`flex flex-col bg-white rounded-2xl overflow-hidden transform transition-all duration-500 p-4 ${scaleClass} ${shadowClass}
+                  ${isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
+                style={{ transitionDelay: `${idx * 150}ms` }}
               >
-                <h4 className="text-2xl md:text-3xl lg:text-4xl font-light mb-4">
-                  {highlight.title}
-                </h4>
-                <p className="text-lg md:text-xl lg:text-2xl leading-relaxed">
-                  {highlight.description}
-                </p>
+                {/* Image with Curtain Reveal */}
+                <div className="relative w-full h-64 rounded-xl overflow-hidden">
+                  <div
+                    className={`absolute inset-0 bg-primary z-30 transform transition-transform duration-600 ease-[cubic-bezier(0.65,0,0.35,1)]
+                      ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
+                    style={{ transitionDelay: `${idx * 150}ms` }}
+                  ></div>
+                  <div
+                    className={`absolute inset-0 bg-background z-20 transform transition-transform duration-600 ease-[cubic-bezier(0.65,0,0.35,1)]
+                      ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
+                    style={{ transitionDelay: `${idx * 150 + 100}ms` }}
+                  ></div>
+
+                  <Image
+                    src={card.img}
+                    alt={card.title}
+                    fill
+                    className="object-cover object-center"
+                  />
+                </div>
+
+                {/* Card Content */}
+                <div className="p-6 flex flex-col flex-grow text-center">
+                  <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">
+                    {card.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-gray-600">{card.subtitle}</p>
+                </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
+
+        {/* CTA Button */}
+        <div className="mt-12 text-center">
+          <Button
+            variant="outline"
+            className="group inline-flex items-center bg-background text-foreground hover:bg-primary hover:text-white transition-colors duration-300"
+          >
+            <span>Explore More</span>
+            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+          </Button>
         </div>
       </div>
     </section>

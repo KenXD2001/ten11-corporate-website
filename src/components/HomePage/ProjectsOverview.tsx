@@ -49,7 +49,7 @@ export default function ProjectsOverview() {
           observer.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.4 }
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);

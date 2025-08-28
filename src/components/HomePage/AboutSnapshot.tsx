@@ -26,7 +26,7 @@ export default function AboutSnapshot() {
           observer.disconnect();
         }
       },
-      { threshold: 0.6 }
+      { threshold: 0.4 }
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
