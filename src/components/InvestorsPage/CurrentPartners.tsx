@@ -1,48 +1,75 @@
 "use client";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 import Image from "next/image";
+import Logo from "@/assets/images/Logos/Ten11-LOGO.svg";
 
 export default function CurrentPartners() {
-  // Replace these placeholder logos with actual partner logos
-  const partners = [
-    { name: "Partner 1", logo: "/images/Investors/partner1.png" },
-    { name: "Partner 2", logo: "/images/Investors/partner2.png" },
-    { name: "Partner 3", logo: "/images/Investors/partner3.png" },
-  ];
+  const partners = Array.from({ length: 10 }).map((_, i) => ({
+    name: `Partner ${i + 1}`,
+    logo: Logo,
+  }));
 
   return (
-    <section className="py-24 bg-gray-50">
-      <div className="container mx-auto px-6 md:px-12 text-center">
-        <h2 className="text-4xl font-bold text-primary mb-12">
-          Our Current Partners
-        </h2>
-
-        {partners.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-center justify-center mb-12">
-            {partners.map((partner) => (
-              <div
-                key={partner.name}
-                className="flex items-center justify-center p-6 bg-white rounded-xl shadow-md"
-              >
-                <Image
-                  src={partner.logo}
-                  alt={partner.name}
-                  width={120}
-                  height={60}
-                  className="object-contain"
-                />
-              </div>
-            ))}
+    <section className="py-24 bg-gray-50 relative">
+      <div className="container w-5/6 mx-auto px-6 md:px-12 text-center relative">
+        {/* Heading Section */}
+        <div className="mb-12 w-5/6 mx-auto md:mx-0 text-center md:text-left">
+          <div className="flex items-center justify-center md:justify-start gap-4 mb-4">
+            <h2 className="text-sm uppercase tracking-widest text-[var(--foreground)]/70">
+              OUR PARTNERS
+            </h2>
+            <div className="border-b-2 border-[var(--foreground)]/70 w-20"></div>
           </div>
-        ) : (
-          <p className="text-lg text-muted mb-12">
-            Partner logos coming soon.
-          </p>
-        )}
 
-        <button className="text-lg px-8 py-6 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300">
-          Contact Us for Opportunities
-        </button>
+          <h3 className="text-3xl md:text-4xl font-light leading-tight text-[var(--foreground)]">
+            Discover our flagship lounges across India — where comfort, design,
+            and technology converge.
+          </h3>
+        </div>
+
+        {/* Swiper */}
+        <div className="relative">
+          <Swiper
+            modules={[Navigation]}
+            spaceBetween={30}
+            slidesPerView={5}
+            navigation={{
+              prevEl: ".custom-swiper-prev",
+              nextEl: ".custom-swiper-next",
+            }}
+            breakpoints={{
+              640: { slidesPerView: 2 },
+              768: { slidesPerView: 3 },
+              1024: { slidesPerView: 5 },
+            }}
+          >
+            {partners.map((partner, index) => (
+              <SwiperSlide key={index}>
+                <div className="flex items-center justify-center p-6">
+                  <Image
+                    src={partner.logo}
+                    alt={partner.name}
+                    width={120}
+                    height={120}
+                    className="object-contain"
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          {/* Navigation buttons on left and right */}
+          <div className="custom-swiper-prev absolute top-1/2 -left-8 transform -translate-y-1/2 w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer shadow-lg z-10">
+            &#10094;
+          </div>
+          <div className="custom-swiper-next absolute top-1/2 -right-8 transform -translate-y-1/2 w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center cursor-pointer shadow-lg z-10">
+            &#10095;
+          </div>
+        </div>
       </div>
     </section>
   );

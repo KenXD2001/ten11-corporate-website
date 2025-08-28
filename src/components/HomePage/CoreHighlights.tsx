@@ -1,151 +1,152 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import Button from "../common/Button";
+import HomePillar01 from "@/assets/images/Home/HomePillars01.webp";
+import HomePillar02 from "@/assets/images/Home/HomePillars02.webp";
+import HomePillar03 from "@/assets/images/Home/HomePillars03.webp";
 
-import HomeCore0101 from "@/assets/images/Home/HomeCore0101.webp";
-import HomeCore0102 from "@/assets/images/Home/HomeCore0102.webp";
-import HomeCore0201 from "@/assets/images/Home/HomeCore0201.webp";
-import HomeCore0202 from "@/assets/images/Home/HomeCore0202.webp";
-import HomeCore0301 from "@/assets/images/Home/HomeCore0301.webp";
-import HomeCore0302 from "@/assets/images/Home/HomeCore0302.webp";
-
-gsap.registerPlugin(ScrollTrigger);
-
-const highlights = [
+const cards = [
   {
-    title: "Innovation in Design",
-    description:
-      "India's first all-digital railway lounge sets new industry standards.",
-    imgSrc1: HomeCore0101,
-    imgSrc2: HomeCore0102,
-    location: "New Delhi, India",
+    id: 1,
+    img: HomePillar01,
+    title: "Lounge digital kiosk → Innovation in Design",
+    subtitle: "India’s first all-digital railway lounge sets new industry standards.",
   },
   {
-    title: "Operational Excellence",
-    description:
-      "Over 1,000,000 travelers served by 300+ trained professionals.",
-    imgSrc1: HomeCore0201,
-    imgSrc2: HomeCore0202,
-    location: "Mumbai, India",
+    id: 2,
+    img: HomePillar02,
+    title: "Smiling staff welcoming guests → Operational Excellence",
+    subtitle: "Over 1,000,000 travelers served by 300+ trained professionals.",
   },
   {
-    title: "Passenger-Centric Care",
-    description:
-      "Luxury, hygiene, and warmth are at the heart of every journey.",
-    imgSrc1: HomeCore0301,
-    imgSrc2: HomeCore0302,
-    location: "Bengaluru, India",
+    id: 3,
+    img: HomePillar03,
+    title: "Traveler enjoying coffee and comfort → Passenger-Centric Care",
+    subtitle: "Luxury, hygiene, and warmth are at the heart of every journey.",
   },
 ];
 
-export default function CoreHighlights() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const pinRef = useRef<HTMLDivElement>(null);
+export default function HighlightsGridModern() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [visibleIndexes, setVisibleIndexes] = useState<number[]>([]);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    highlights.forEach((h) => {
-      new window.Image().src = h.imgSrc1.src;
-      new window.Image().src = h.imgSrc2.src;
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!sectionRef.current || !pinRef.current) return;
-
-    const scrollPerHighlight = 800;
-    const totalScroll = highlights.length * scrollPerHighlight;
-
-    gsap.set(sectionRef.current, { height: totalScroll });
-
-    const scrollTrigger = ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: "top top",
-      end: `+=${totalScroll}`,
-      pin: pinRef.current,
-      pinSpacing: false,
-      scrub: 0.8,
-      onUpdate: (self) => {
-        const progress = self.progress;
-        const index = Math.min(
-          highlights.length - 1,
-          Math.floor(progress * highlights.length)
-        );
-        setActiveIndex(index);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          cards.forEach((_, idx) => {
+            setTimeout(() => {
+              setVisibleIndexes((prev) => [...prev, idx]);
+            }, idx * 200);
+          });
+          observer.disconnect();
+        }
       },
-    });
+      { threshold: 0.3 }
+    );
 
-    return () => scrollTrigger.kill();
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
   }, []);
 
-  const activeHighlight = highlights[activeIndex];
+  const middleIndex = Math.floor(cards.length / 2);
 
   return (
-    <>
-      <section ref={sectionRef} className="relative w-full">
+    <section
+      ref={sectionRef}
+      className="w-full py-24 px-6 bg-primary text-foreground overflow-hidden"
+    >
+      <div className="max-w-7xl mx-auto">
+        {/* Section Heading */}
         <div
-          ref={pinRef}
-          className="relative h-screen flex items-center justify-center"
+          className={` mb-16 text-center transform transition-all duration-1000 ease-[cubic-bezier(0.42,0,0.58,1)]
+            ${visibleIndexes.length ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
         >
-          <div className="container mx-auto px-6 grid grid-cols-[10%_45%_45%] h-[500px] md:h-[600px] w-[80%] overflow relative">
-            {highlights.map((h, i) => (
-              <div
-                key={i}
-                className="absolute inset-0 transition-all duration-700 ease-out"
-                style={{
-                  backgroundImage: `url(${h.imgSrc1.src})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  opacity: activeIndex === i ? 1 : 0,
-                  transform: `scale(${activeIndex === i ? 1 : 1.1})`,
-                }}
-              />
-            ))}
-
-            <div className="absolute inset-0 bg-black/10" />
-
-            <div />
-
-            <div className="bg-white p-12 flex flex-col justify-center space-y-6 z-10 relative">
-              <h2 className="text-2xl md:text-3xl font-normal text-gray-900 transition-opacity duration-500">
-                {activeHighlight.title}
-              </h2>
-              <p className="text-gray-700 text-base leading-relaxed transition-opacity duration-500">
-                {activeHighlight.description}
-              </p>
-            </div>
-
-            <div className="relative flex flex-col justify-end p-12 z-10">
-              <p className="absolute -bottom-10 text-xl text-gray-100 font-semibold transition-opacity duration-500">
-                {activeHighlight.location}
-              </p>
-            </div>
-
-            <div className="absolute top-1/2 -translate-y-1/2 -right-[5%] h-[400px] md:h-[500px] w-1/4 overflow-hidden shadow-2xl">
-              {highlights.map((h, i) => (
-                <div
-                  key={i}
-                  className="absolute inset-0 transition-all duration-700 ease-out"
-                  style={{
-                    backgroundImage: `url(${h.imgSrc2.src})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    opacity: activeIndex === i ? 1 : 0,
-                    transform: `scale(${activeIndex === i ? 1 : 1.1})`,
-                  }}
-                />
-              ))}
-            </div>
-          </div>
+          <h2 className="text-4xl md:text-5xl font-light text-white mb-4">
+            The Three Pillars of Excellence
+          </h2>
+          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
+            Travel isn’t just about where you’re going, it’s about how you feel along the way. At Ten 11 Hospitality, every moment matters. Comfort. Care. Convenience -redefined
+          </p>
         </div>
-      </section>
 
-      <div
-        style={{ height: "800px" }}
-        className="relative z-0 opacity-0 pointer-events-none"
-      />
-    </>
+        {/* Modern Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+          {cards.map((card, idx) => {
+            const isVisible = visibleIndexes.includes(idx);
+            const isHovered = hoveredIndex === idx;
+            const isMiddle = idx === middleIndex;
+
+            // Determine scale
+            const scaleClass =
+              isHovered
+                ? "scale-105" // hovered card grows
+                : isMiddle && hoveredIndex === null
+                ? "scale-105" // middle card is big if no other hovered
+                : "scale-100"; // normal
+
+            const shadowClass =
+              isHovered || (isMiddle && hoveredIndex === null)
+                ? "shadow-2xl"
+                : "shadow-lg";
+
+            return (
+              <div
+                key={card.id}
+                onMouseEnter={() => setHoveredIndex(idx)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className={`flex flex-col bg-white rounded-2xl overflow-hidden transform transition-all duration-500 p-4 ${scaleClass} ${shadowClass}
+                  ${isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
+                style={{ transitionDelay: `${idx * 150}ms` }}
+              >
+                {/* Image with Curtain Reveal */}
+                <div className="relative w-full h-64 rounded-xl overflow-hidden">
+                  <div
+                    className={`absolute inset-0 bg-primary z-30 transform transition-transform duration-600 ease-[cubic-bezier(0.65,0,0.35,1)]
+                      ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
+                    style={{ transitionDelay: `${idx * 150}ms` }}
+                  ></div>
+                  <div
+                    className={`absolute inset-0 bg-background z-20 transform transition-transform duration-600 ease-[cubic-bezier(0.65,0,0.35,1)]
+                      ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
+                    style={{ transitionDelay: `${idx * 150 + 100}ms` }}
+                  ></div>
+
+                  <Image
+                    src={card.img}
+                    alt={card.title}
+                    fill
+                    className="object-cover object-center"
+                  />
+                </div>
+
+                {/* Card Content */}
+                <div className="p-6 flex flex-col flex-grow text-center">
+                  <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">
+                    {card.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-gray-600">{card.subtitle}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* CTA Button */}
+        <div className="mt-12 text-center">
+          <Button
+            variant="outline"
+            className="group inline-flex items-center bg-background text-foreground hover:bg-primary hover:text-white transition-colors duration-300"
+          >
+            <span>Explore More</span>
+            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+          </Button>
+        </div>
+      </div>
+    </section>
   );
 }

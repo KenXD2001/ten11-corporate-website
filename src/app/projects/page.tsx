@@ -3,7 +3,7 @@ import ProjectListings from "@/components/ProjectsPage/ProjectListings";
 
 export default function ProjectsPage() {
   return (
-    <div className="container mx-auto px-6">
+    <div className="w-full">
       {/*Projects Hero Section*/}
       <ProjectsHero />
 

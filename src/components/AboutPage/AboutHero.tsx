@@ -16,14 +16,14 @@ export default function AboutHero() {
   }, []);
 
   return (
-    <section className="relative w-full h-[50vh] flex items-center justify-center overflow-hidden">
+    <section className="relative w-full h-[100vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-center bg-cover transition-transform duration-500 ease-out"
-        style={{
-          backgroundImage: "url('/images/AboutUS/Warmloungeinterior.jpeg')",
-          transform: `translateY(${offsetY}px)`,
-        }}
+        // style={{
+        //   backgroundImage: "url('/images/AboutUS/Warmloungeinterior.jpeg')",
+        //   transform: `translateY(${offsetY}px)`,
+        // }}
       />
 
       {/* Overlay */}
@@ -31,12 +31,11 @@ export default function AboutHero() {
 
       {/* Text */}
       <div className="relative text-center px-6 z-10">
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-          Every Journey Deserves Comfort.
+        <h1 className="text-6xl md:text-8xl font-base text-white mb-4">
+          About Us
         </h1>
         <p className="text-lg md:text-2xl text-white/80">
-          Discover how Ten11 Hospitality transforms waiting into an experience
-          worth remembering.
+          Every Journey Deserves Comfort
         </p>
       </div>
     </section>

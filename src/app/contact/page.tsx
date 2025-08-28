@@ -1,7 +1,7 @@
 import ContactHero from "@/components/ContactPage/ContactHero";
 import ContactForm from "@/components/ContactPage/ContactForm";
 import ContactDetails from "@/components/ContactPage/ContactDetails";
-import MapSection from "@/components/ContactPage/MapSection";
+// import MapSection from "@/components/ContactPage/MapSection";
 
 export default function ContactPage() {
   return (
@@ -9,7 +9,7 @@ export default function ContactPage() {
       <ContactHero />
       <ContactForm />
       <ContactDetails />
-      <MapSection />
+      {/* <MapSection /> */}
     </div>
   );
 }

@@ -24,8 +24,8 @@ const Button = ({
   
   // Variant styles
   const variantStyles = {
-    primary: "bg-primary text-background border border-primary hover:bg-transparent hover:text-primary",
-    outline: "bg-transparent border border-primary text-primary hover:bg-primary hover:text-background"
+    primary: "text-base font-base bg-primary text-background border-2 border-primary hover:bg-transparent hover:text-primary",
+    outline: "text-base font-base bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-background"
   };
   
   // Combined classes
