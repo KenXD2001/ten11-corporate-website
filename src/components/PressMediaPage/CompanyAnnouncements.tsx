@@ -19,16 +19,17 @@ export default function CompanyAnnouncements() {
   ];
 
   return (
-    <section className="w-full bg-white py-24 px-6">
-      <div className="max-w-7xl mx-auto space-y-16">
+    <section className="w-full bg-white py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20">
+      <div className="max-w-7xl mx-auto space-y-12">
         {/* Top Section */}
-        <div className="mb-20 mx-0">
-          <div className="flex items-center gap-10 mb-4 justify-center md:justify-start">
-            <h2 className="text-lg uppercase tracking-widest">Company Announcements</h2>
-            <div className="border-b-2 w-[100px]"></div>
+        <div className="space-y-6 text-center md:text-left">
+          <div className="flex flex-col md:flex-row items-center md:items-start gap-2 md:gap-6 justify-center md:justify-start">
+            <h2 className="text-sm sm:text-base uppercase tracking-widest">
+              Company Announcements
+            </h2>
+            <div className="border-b-2 border-current w-16 sm:w-24"></div>
           </div>
-
-          <h3 className="text-4xl md:text-5xl font-light leading-tight text-center md:text-left cursor-pointer">
+          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light leading-snug cursor-pointer">
             Stay updated on Ten11 Hospitality’s latest initiatives, expansions, and strategic partnerships.
           </h3>
         </div>
@@ -38,19 +39,19 @@ export default function CompanyAnnouncements() {
           {/* Left Column - Featured Announcement */}
           {announcements[0] && (
             <div className="w-full">
-              <div className="block overflow-hidden bg-white flex flex-col">
-                <div className="relative aspect-video w-full bg-muted">
+              <div className="block overflow-hidden flex flex-col rounded-lg shadow hover:shadow-lg transition-shadow">
+                <div className="relative w-full aspect-video bg-gray-200">
                   <Image
                     src={announcements[0].image}
                     alt={announcements[0].text}
                     fill
-                    className="object-cover transition-transform duration-500"
+                    className="object-cover object-center transition-transform duration-500 hover:scale-105"
                     priority
                   />
                 </div>
                 <div className="p-6 flex flex-col justify-between">
                   <p className="text-sm text-gray-500 mb-2">{announcements[0].date}</p>
-                  <h3 className="text-xl md:text-2xl lg:text-3xl font-light text-[var(--foreground)] mb-2 line-clamp-2 hover:underline cursor-pointer">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-light text-[var(--foreground)] line-clamp-2 hover:underline cursor-pointer">
                     {announcements[0].text}
                   </h3>
                 </div>
@@ -59,23 +60,23 @@ export default function CompanyAnnouncements() {
           )}
 
           {/* Right Column - Smaller Announcements */}
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {announcements.slice(1).map((a, idx) => (
               <div
                 key={idx}
-                className="block overflow-hidden bg-white flex flex-col"
+                className="block overflow-hidden flex flex-col rounded-lg shadow hover:shadow-md transition-shadow"
               >
-                <div className="relative aspect-video w-full bg-muted">
+                <div className="relative w-full aspect-video bg-gray-200">
                   <Image
                     src={a.image}
                     alt={a.text}
                     fill
-                    className="object-cover transition-transform duration-500"
+                    className="object-cover object-center transition-transform duration-500 hover:scale-105"
                   />
                 </div>
                 <div className="p-4 flex flex-col justify-between">
                   <p className="text-sm text-gray-500 mb-2">{a.date}</p>
-                  <h3 className="text-lg md:text-xl lg:text-2xl font-light text-[var(--foreground)] mb-2 line-clamp-2 hover:underline cursor-pointer">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-light text-[var(--foreground)] line-clamp-2 hover:underline cursor-pointer">
                     {a.text}
                   </h3>
                 </div>
@@ -85,7 +86,7 @@ export default function CompanyAnnouncements() {
         </div>
 
         {/* View More Button */}
-        <div className="text-center">
+        <div className="text-center mt-8">
           <Button variant="outline" className="group inline-flex items-center">
             <span>View More</span>
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />

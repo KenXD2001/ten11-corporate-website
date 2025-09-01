@@ -27,52 +27,48 @@ export default function BrandPurposeSection() {
       { threshold: 0.4 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    if (sectionRef.current) observer.observe(sectionRef.current);
 
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full py-24 lg:py-32 overflow-hidden">
-      <div className="container mx-auto px-4 lg:px-8 max-w-6xl flex flex-col items-center text-center space-y-6">
+    <section ref={sectionRef} className="w-full py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl flex flex-col items-center text-center space-y-6 sm:space-y-8 md:space-y-10">
+        
         {/* Title */}
         <h3
-          className={`text-4xl md:text-5xl font-light text-gray-900 leading-tight transform transition-all duration-700 ease-out
-    ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
+          className={`text-2xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-gray-900 leading-snug sm:leading-tight transform transition-all duration-700 ease-out
+            ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
         >
           {content.title}
         </h3>
 
-        {/* Subtitle */}
+        {/* Paragraph */}
         <p
-          className={`text-gray-600 text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl transform transition-all duration-700 ease-out delay-200
-    ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
+          className={`text-sm xs:text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-xs sm:max-w-sm md:max-w-2xl lg:max-w-3xl transform transition-all duration-700 ease-out delay-200
+            ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
         >
           {content.paragraph}
         </p>
 
         {/* Image with Curtain Reveal */}
-        <div className="rounded-3xl relative w-5/6 h-[450px] overflow-hidden mx-auto">
+        <div className="relative w-5/6 sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-2/5 h-[300px] sm:h-[350px] md:h-[400px] lg:h-[450px] xl:h-[500px] rounded-3xl overflow-hidden">
+          
           {/* White Curtain */}
           <div
-            className={`absolute inset-0 bg-background z-30 transform transition-transform duration-600 ease-[cubic-bezier(0.65,0,0.35,1)]
-      ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
+            className={`absolute inset-0 bg-background z-30 transform transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)]
+              ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
           ></div>
 
           {/* Black Curtain */}
           <div
-            className={`absolute inset-0 bg-primary z-20 transform transition-transform duration-600 delay-600 ease-[cubic-bezier(0.65,0,0.35,1)]
-      ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
+            className={`absolute inset-0 bg-primary z-20 transform transition-transform duration-700 delay-600 ease-[cubic-bezier(0.65,0,0.35,1)]
+              ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
           ></div>
 
           {/* Image */}
-          <div
-            className={`absolute inset-0 z-10 rounded ${
-              isVisible ? "" : "hidden"
-            }`}
-          >
+          <div className={`absolute inset-0 z-10 rounded ${isVisible ? "" : "hidden"}`}>
             <Image
               src={HomePurposeBG}
               alt={content.alt}

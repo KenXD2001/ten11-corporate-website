@@ -27,18 +27,17 @@ export default function MediaMentions() {
   ];
 
   return (
-    <section className="w-full bg-white py-24 px-6">
-      <div className="max-w-7xl mx-auto space-y-16">
+    <section className="w-full bg-white py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20">
+      <div className="max-w-7xl mx-auto space-y-12">
         {/* Top Section */}
-        <div className="mb-20 mx-0">
-          <div className="flex items-center gap-10 mb-4">
-            <h2 className="text-lg uppercase tracking-widest">
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-6">
+            <h2 className="text-sm sm:text-base uppercase tracking-widest">
               Media Mentions
             </h2>
-            <div className="border-b-2 w-[100px]"></div>
+            <div className="border-b-2 border-current w-16 sm:w-24"></div>
           </div>
-
-          <h3 className="text-4xl md:text-5xl font-light leading-tight cursor-pointer">
+          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light leading-snug sm:leading-tight md:leading-tight cursor-pointer">
             Discover how leading publications and media outlets are highlighting
             Ten11 Hospitality’s journey, innovation, and impact in the industry.
           </h3>
@@ -46,26 +45,25 @@ export default function MediaMentions() {
 
         {/* Media Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left Column */}
+          {/* Left Column - Main Feature */}
           <div className="w-full">
             <a
               href={mentions[0].link}
               target="_blank"
               rel="noopener noreferrer"
-              className="block overflow-hidden bg-white flex flex-col"
+              className="block overflow-hidden flex flex-col rounded-lg shadow-lg hover:shadow-2xl transition-shadow"
             >
-              <div className="relative aspect-video w-full bg-muted">
+              <div className="relative w-full aspect-video bg-gray-200">
                 <Image
                   src={mentions[0].image}
                   alt={mentions[0].title}
                   fill
-                  className="object-cover transition-transform duration-500"
+                  className="object-cover object-center transition-transform duration-500 hover:scale-105"
                   priority
                 />
               </div>
-
               <div className="p-6 flex flex-col justify-between">
-                <h3 className="text-xl md:text-2xl lg:text-3xl font-light text-[var(--foreground)] mb-2 line-clamp-2 hover:underline cursor-pointer">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-light mb-2 line-clamp-2 hover:underline">
                   {mentions[0].title}
                 </h3>
                 <p className="text-sm text-gray-500">{mentions[0].date}</p>
@@ -73,27 +71,26 @@ export default function MediaMentions() {
             </a>
           </div>
 
-          {/* Right Column - 2 side-by-side cards */}
-          <div className="grid grid-cols-2 gap-6">
+          {/* Right Column - Two Smaller Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {mentions.slice(1).map((m) => (
               <a
                 key={m.title}
                 href={m.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block overflow-hidden bg-white flex flex-col"
+                className="block overflow-hidden flex flex-col rounded-lg shadow hover:shadow-lg transition-shadow"
               >
-                <div className="relative aspect-video w-full bg-muted">
+                <div className="relative w-full aspect-video bg-gray-200">
                   <Image
                     src={m.image}
                     alt={m.title}
                     fill
-                    className="object-cover transition-transform duration-500"
+                    className="object-cover object-center transition-transform duration-500 hover:scale-105"
                   />
                 </div>
-
                 <div className="p-4 flex flex-col justify-between">
-                  <h3 className="text-lg md:text-xl lg:text-2xl font-light text-[var(--foreground)] mb-2 line-clamp-2 hover:underline cursor-pointer">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-light mb-2 line-clamp-2 hover:underline">
                     {m.title}
                   </h3>
                   <p className="text-sm text-gray-500">{m.date}</p>
@@ -102,13 +99,14 @@ export default function MediaMentions() {
             ))}
           </div>
         </div>
-      </div>
-      {/* View More Button */}
-      <div className="text-center">
-        <Button variant="outline" className="group inline-flex items-center">
-          <span>View More</span>
-          <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-        </Button>
+
+        {/* View More Button */}
+        <div className="text-center mt-8">
+          <Button variant="outline" className="group inline-flex items-center">
+            <span>View More</span>
+            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+          </Button>
+        </div>
       </div>
     </section>
   );

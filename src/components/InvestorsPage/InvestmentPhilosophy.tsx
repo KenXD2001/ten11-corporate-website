@@ -35,30 +35,29 @@ export default function InvestmentPhilosophy() {
   }, []);
 
   return (
-    <section className="w-full bg-primary text-black py-24 px-6">
-      <div className="max-w-7xl mx-auto space-y-20">
+    <section className="w-full bg-primary text-black py-16 sm:py-24 px-4 sm:px-6 lg:px-12">
+      <div className="max-w-7xl mx-auto space-y-16 sm:space-y-20">
         {/* Top Section */}
-        <div className="mb-20 mx-0">
-          <div className="flex items-center gap-10 mb-4">
-            <h2 className="text-lg uppercase tracking-widest text-background">
+        <div className="mb-12 sm:mb-20">
+          <div className="flex items-center gap-6 sm:gap-10 mb-4">
+            <h2 className="text-sm sm:text-base md:text-lg uppercase tracking-widest text-background">
               OUR INVESTMENT PHILOSOPHY
             </h2>
-            <div className="border-b-2 border-background w-[100px]"></div>
+            <div className="border-b-2 border-background w-12 sm:w-[100px]"></div>
           </div>
 
-          <h3 className="text-4xl md:text-5xl font-light leading-tight text-background">
-            At Ten11 Hospitality, we are committed to delivering exceptional value to our investors through strategic investments, sustainable practices, and innovative designs.
+          <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-snug sm:leading-tight text-background">
+            At Ten11 Hospitality, we are committed to delivering exceptional
+            value to our investors through strategic investments, sustainable
+            practices, and innovative designs.
           </h3>
         </div>
 
         {/* Bottom Section: Image + Highlights */}
-        <div className="flex flex-col lg:flex-row gap-24 items-start justify-center mx-auto max-w-[1280px]">
-          {/* Right Image */}
-          <div className="lg:w-auto relative">
-            <div
-              className="relative overflow-hidden shadow-2xl"
-              style={{ width: "600px", height: "800px" }}
-            >
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-start justify-center mx-auto max-w-[1280px]">
+          {/* Left Image */}
+          <div className="w-full sm:w-[400px] md:w-[500px] lg:w-[600px] relative mx-auto lg:mx-0">
+            <div className="relative overflow-hidden shadow-2xl rounded-xl w-full h-auto aspect-[3/4]">
               {/* <Image
                 src={InvestmentImage}
                 alt="Investment Strategy"
@@ -71,7 +70,7 @@ export default function InvestmentPhilosophy() {
           </div>
 
           {/* Right Highlights */}
-          <div className="lg:w-1/2 flex flex-col justify-center space-y-12">
+          <div className="lg:w-1/2 flex flex-col justify-center space-y-8 sm:space-y-12">
             {highlights.map((highlight, index) => (
               <div
                 key={index}
@@ -80,10 +79,10 @@ export default function InvestmentPhilosophy() {
                 }`}
                 onMouseEnter={() => setActiveIndex(index)}
               >
-                <h4 className="text-2xl md:text-3xl lg:text-4xl text-background font-light mb-4">
+                <h4 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-background font-light mb-2 sm:mb-4">
                   {highlight.title}
                 </h4>
-                <p className="text-lg md:text-xl lg:text-2xl text-background/80 leading-relaxed">
+                <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-background/80 leading-relaxed">
                   {highlight.description}
                 </p>
               </div>

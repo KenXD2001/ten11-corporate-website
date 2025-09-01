@@ -58,24 +58,25 @@ export default function HighlightsGridModern() {
   return (
     <section
       ref={sectionRef}
-      className="w-full py-24 px-6 bg-primary text-foreground overflow-hidden"
+      className="w-full py-16 sm:py-20 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8 bg-primary text-foreground overflow-hidden"
     >
       <div className="max-w-7xl mx-auto">
+
         {/* Section Heading */}
         <div
-          className={` mb-16 text-center transform transition-all duration-1000 ease-[cubic-bezier(0.42,0,0.58,1)]
+          className={`mb-12 sm:mb-16 text-center transform transition-all duration-1000 ease-[cubic-bezier(0.42,0,0.58,1)]
             ${visibleIndexes.length ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
         >
-          <h2 className="text-4xl md:text-5xl font-light text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-light text-white mb-4">
             The Three Pillars of Excellence
           </h2>
-          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto">
-            Travel isn’t just about where you’re going, it’s about how you feel along the way. At Ten 11 Hospitality, every moment matters. Comfort. Care. Convenience -redefined
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 max-w-xl sm:max-w-2xl mx-auto">
+            Travel isn’t just about where you’re going, it’s about how you feel along the way. At Ten 11 Hospitality, every moment matters. Comfort. Care. Convenience - redefined
           </p>
         </div>
 
         {/* Modern Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
           {cards.map((card, idx) => {
             const isVisible = visibleIndexes.includes(idx);
             const isHovered = hoveredIndex === idx;
@@ -84,10 +85,10 @@ export default function HighlightsGridModern() {
             // Determine scale
             const scaleClass =
               isHovered
-                ? "scale-105" // hovered card grows
+                ? "scale-105"
                 : isMiddle && hoveredIndex === null
-                ? "scale-105" // middle card is big if no other hovered
-                : "scale-100"; // normal
+                ? "scale-105"
+                : "scale-100";
 
             const shadowClass =
               isHovered || (isMiddle && hoveredIndex === null)
@@ -99,19 +100,19 @@ export default function HighlightsGridModern() {
                 key={card.id}
                 onMouseEnter={() => setHoveredIndex(idx)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className={`flex flex-col bg-white rounded-2xl overflow-hidden transform transition-all duration-500 p-4 ${scaleClass} ${shadowClass}
+                className={`flex flex-col bg-white rounded-2xl overflow-hidden transform transition-all duration-500 p-4 sm:p-5 md:p-6 ${scaleClass} ${shadowClass} 
                   ${isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
                 style={{ transitionDelay: `${idx * 150}ms` }}
               >
                 {/* Image with Curtain Reveal */}
-                <div className="relative w-full h-64 rounded-xl overflow-hidden">
+                <div className="relative w-full h-56 sm:h-64 md:h-72 lg:h-80 rounded-xl overflow-hidden">
                   <div
-                    className={`absolute inset-0 bg-primary z-30 transform transition-transform duration-600 ease-[cubic-bezier(0.65,0,0.35,1)]
+                    className={`absolute inset-0 bg-primary z-30 transform transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)]
                       ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
                     style={{ transitionDelay: `${idx * 150}ms` }}
                   ></div>
                   <div
-                    className={`absolute inset-0 bg-background z-20 transform transition-transform duration-600 ease-[cubic-bezier(0.65,0,0.35,1)]
+                    className={`absolute inset-0 bg-background z-20 transform transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)]
                       ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
                     style={{ transitionDelay: `${idx * 150 + 100}ms` }}
                   ></div>
@@ -125,11 +126,11 @@ export default function HighlightsGridModern() {
                 </div>
 
                 {/* Card Content */}
-                <div className="p-6 flex flex-col flex-grow text-center">
-                  <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">
+                <div className="p-4 sm:p-5 md:p-6 flex flex-col flex-grow text-center">
+                  <h3 className="text-base sm:text-lg md:text-xl font-semibold mb-2 text-gray-900">
                     {card.title}
                   </h3>
-                  <p className="text-sm md:text-base text-gray-600">{card.subtitle}</p>
+                  <p className="text-xs sm:text-sm md:text-base text-gray-600">{card.subtitle}</p>
                 </div>
               </div>
             );
@@ -137,10 +138,10 @@ export default function HighlightsGridModern() {
         </div>
 
         {/* CTA Button */}
-        <div className="mt-12 text-center">
+        <div className="mt-8 sm:mt-12 text-center">
           <Button
             variant="outline"
-            className="group inline-flex items-center bg-background text-foreground hover:bg-primary hover:text-white transition-colors duration-300"
+            className="group inline-flex items-center bg-background text-foreground hover:bg-primary hover:text-white transition-colors duration-300 px-6 py-3 sm:px-8 sm:py-4 md:px-10 md:py-5"
           >
             <span>Explore More</span>
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />

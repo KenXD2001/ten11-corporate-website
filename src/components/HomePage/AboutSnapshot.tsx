@@ -30,25 +30,25 @@ export default function AboutSnapshot() {
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
-
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full py-24 lg:py-32 overflow-hidden bg-primary">
-      <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
-        <div className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12">
+    <section ref={sectionRef} className="w-full py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden bg-primary">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="flex flex-col lg:flex-row justify-center items-center gap-8 sm:gap-10 lg:gap-12">
+          
           {/* Left Section - Image with Curtain Reveal */}
-          <div className="w-[440px] relative aspect-[3/4] overflow-hidden">
+          <div className="w-full sm:w-3/4 md:w-2/3 lg:w-[440px] relative aspect-[3/4] overflow-hidden mx-auto lg:mx-0">
             {/* White Curtain */}
             <div
-              className={`absolute inset-0 bg-primary z-30 transform transition-transform duration-600 ease-[cubic-bezier(0.65,0,0.35,1)]
+              className={`absolute inset-0 bg-primary z-30 transform transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)]
                 ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
             ></div>
 
             {/* Black Curtain */}
             <div
-              className={`absolute inset-0 bg-background z-20 transform transition-transform duration-600 delay-600 ease-[cubic-bezier(0.65,0,0.35,1)]
+              className={`absolute inset-0 bg-background z-20 transform transition-transform duration-700 delay-500 ease-[cubic-bezier(0.65,0,0.35,1)]
                 ${isVisible ? "-translate-y-full" : "translate-y-0"}`}
             ></div>
 
@@ -66,13 +66,13 @@ export default function AboutSnapshot() {
 
           {/* Right Section - Content */}
           <div
-            className={`w-[640px] space-y-8 text-center lg:text-left transform transition-all duration-1000 ease-[cubic-bezier(0.42,0,0.58,1)]
+            className={`w-full sm:w-4/5 md:w-3/4 lg:w-[640px] space-y-6 sm:space-y-8 lg:space-y-10 text-center lg:text-left transform transition-all duration-1000 ease-[cubic-bezier(0.42,0,0.58,1)]
               ${isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
           >
             <div className="relative">
-              <div className="absolute -left-4 -top-4 w-24 h-24 bg-primary/5 mix-blend-multiply filter blur-xl animate-pulse"></div>
+              <div className="absolute -left-4 -top-4 w-20 h-20 sm:w-24 sm:h-24 bg-primary/5 mix-blend-multiply filter blur-xl animate-pulse"></div>
               <h3
-                className={`text-2xl md:text-3xl lg:text-4xl font-light text-background leading-tight relative transition-transform duration-1000
+                className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-background leading-tight relative transition-transform duration-1000
                   ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
               >
                 {content.title}
@@ -80,7 +80,7 @@ export default function AboutSnapshot() {
             </div>
 
             <p
-              className={`text-background/80 text-lg md:text-xl lg:text-2xl leading-relaxed max-w-2xl mx-auto lg:mx-0 transition-transform duration-1000 delay-200
+              className={`text-background/80 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed max-w-full sm:max-w-xl mx-auto lg:mx-0 transition-transform duration-1000 delay-200
                 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
             >
               {content.paragraph}

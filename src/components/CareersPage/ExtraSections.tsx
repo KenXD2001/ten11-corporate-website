@@ -1,3 +1,5 @@
+"use client";
+
 export default function ExtraSections() {
   return (
     <section className="w-full bg-white text-[var(--foreground)] py-24 px-6">
@@ -19,7 +21,7 @@ export default function ExtraSections() {
         {/* Bottom Section: Internships & Training */}
         <div className="grid md:grid-cols-2 gap-12">
           {/* Internships */}
-          <div className="p-8 border border-background hover:border-muted transition-border duration-300">
+          <div className="p-8 border border-background rounded-xl hover:border-muted hover:shadow-lg hover:scale-105 transform transition-all duration-300">
             <h4 className="text-xl md:text-2xl lg:text-3xl font-light mb-4">
               Internships & Freshers
             </h4>
@@ -29,7 +31,7 @@ export default function ExtraSections() {
           </div>
 
           {/* Training */}
-          <div className="p-8 border border-background hover:border-muted transition-border duration-300">
+          <div className="p-8 border border-background rounded-xl hover:border-muted hover:shadow-lg hover:scale-105 transform transition-all duration-300">
             <h4 className="text-xl md:text-2xl lg:text-3xl font-light mb-4">
               Training Modules
             </h4>

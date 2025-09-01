@@ -28,27 +28,27 @@ export default function ContactForm() {
   };
 
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+    <section className="py-16 sm:py-20 md:py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
         {/* Left Section - Title */}
         <div className="flex flex-col justify-center">
-          <h2 className="text-4xl md:text-5xl font-light mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-light mb-4 sm:mb-6">
             Drop Us a Line
           </h2>
-          <p className="text-2xl md:text-3xl font-light text-muted">
-            Want to learn more? Send us a message and we'll be in touch.
+          <p className="text-lg sm:text-xl md:text-2xl font-light text-muted">
+            Want to learn more? Send us a message and we&apos;ll be in touch.
           </p>
         </div>
 
         {/* Right Section - Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 md:space-y-8">
           <input
             type="text"
             name="name"
             placeholder="Your Name"
             value={form.name}
             onChange={handleChange}
-            className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-3 placeholder-gray-500 transition-colors text-lg md:text-xl"
+            className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-2 sm:py-3 placeholder-gray-500 transition-colors text-base sm:text-lg md:text-xl"
             required
           />
 
@@ -58,7 +58,7 @@ export default function ContactForm() {
             placeholder="Your Email"
             value={form.email}
             onChange={handleChange}
-            className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-3 placeholder-gray-500 transition-colors text-lg md:text-xl"
+            className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-2 sm:py-3 placeholder-gray-500 transition-colors text-base sm:text-lg md:text-xl"
             required
           />
 
@@ -66,7 +66,7 @@ export default function ContactForm() {
             name="country"
             value={form.country}
             onChange={handleChange}
-            className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-3 placeholder-gray-500 bg-transparent text-lg md:text-xl"
+            className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-2 sm:py-3 placeholder-gray-500 bg-transparent text-base sm:text-lg md:text-xl"
             required
           >
             <option value="" disabled>
@@ -82,7 +82,7 @@ export default function ContactForm() {
             name="interest"
             value={form.interest}
             onChange={handleChange}
-            className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-3 placeholder-gray-500 bg-transparent text-lg md:text-xl"
+            className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-2 sm:py-3 placeholder-gray-500 bg-transparent text-base sm:text-lg md:text-xl"
             required
           >
             <option value="" disabled>
@@ -99,11 +99,14 @@ export default function ContactForm() {
             value={form.message}
             onChange={handleChange}
             rows={5}
-            className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-3 placeholder-gray-500 transition-colors resize-none text-lg md:text-xl"
+            className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-2 sm:py-3 placeholder-gray-500 transition-colors resize-none text-base sm:text-lg md:text-xl"
             required
           />
 
-          <Button className="group inline-flex items-center !bg-black !text-white !border-black" type="submit">
+          <Button
+            className="group inline-flex items-center justify-center !bg-black !text-white !border-black w-full sm:w-auto px-6 py-3 sm:py-4"
+            type="submit"
+          >
             <span>Submit</span>
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>

@@ -25,30 +25,28 @@ export default function Differentiators() {
   }, []);
 
   return (
-    <section className="w-full bg-primary text-white py-44 px-6 md:px-34">
+    <section className="w-full bg-primary text-white py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20">
       <div className="mx-auto max-w-7xl">
         {/* Top Section */}
-        <div className="mb-20 w-full md:w-5/6 mx-0">
-          <div className="flex items-center gap-10 mb-4">
-            <h2 className="text-lg uppercase tracking-widest text-background/90">
+        <div className="mb-12 sm:mb-16 md:mb-20 w-full md:w-5/6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-6 mb-4">
+            <h2 className="text-sm sm:text-base uppercase tracking-widest text-background/90">
               WHAT MAKES US DIFFERENT
             </h2>
-            <div className="border-b-2 border-background/90 w-[100px]"></div>
+            <div className="border-b-2 border-background/90 w-16 sm:w-24"></div>
           </div>
 
-          <h3 className="text-4xl md:text-5xl font-light leading-tight">
+          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light leading-snug sm:leading-tight md:leading-tight">
             We’re not just another service provider — we’re experience creators.
           </h3>
         </div>
 
         {/* Bottom Section: Image + Points */}
-        <div className="flex flex-col lg:flex-row gap-24 items-start justify-center mx-auto max-w-[1280px]">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-start justify-center mx-auto max-w-[1280px]">
           {/* Left Image */}
-          <div className="lg:w-auto relative">
-            <div
-              className="relative overflow-hidden"
-              style={{ width: "600px", height: "800px" }}
-            >
+          <div className="lg:w-auto w-full flex justify-center mb-12 lg:mb-0">
+            <div className="relative w-full sm:w-[400px] md:w-[500px] lg:w-[600px] aspect-[3/4] overflow-hidden rounded-lg shadow-lg">
+              {/* Replace with Image when ready */}
               {/* <Image
                 src={CoreImage}
                 alt="Lounge interior with modern design"
@@ -61,7 +59,7 @@ export default function Differentiators() {
           </div>
 
           {/* Right Points */}
-          <div className="lg:w-1/2 flex flex-col justify-center space-y-12">
+          <div className="lg:w-1/2 flex flex-col justify-center space-y-6 sm:space-y-8 md:space-y-10 lg:space-y-12">
             {points.map((point, index) => (
               <div
                 key={index}
@@ -70,7 +68,7 @@ export default function Differentiators() {
                 }`}
                 onMouseEnter={() => setActiveIndex(index)}
               >
-                <h4 className="text-2xl md:text-3xl lg:text-4xl font-light mb-4">
+                <h4 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light mb-2 sm:mb-3">
                   {point}
                 </h4>
               </div>
