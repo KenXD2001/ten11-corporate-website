@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
-import Ten11Logo from "@/assets/images/Logos/Ten11-LOGO.svg";
+import Ten11Logo from "@/assets/images/Logos/Ten11-LOGO.png";
 import { Menu, X } from "lucide-react";
 
 const navLeft = [
@@ -31,7 +31,8 @@ export default function Header() {
     if (typeof window !== "undefined") {
       const currentScrollY = window.scrollY;
       if (currentScrollY <= 0) setIsVisible(true);
-      else if (currentScrollY > 300 && currentScrollY > lastScrollY) setIsVisible(false);
+      else if (currentScrollY > 300 && currentScrollY > lastScrollY)
+        setIsVisible(false);
       else if (currentScrollY < lastScrollY) setIsVisible(true);
       setLastScrollY(currentScrollY);
     }
@@ -56,7 +57,9 @@ export default function Header() {
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
-    return () => { document.body.style.overflow = "unset"; };
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [isMobileMenuOpen]);
 
   const renderNav = (items: { name: string; path: string }[]) =>
@@ -88,10 +91,10 @@ export default function Header() {
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <div className="container mx-auto flex justify-between items-center h-16 sm:h-20 px-4 sm:px-6 md:px-6">
+      <div className="container mx-auto flex justify-between items-center h-20 sm:h-24 px-4 sm:px-6 md:px-6">
         {/* Desktop Nav Left */}
         <nav
-          className="hidden md:flex gap-6 lg:gap-10 font-medium uppercase tracking-wider"
+          className="hidden lg:flex gap-6 lg:gap-10 font-medium uppercase tracking-wider"
           aria-label="Main Navigation Left"
         >
           {renderNav(navLeft)}
@@ -100,31 +103,29 @@ export default function Header() {
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center justify-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2"
+          className="flex items-center justify-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 h-full"
           aria-label="Ten11 Hospitality Home"
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <Image
             src={Ten11Logo}
             alt="TEN11 Logo"
-            width={70}
-            height={35}
+            className="h-full w-auto object-contain"
             priority
-            className="object-contain sm:w-20 sm:h-10 md:w-20 md:h-10"
           />
         </Link>
 
         {/* Desktop Nav Right */}
         <nav
-          className="hidden md:flex gap-6 lg:gap-10 items-center font-medium uppercase tracking-wider"
+          className="hidden lg:flex gap-6 lg:gap-10 items-center font-medium uppercase tracking-wider"
           aria-label="Main Navigation Right"
         >
           {renderNav(navRight)}
         </nav>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile/Tablet Menu Toggle */}
         <button
-          className="md:hidden flex justify-center items-center w-10 h-10 relative z-50"
+          className="lg:hidden flex justify-center items-center w-10 h-10 relative z-50"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-controls="mobile-menu"
           aria-expanded={isMobileMenuOpen}
@@ -138,10 +139,10 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile/Tablet Menu */}
       <div
         id="mobile-menu"
-        className={`md:hidden fixed top-0 right-0 w-64 sm:w-72 md:w-80 h-screen bg-background shadow-xl transform transition-transform duration-500 ease-in-out z-40 ${
+        className={`lg:hidden fixed top-0 right-0 w-64 sm:w-72 md:w-80 h-screen bg-background shadow-xl transform transition-transform duration-500 ease-in-out z-40 ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -161,7 +162,9 @@ export default function Header() {
                   isActive ? "text-primary" : "text-foreground"
                 } ${isMobileMenuOpen ? "menu-item-fade-in" : ""}`}
                 style={{
-                  animationDelay: isMobileMenuOpen ? `${0.1 + index * 0.1}s` : "0s",
+                  animationDelay: isMobileMenuOpen
+                    ? `${0.1 + index * 0.1}s`
+                    : "0s",
                 }}
               >
                 {item.name}

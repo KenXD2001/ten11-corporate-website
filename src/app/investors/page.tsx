@@ -4,7 +4,7 @@ import CurrentPartners from "@/components/InvestorsPage/CurrentPartners";
 
 export default function InvestorsPage() {
   return (
-    <div className="container mx-auto px-0">
+    <div className="full">
       <InvestorsHero />
       <InvestmentPhilosophy />
       <CurrentPartners />

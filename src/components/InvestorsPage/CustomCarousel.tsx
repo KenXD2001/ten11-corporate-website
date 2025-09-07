@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Logo from "@/assets/images/Logos/Ten11-LOGO.svg";
 
-export default function CurrentPartners() {
+export default function CustomCarousel() {
   const partners = Array.from({ length: 10 }).map((_, i) => ({
     name: `Partner ${i + 1}`,
     logo: Logo,
@@ -11,6 +11,8 @@ export default function CurrentPartners() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slidesToShow, setSlidesToShow] = useState(1);
+
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Update slidesToShow based on window width
   useEffect(() => {
@@ -48,7 +50,6 @@ export default function CurrentPartners() {
           and technology converge.
         </h3>
 
-        {/* Carousel */}
         <div className="w-full">
           {/* Carousel wrapper */}
           <div className="overflow-hidden">

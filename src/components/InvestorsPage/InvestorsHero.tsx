@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function InvestorsHero() {
+export default function ProjectsHero() {
   const [offsetY, setOffsetY] = useState(0);
 
   const handleScroll = () => {

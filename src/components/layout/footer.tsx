@@ -2,7 +2,7 @@
 
 import { Icon } from "@iconify/react";
 import Image from "next/image";
-import Ten11Logo from "@/assets/images/Logos/Ten11-LOGO-BIG.svg";
+import Ten11Logo from "@/assets/images/Logos/Ten11-LOGO-BIG.png";
 
 export default function Footer() {
   return (

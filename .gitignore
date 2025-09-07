@@ -16,8 +16,9 @@
 # next.js
 /.next/
 /out/
-ten11.zip
-package-lock.json
+out.zip*
+ten11.zip*
+package-lock.json*
 
 # production
 /build

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import TimelinePath from "./TimelinePath";
 
 const steps = [
   {
@@ -45,20 +46,7 @@ export default function OurStory() {
       <section className="relative bg-background pt-12 sm:pt-16 md:pt-20 pb-16 sm:pb-20 md:pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative">
           {/* SVG path */}
-          <svg
-            className="absolute top-0 left-1/2 transform -translate-x-1/2 h-full w-1/2 md:w-1/4"
-            viewBox="0 0 200 1000"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M100 0 C 100 150, 0 250, 100 400 C 200 550, 100 650, 100 800"
-              stroke="#b88d5b"
-              strokeWidth="4"
-              strokeDasharray="8 4"
-              fill="transparent"
-            />
-          </svg>
+          <TimelinePath className="hidden md:block w-1/2 md:w-1/4" />
 
           {/* Steps */}
           <div className="flex flex-col space-y-16 sm:space-y-20 md:space-y-28 relative z-20">
