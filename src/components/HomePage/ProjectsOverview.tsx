@@ -13,7 +13,12 @@ const projects = [
     description: "Premium service and comfort in India's busiest station.",
     coords: [347, 315],
     zoomCoords: { x: 220, y: 250, scale: 3 },
-    features: ["Premium Services", "Comfortable Seating", "High-speed WiFi"],
+    features: [
+      "Beds & Recliners",
+      "Unlimited Buffet (Veg/Non Veg)",
+      "Shower & Change",
+      "Massage Chair",
+    ],
   },
   {
     id: "mumbai",
@@ -23,7 +28,12 @@ const projects = [
       "India's first all-digital lounge, changing hospitality with technology.",
     coords: [230, 610],
     zoomCoords: { x: 400, y: -100, scale: 3 },
-    features: ["Digital Check-in", "Smart Lighting", "Touch-screen Menus"],
+    features: [
+      "Co-Working Desks",
+      "Collaborative Meeting Nooks",
+      "High Speed Internet",
+      "Premium Coffee / Tea",
+    ],
   },
   {
     id: "chennai",
@@ -33,7 +43,25 @@ const projects = [
       "Contemporary and spacious, crafted for today's modern travelers.",
     coords: [426, 779],
     zoomCoords: { x: 600, y: -450, scale: 3 },
-    features: ["Spacious Layout", "Modern Design", "Business Facilities"],
+    features: [
+      "Sleeping Pods",
+      "Unlimited Buffet (Veg/Non Veg)",
+      "Shower & Change",
+    ],
+  },
+  {
+    id: "vadodara",
+    location: "Vadodara Junction",
+    title: "INEJ Digital Lounge",
+    description:
+      "Modelled after airport lounges, providing a productive and comfortable space for travellers at Vadodara Junction.",
+    coords: [230, 510],
+    zoomCoords: { x: 400, y: -100, scale: 3 },
+    features: [
+      "Wi-Fi & Charging Stations",
+      "Comfortable Seating & Work-Friendly Environment",
+      "Food & Beverage Service",
+    ],
   },
 ];
 
@@ -172,17 +200,17 @@ export default function ProjectsOverview() {
         </div>
 
         {/* Main Content - Split Layout */}
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-stretch">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
           {/* Left Section - Project Details Card */}
           <div className="w-full lg:w-2/5 flex flex-col justify-center">
             {/* Carousel Controls */}
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex space-x-2 items-center">
+            <div className="flex justify-between items-center mb-3 sm:mb-4">
+              <div className="flex space-x-1.5 sm:space-x-2 items-center">
                 {projects.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => !isAnimating && setCurrentIndex(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                       index === currentIndex
                         ? "bg-[var(--primary)] scale-110"
                         : "bg-gray-300 hover:bg-gray-400"
@@ -191,16 +219,16 @@ export default function ProjectsOverview() {
                   />
                 ))}
               </div>
-              <div className="flex space-x-2 sm:space-x-4">
+              <div className="flex space-x-2">
                 <button
                   onClick={prevProject}
-                  className="p-2 sm:p-3 rounded-full bg-white shadow-md hover:bg-gray-50 transition-all duration-300 hover:shadow-lg disabled:opacity-50 border border-gray-200"
+                  className="p-1.5 sm:p-2 rounded-full bg-white shadow hover:bg-gray-50 transition-all duration-300 hover:shadow-md disabled:opacity-50 border border-gray-200"
                   aria-label="Previous project"
                   disabled={isAnimating}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 sm:h-6 sm:w-6 text-gray-700"
+                    className="h-4 w-4 sm:h-5 sm:w-5 text-gray-700"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -215,13 +243,13 @@ export default function ProjectsOverview() {
                 </button>
                 <button
                   onClick={nextProject}
-                  className="p-2 sm:p-3 rounded-full bg-white shadow-md hover:bg-gray-50 transition-all duration-300 hover:shadow-lg disabled:opacity-50 border border-gray-200"
+                  className="p-1.5 sm:p-2 rounded-full bg-white shadow hover:bg-gray-50 transition-all duration-300 hover:shadow-md disabled:opacity-50 border border-gray-200"
                   aria-label="Next project"
                   disabled={isAnimating}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 sm:h-6 sm:w-6 text-gray-700"
+                    className="h-4 w-4 sm:h-5 sm:w-5 text-gray-700"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -239,40 +267,40 @@ export default function ProjectsOverview() {
 
             <div
               ref={cardRef}
-              className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 border border-gray-100"
+              className="bg-white rounded-xl shadow-xl p-5 sm:p-6 border border-gray-100"
             >
               {projects
                 .filter((p) => p.id === active)
                 .map((p) => (
-                  <div key={p.id} className="space-y-5 sm:space-y-6">
+                  <div key={p.id} className="space-y-4 sm:space-y-5">
                     <div>
-                      <span className="text-xs sm:text-sm font-semibold text-[var(--primary)] uppercase tracking-wider">
+                      <span className="text-[10px] sm:text-xs font-semibold text-[var(--primary)] uppercase tracking-wide">
                         Featured Project
                       </span>
-                      <h4 className="text-xl sm:text-2xl font-bold text-gray-900 mt-1">
+                      <h4 className="text-lg sm:text-xl font-bold text-gray-900 mt-1">
                         {p.location}
                       </h4>
-                      <p className="text-base sm:text-lg text-[var(--primary)] font-medium mt-1">
+                      <p className="text-sm sm:text-base text-[var(--primary)] font-medium mt-0.5">
                         {p.title}
                       </p>
                     </div>
 
-                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                       {p.description}
                     </p>
 
                     <div>
-                      <h5 className="font-semibold text-gray-900 mb-2 sm:mb-3">
+                      <h5 className="font-semibold text-gray-900 mb-1.5 sm:mb-2">
                         Key Features
                       </h5>
-                      <ul className="space-y-1 sm:space-y-2">
+                      <ul className="space-y-1.5">
                         {p.features.map((feature, index) => (
                           <li
                             key={index}
-                            className="flex items-start text-sm sm:text-base"
+                            className="flex items-start text-xs sm:text-sm"
                           >
                             <svg
-                              className="h-4 w-4 sm:h-5 sm:w-5 text-[var(--primary)] mr-2 mt-0.5"
+                              className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--primary)] mr-1.5 mt-0.5"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -290,8 +318,8 @@ export default function ProjectsOverview() {
                       </ul>
                     </div>
 
-                    <button className="mt-3 sm:mt-4 px-5 sm:px-6 py-2 sm:py-3 bg-[var(--primary)] text-white rounded-lg font-medium hover:opacity-90 transition-opacity shadow-md text-sm sm:text-base">
-                      Explore This Project &rarr;
+                    <button className="mt-2.5 sm:mt-3 px-4 sm:px-5 py-2 sm:py-2.5 bg-[var(--primary)] text-white rounded-md font-medium hover:opacity-90 transition-opacity shadow text-xs sm:text-sm">
+                      Explore This Project →
                     </button>
                   </div>
                 ))}
@@ -299,13 +327,13 @@ export default function ProjectsOverview() {
           </div>
 
           {/* Right Section - Map */}
-          <div className="w-full lg:w-3/5 relative rounded-2xl overflow-hidden h-96 sm:h-[28rem] md:h-[32rem] lg:h-auto">
+          <div className="w-full lg:w-3/5 relative rounded-xl overflow-hidden h-72 sm:h-80 md:h-96 lg:h-[24rem]">
             <div
               ref={mapContainerRef}
               className="relative w-full h-full"
               style={{
                 padding: "0px",
-                maskImage: `linear-gradient(to top, transparent, black 10%), linear-gradient(to bottom, transparent, black 10%), linear-gradient(to left, transparent, black 10%), linear-gradient(to right, transparent, black 10%)`,
+                maskImage: `linear-gradient(to top, transparent, black 8%), linear-gradient(to bottom, transparent, black 8%), linear-gradient(to left, transparent, black 8%), linear-gradient(to right, transparent, black 8%)`,
                 WebkitMaskImage: `linear-gradient(to top, transparent, black 5%), linear-gradient(to bottom, transparent, black 5%), linear-gradient(to left, transparent, black 5%), linear-gradient(to right, transparent, black 5%)`,
                 maskComposite: "intersect",
                 WebkitMaskComposite: "destination-in",
@@ -319,7 +347,7 @@ export default function ProjectsOverview() {
                 >
                   <IndianMapSVG />
 
-                   {projects.map((p, index) => (
+                  {projects.map((p, index) => (
                     <g
                       key={p.id}
                       ref={(el) => {
@@ -332,26 +360,26 @@ export default function ProjectsOverview() {
                       {active === p.id && (
                         <>
                           <circle
-                            r="16"
+                            r="14"
                             fill="var(--primary)"
                             opacity="0.2"
                             className="animate-pulse"
                           />
-                          <circle r="12" fill="var(--primary)" opacity="0.4" />
+                          <circle r="10" fill="var(--primary)" opacity="0.4" />
                         </>
                       )}
                       <circle
-                        r="10"
+                        r="8"
                         fill={active === p.id ? "var(--primary)" : "#4B5563"}
                         className="transition-all duration-300 group-hover:scale-110 group-hover:fill-[var(--primary)]"
                         stroke="white"
-                        strokeWidth="2"
+                        strokeWidth="1.5"
                       />
-                      <circle r="4" fill="white" />
+                      <circle r="3" fill="white" />
                       <text
-                        y="-24"
+                        y="-20"
                         textAnchor="middle"
-                        className="text-xs sm:text-sm font-bold fill-gray-800 group-hover:fill-[var(--primary)] transition-colors"
+                        className="text-[10px] sm:text-xs font-bold fill-gray-800 group-hover:fill-[var(--primary)] transition-colors"
                         filter="url(#textOutline)"
                       >
                         {p.location}

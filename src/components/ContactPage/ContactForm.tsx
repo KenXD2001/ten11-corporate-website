@@ -3,6 +3,9 @@
 import { useState } from "react";
 import Button from "../common/Button";
 import { ArrowRight } from "lucide-react";
+import NotificationContainer, {
+  NotificationItem,
+} from "./NotificationContainer";
 
 export default function ContactForm() {
   const [form, setForm] = useState({
@@ -12,6 +15,19 @@ export default function ContactForm() {
     interest: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+
+  const addNotification = (type: "success" | "error", message: string) => {
+    const id = Date.now().toString();
+    setNotifications((prev) => [...prev, { id, type, message }]);
+  };
+
+  const removeNotification = (id: string) => {
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
+  };
+
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -21,10 +37,51 @@ export default function ContactForm() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted", form);
-    alert("Thank you for reaching out! We'll get back to you soon.");
+    setIsSubmitting(true);
+
+    try {
+      const scriptUrl =
+        "https://script.google.com/macros/s/AKfycbwLcM8-zBlVxLZIAzMlOxd46beBLM5d5FdSB06Q802pJjH17mU3z0clSpJIPAggo8gw/exec";
+
+      const response = await fetch(scriptUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded", // avoids preflight
+        },
+        body: new URLSearchParams(form).toString(), // converts {key: value} → key=value&...
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.result === "success") {
+        // alert("Thank you for reaching out! We'll get back to you soon.");
+        addNotification("success", "Thank you for reaching out! We'll get back to you soon.");
+
+        // Reset form
+        setForm({
+          name: "",
+          email: "",
+          country: "",
+          interest: "",
+          message: "",
+        });
+      } else {
+        // alert(
+        //   `Error: ${
+        //     result?.message || "There was an error submitting the form."
+        //   }`
+        // );
+        addNotification("error", result?.message || "There was an error submitting the form.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      // alert("Network error. Please try again later.");
+      addNotification("error", "Network error. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -41,7 +98,10 @@ export default function ContactForm() {
         </div>
 
         {/* Right Section - Form */}
-        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 md:space-y-8">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4 sm:space-y-6 md:space-y-8"
+        >
           <input
             type="text"
             name="name"
@@ -50,6 +110,7 @@ export default function ContactForm() {
             onChange={handleChange}
             className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-2 sm:py-3 placeholder-gray-500 transition-colors text-base sm:text-lg md:text-xl"
             required
+            disabled={isSubmitting}
           />
 
           <input
@@ -60,6 +121,7 @@ export default function ContactForm() {
             onChange={handleChange}
             className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-2 sm:py-3 placeholder-gray-500 transition-colors text-base sm:text-lg md:text-xl"
             required
+            disabled={isSubmitting}
           />
 
           <select
@@ -68,6 +130,7 @@ export default function ContactForm() {
             onChange={handleChange}
             className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-2 sm:py-3 placeholder-gray-500 bg-transparent text-base sm:text-lg md:text-xl"
             required
+            disabled={isSubmitting}
           >
             <option value="" disabled>
               Select Your Country / Region
@@ -84,6 +147,7 @@ export default function ContactForm() {
             onChange={handleChange}
             className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-2 sm:py-3 placeholder-gray-500 bg-transparent text-base sm:text-lg md:text-xl"
             required
+            disabled={isSubmitting}
           >
             <option value="" disabled>
               Select Your Interest
@@ -101,17 +165,30 @@ export default function ContactForm() {
             rows={5}
             className="w-full border-b border-gray-300 focus:border-black focus:outline-none py-2 sm:py-3 placeholder-gray-500 transition-colors resize-none text-base sm:text-lg md:text-xl"
             required
+            disabled={isSubmitting}
           />
 
           <Button
-            className="group inline-flex items-center justify-center !bg-black !text-white !border-black w-full sm:w-auto px-6 py-3 sm:py-4"
+            className="group inline-flex items-center justify-center !bg-black !text-white !border-black w-full sm:w-auto px-6 py-3 sm:py-4 disabled:opacity-50"
             type="submit"
+            disabled={isSubmitting}
           >
-            <span>Submit</span>
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            {isSubmitting ? (
+              "Submitting..."
+            ) : (
+              <>
+                <span>Submit</span>
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+              </>
+            )}
           </Button>
         </form>
       </div>
+
+      <NotificationContainer
+        notifications={notifications}
+        removeNotification={removeNotification}
+      />
     </section>
   );
 }

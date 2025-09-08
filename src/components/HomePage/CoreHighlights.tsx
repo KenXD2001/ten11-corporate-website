@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import Button from "../common/Button";
-import HomePillar01 from "@/assets/images/Home/HomePillars01.webp";
-import HomePillar02 from "@/assets/images/Home/HomePillars02.webp";
-import HomePillar03 from "@/assets/images/Home/HomePillars03.webp";
+import HomePillar01 from "@/assets/images/Home/HomeCore0301.webp";
+import HomePillar02 from "@/assets/images/Home/HomeCore0201.webp";
+import HomePillar03 from "@/assets/images/Home/HomeCore0101.webp";
 
 const cards = [
   {

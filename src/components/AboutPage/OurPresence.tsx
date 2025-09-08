@@ -1,104 +1,254 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
-import LoungeImage1 from "@/assets/images/Home/HomeProjects01.webp";
-import LoungeImage2 from "@/assets/images/Home/HomeProjects02.webp";
-import LoungeImage3 from "@/assets/images/Home/HomeProjects03.webp";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import HomeProjects01 from "@/assets/images/Home/HomeProjects01.webp";
+import HomeProjects02 from "@/assets/images/Home/HomeProjects02.webp";
+import HomeProjects03 from "@/assets/images/Home/HomeProjects03.webp";
 
-const lounges = [
+const projects = [
   {
-    name: "New Delhi Railway Station",
-    location: "IRCTC Executive Lounge",
-    note: "",
-    imgSrc: LoungeImage1,
-    description:
-      "Luxury lounge experience curated for business and leisure travelers.",
+    location: "New Delhi",
+    title: "New Delhi – IRCTC Executive Lounge",
+    description: "Premium service and comfort in India's busiest station.",
+    imgSrc: HomeProjects01,
+    alt: "New Delhi IRCTC Executive Lounge",
+    features: [
+      "Beds & Recliners",
+      "Unlimited Buffet",
+      "Shower Facilities",
+      "Massage Chairs",
+    ],
   },
   {
-    name: "Chennai Central Railway Station",
-    location: "INEJ Lounge",
-    note: "",
-    imgSrc: LoungeImage2,
-    description:
-      "Blending modern design with comfort for travelers on the move.",
+    location: "Chennai",
+    title: "Chennai Central – INEJ Lounge",
+    description: "Contemporary and spacious, crafted for today's travelers.",
+    imgSrc: HomeProjects02,
+    alt: "Chennai Central INEJ Lounge",
+    features: [
+      "Sleeping Pods",
+      "Gourmet Dining",
+      "Business Center",
+      "Relaxation Areas",
+    ],
   },
   {
-    name: "Mumbai Central Railway Station",
-    location: "India’s first All Digital INEJ Lounge",
-    note: "",
-    imgSrc: LoungeImage3,
+    location: "Mumbai",
+    title: "Mumbai Central – INEJ Digital Lounge",
     description:
-      "Digitally enabled lounge offering seamless experiences and convenience.",
+      "India's first all-digital lounge, changing hospitality with technology.",
+    imgSrc: HomeProjects03,
+    alt: "Mumbai Central INEJ Digital Lounge",
+    features: [
+      "Co-Working Spaces",
+      "High-Speed Internet",
+      "Digital Check-in",
+      "Smart Lounges",
+    ],
   },
+  // {
+  //   location: "Vadodara Junction",
+  //   title: "Vadodara Junction – INEJ Digital Lounge",
+  //   description:
+  //     "Modelled after airport lounges, providing a productive and comfortable space for travellers.",
+  //   imgSrc: HomeProjects01, // You might want to add a specific image for this project
+  //   alt: "Vadodara Junction INEJ Digital Lounge",
+  //   features: [
+  //     "Wi-Fi & Charging",
+  //     "Comfortable Seating",
+  //     "Food & Beverage",
+  //     "Work-Friendly Environment",
+  //   ],
+  // },
 ];
 
 export default function OurPresence() {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.7,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
-    <section className="w-full bg-gray-50 text-black py-16 sm:py-20 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20">
-      <div className="max-w-7xl mx-auto space-y-16 sm:space-y-20">
+    <section className="w-full bg-gradient-to-b from-white to-gray-50 text-[var(--foreground)] py-16 sm:py-24 px-4 sm:px-6 lg:px-12 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute top-0 right-0 w-72 h-72 bg-[var(--primary)]/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[var(--secondary)]/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
+
+      <div className="max-w-7xl mx-auto space-y-16 sm:space-y-20 relative z-10">
         {/* Top Section */}
-        <div className="w-full sm:w-5/6 mx-0 mb-12 sm:mb-16">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-6 mb-4">
-            <h2 className="text-sm sm:text-base uppercase tracking-widest text-[var(--foreground)]/90">
+        <motion.div
+          className="mb-12 sm:mb-20 w-full mx-auto text-center"
+          ref={ref}
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7 }}
+        >
+          <div className="flex flex-col items-center mb-8">
+            <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-xs sm:text-sm uppercase tracking-widest font-medium mb-4">
               OUR PRESENCE
-            </h2>
-            <div className="border-b-2 border-[var(--foreground)]/90 w-16 sm:w-24"></div>
+            </div>
+            <div className="flex items-center gap-4 sm:gap-6 mb-6 justify-center">
+              <h2 className="text-sm sm:text-base md:text-lg uppercase tracking-widest text-[var(--foreground)]/90">
+                FLAGSHIP LOUNGES
+              </h2>
+              <div className="border-b-2 border-[var(--primary)]/50 w-12 sm:w-16 md:w-20"></div>
+            </div>
           </div>
 
-          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light leading-snug sm:leading-tight md:leading-tight text-[var(--foreground)]">
-            Discover our flagship lounges across India — where comfort, design,
-            and technology converge.
+          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-tight text-[var(--foreground)] max-w-5xl mx-auto">
+            Discover our flagship lounges across India — where{" "}
+            <span className="font-semibold text-[var(--primary)]">comfort</span>
+            ,{" "}
+            <span className="font-semibold text-[var(--primary)]">design</span>,
+            and{" "}
+            <span className="font-semibold text-[var(--primary)]">
+              technology
+            </span>{" "}
+            converge.
           </h3>
-        </div>
+        </motion.div>
 
-        {/* Lounges Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 md:gap-16">
-          {lounges.map((lounge, idx) => (
-            <div key={idx} className="flex flex-col space-y-4 group">
-              {/* Text Section */}
-              <div className="text-center lg:text-left flex flex-col gap-1">
-                <span className="text-sm sm:text-base text-primary block">
-                  {lounge.location}
-                </span>
-                <h3 className="text-2xl sm:text-3xl md:text-4xl font-light">
-                  {lounge.name}
-                </h3>
-                {lounge.note && (
-                  <p className="text-sm text-muted mt-1">{lounge.note}</p>
-                )}
-              </div>
-
-              {/* Card / Image Section */}
-              <div className="relative overflow-hidden bg-muted rounded-lg shadow-lg cursor-pointer">
-                <div className="relative w-full h-64 sm:h-72 md:h-80">
-                  {/* Uncomment below to use Image */}
-                  {/* <Image
-                    src={lounge.imgSrc}
-                    alt={lounge.name}
+        {/* Projects Grid */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+        >
+          {projects.map((item, idx) => (
+            <motion.div
+              key={idx}
+              className="flex flex-col space-y-6 group cursor-pointer"
+              variants={itemVariants}
+              whileHover={{ y: -8 }}
+            >
+              {/* Card Section */}
+              <div className="relative overflow-hidden bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100">
+                {/* Image */}
+                <div className="relative w-full h-60 sm:h-72 md:h-80 overflow-hidden">
+                  <Image
+                    src={item.imgSrc}
+                    alt={item.alt}
                     fill
-                    className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                  /> */}
+                    className="object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                  />
+                  {/* Location badge */}
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                    <span className="text-xs font-medium text-[var(--primary)]">
+                      {item.location}
+                    </span>
+                  </div>
+
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                    <p className="text-white text-sm mb-4 leading-relaxed">
+                      {item.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {item.features.slice(0, 2).map((feature, i) => (
+                        <span
+                          key={i}
+                          className="bg-white/20 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm"
+                        >
+                          {feature}
+                        </span>
+                      ))}
+                    </div>
+                    <button className="self-start flex items-center text-white font-medium text-sm group-hover:underline">
+                      Learn More
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 ml-1"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
 
-                {/* Hover Overlay */}
-                <div className="absolute bottom-0 left-4 right-4 sm:left-6 sm:right-6 bg-white/90 text-black p-4 sm:p-6 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 rounded-t-lg">
-                  <p className="text-sm sm:text-base text-muted mb-2 sm:mb-4">
-                    {lounge.description}
-                  </p>
-                  <a className="text-primary font-semibold hover:underline text-sm sm:text-base">
-                    Learn More
-                  </a>
+                {/* Content below image */}
+                <div className="p-5">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
+                    {item.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {item.features.slice(0, 3).map((feature, i) => (
+                      <span
+                        key={i}
+                        className="text-xs text-gray-600 bg-gray-100 px-2.5 py-1 rounded-full"
+                      >
+                        {feature}
+                      </span>
+                    ))}
+                    {item.features.length > 3 && (
+                      <span className="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">
+                        +{item.features.length - 3} more
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Closing Statement */}
-        <p className="text-base sm:text-lg md:text-xl text-muted max-w-3xl mx-auto mt-8 sm:mt-12 text-center">
-          Each of our spaces is designed to bring global standards of comfort
-          right into India’s busiest transit hubs.
-        </p>
+        {/* CTA Section */}
+        <motion.div
+          className="text-center pt-8"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.5, duration: 0.7 }}
+        >
+          <Link
+            href="/projects"
+            className="px-8 py-4 bg-[var(--primary)] text-white rounded-xl font-medium hover:bg-[var(--primary-dark)] transition-colors duration-300 shadow-lg hover:shadow-xl inline-flex items-center mx-auto"
+          >
+            View All Projects
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 ml-2"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

@@ -59,7 +59,7 @@ export default function CareersIntro() {
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-[var(--background)] p-24"
+      className="w-full bg-[var(--background)] p-6 sm:p-12 md:p-16 lg:p-24"
     >
       <div className="max-w-6xl mx-auto">
         <p

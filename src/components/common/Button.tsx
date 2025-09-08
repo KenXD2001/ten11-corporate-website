@@ -3,11 +3,12 @@ import { ReactNode } from "react";
 
 interface ButtonProps {
   children: ReactNode;
-  variant?: "primary" | "outline";
+  variant?: "primary" | "outline" | "secondary";
   href?: string;
   onClick?: () => void;
   className?: string;
   type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 const Button = ({ 
@@ -25,6 +26,7 @@ const Button = ({
   // Variant styles
   const variantStyles = {
     primary: "text-base font-base bg-primary text-background border-2 border-primary hover:bg-transparent hover:text-primary",
+    secondary: "text-base font-base bg-background text-primary border-2 border-primary hover:bg-background/80",
     outline: "text-base font-base bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-background"
   };
   

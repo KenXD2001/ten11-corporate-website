@@ -7,10 +7,8 @@ import Ten11Logo from "@/assets/images/Logos/Ten11-LOGO-BIG.png";
 export default function Footer() {
   return (
     <footer className="bg-foreground text-background">
-
       {/* Top Section */}
       <div className="max-w-7xl mx-4 sm:mx-6 md:mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-8 sm:gap-12 py-12 border-b border-background/20">
-
         {/* Logo & Description */}
         <div>
           <div className="mb-4 sm:mb-6">
@@ -35,14 +33,16 @@ export default function Footer() {
             Quick Links
           </h3>
           <ul className="space-y-2 text-sm sm:text-base">
-            {["About", "Projects", "Careers", "Press", "Contact"].map((item) => (
-              <li
-                key={item}
-                className="hover:text-primary cursor-pointer transition-colors"
-              >
-                {item}
-              </li>
-            ))}
+            {["About", "Projects", "Careers", "Press", "Contact"].map(
+              (item) => (
+                <li
+                  key={item}
+                  className="hover:text-primary cursor-pointer transition-colors"
+                >
+                  {item}
+                </li>
+              )
+            )}
           </ul>
         </div>
 
@@ -53,20 +53,29 @@ export default function Footer() {
           </h3>
           <div className="flex gap-2 sm:gap-3 mb-4 sm:mb-6">
             {[
-              { icon: "mdi:globe", link: "#" },
-              { icon: "mdi:twitter", link: "#" },
-              { icon: "mdi:facebook", link: "#" },
-              { icon: "mdi:linkedin", link: "#" },
+              // { icon: "mdi:globe", link: "#" },
+              // { icon: "mdi:twitter", link: "#" },
+              // { icon: "mdi:facebook", link: "#" },
+              {
+                icon: "mdi:linkedin",
+                link: "https://www.linkedin.com/company/ten-11-hospitality",
+              },
             ].map((s, i) => (
               <a
                 key={i}
                 href={s.link}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-background/10 hover:bg-primary transition"
               >
-                <Icon icon={s.icon} className="text-background text-base sm:text-lg" />
+                <Icon
+                  icon={s.icon}
+                  className="text-background text-base sm:text-lg"
+                />
               </a>
             ))}
           </div>
+
           <p className="text-sm sm:text-base text-background/70">
             123 Corporate Street, City, Country
           </p>
@@ -76,7 +85,11 @@ export default function Footer() {
       {/* Bottom Section */}
       <div className="max-w-7xl mx-4 sm:mx-6 md:mx-auto px-4 sm:px-6 md:px-12 grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] items-center gap-2 sm:gap-4 py-6 text-xs sm:text-sm text-background/60">
         <p className="mb-1 sm:mb-0">
-          © 2025 <span className="font-semibold text-background">Ten11 Hospitality</span>. All rights reserved.
+          © 2025{" "}
+          <span className="font-semibold text-background">
+            Ten11 Hospitality
+          </span>
+          . All rights reserved.
         </p>
 
         <p className="mb-1 sm:mb-0 hover:text-primary cursor-pointer transition">
@@ -87,7 +100,6 @@ export default function Footer() {
           Terms of Use
         </p>
       </div>
-
     </footer>
   );
 }

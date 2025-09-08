@@ -1,89 +1,97 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const values = [
-  "Constant Innovation & Adaptability",
-  "Unforgettable Experiences",
-  "Teamwork",
-  "Exceptional Service",
+type Value = {
+  key: string;
+  title: string;
+  description: string;
+};
+
+const values: Value[] = [
+  {
+    key: "C",
+    title: "Constant Innovation and Adaptability",
+    description:
+      "We believe in embracing change and continuously seeking innovative solutions to stay ahead in the dynamic travel landscape."
+  },
+  {
+    key: "U",
+    title: "Unforgettable Experiences",
+    description:
+      "Our People-First ethos means valuing everyone like family—building lasting relationships with honesty, transparency, and trust."
+  },
+  {
+    key: "T",
+    title: "Team Work",
+    description:
+      "We believe in the power of many—not one. Collaboration and open communication are central to exceptional guest experiences."
+  },
+  {
+    key: "E",
+    title: "Exceptional Services",
+    description:
+      "Delivering best-in-class service creates high recall value. We adhere to our values to grow and achieve milestones each year."
+  },
 ];
 
 export default function CoreValues() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
-  const [typedIndexes, setTypedIndexes] = useState<number>(-1);
+  const [revealedIndex, setRevealedIndex] = useState(-1);
 
-  // Observer for scroll threshold (20%)
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setVisible(true);
-          }
-        });
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
       },
       { threshold: 0.4 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
+    sectionRef.current && observer.observe(sectionRef.current);
+    return () => sectionRef.current && observer.unobserve(sectionRef.current);
   }, []);
 
-  // Typing effect – reveal titles one by one
   useEffect(() => {
-    if (visible && typedIndexes < values.length - 1) {
-      const timeout = setTimeout(() => {
-        setTypedIndexes((prev) => prev + 1);
-      }, 500);
+    if (visible && revealedIndex < values.length - 1) {
+      const timeout = setTimeout(() => setRevealedIndex((i) => i + 1), 400);
       return () => clearTimeout(timeout);
     }
-  }, [visible, typedIndexes]);
+  }, [visible, revealedIndex]);
 
   return (
     <section
       ref={sectionRef}
-      className="w-full py-16 sm:py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 overflow-x-hidden"
+      className="w-full py-16 px-6 sm:px-12 lg:px-20 bg-gray-50"
     >
-      <div className="mx-auto max-w-5xl text-center">
-        {/* Heading */}
-        <div className="mb-12 sm:mb-16 md:mb-20">
-          <h2 className="text-sm sm:text-base uppercase tracking-widest text-foreground mb-4">
-            Our Core Values
-          </h2>
-          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light leading-snug sm:leading-tight">
-            Our global employees are deeply committed to the values that define
-            our character and culture.
-          </h3>
-        </div>
+      <div className="max-w-5xl mx-auto text-center">
+        <h2 className="text-lg uppercase tracking-widest text-gray-700 mb-4">
+          Core Values
+        </h2>
+        <h3 className="text-2xl sm:text-3xl lg:text-4xl font-light mb-12">
+          Our global employees are deeply committed to the values that define our character and culture.
+        </h3>
 
-        {/* CUT E Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {values.map((val, i) => (
-            <div key={i} className="flex flex-col items-center">
-              {/* Initial Letter */}
-              <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold text-primary">
-                {val[0]}
-              </h1>
-              {/* Typing Reveal */}
-              <p
-                className={`text-base sm:text-lg md:text-xl font-light mt-4 transition-all duration-500 ${
-                  typedIndexes >= i
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-4"
-                }`}
-              >
-                {typedIndexes >= i ? val : ""}
-              </p>
-            </div>
+            <AnimatePresence key={val.key}>
+              {revealedIndex >= i && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.5, delay: i * 0.2 }}
+                  className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center"
+                >
+                  <div className="text-6xl sm:text-7xl font-bold text-primary mb-4">
+                    {val.key}
+                  </div>
+                  <h4 className="text-lg font-semibold mb-2">{val.title}</h4>
+                  <p className="text-sm text-gray-600">{val.description}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           ))}
         </div>
       </div>

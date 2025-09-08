@@ -11,7 +11,7 @@ const navLeft = [
   { name: "Home", path: "/" },
   { name: "About Us", path: "/about" },
   { name: "Projects", path: "/projects" },
-  { name: "Investors", path: "/investors" },
+  // { name: "Investors", path: "/investors" },
 ];
 
 const navRight = [

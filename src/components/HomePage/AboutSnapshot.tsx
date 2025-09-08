@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import HomePurposeBG from "@/assets/images/Home/HomePurposeBG.webp";
+import HomePurposeBG from "@/assets/images/Home/HomeCore0301.webp";
 import { useEffect, useRef, useState } from "react";
 import Button from "../common/Button";
 import { ArrowRight } from "lucide-react";
