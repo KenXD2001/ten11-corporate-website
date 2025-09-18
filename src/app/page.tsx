@@ -1,7 +1,7 @@
 // src/app/page.tsx
 import HeroSection from "@/components/HomePage/HeroSection";
 import BrandPurposeSection from "@/components/HomePage/BrandPurpose";
-import CoreHighlights from "@/components/HomePage/CoreHighlights";
+// import CoreHighlights from "@/components/HomePage/CoreHighlights";
 import ProjectsOverview from "@/components/HomePage/ProjectsOverview";
 import AboutSnapshot from "@/components/HomePage/AboutSnapshot";
 import PressMedia from "@/components/HomePage/PressMedia";
@@ -17,14 +17,14 @@ export default function HomePage() {
       {/* Brand Purpose Section */}
       <BrandPurposeSection />
 
+      {/* About Snapshot Section */}
+      <AboutSnapshot />
+
       {/* Core Highlights Section */}
-      <CoreHighlights />
+      {/* <CoreHighlights /> */}
 
       {/* Projects Overview Section */}
       <ProjectsOverview />
-
-      {/* About Snapshot Section */}
-      <AboutSnapshot />
 
       {/* Press Media Section */}
       <PressMedia />

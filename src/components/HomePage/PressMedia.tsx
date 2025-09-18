@@ -62,15 +62,22 @@ export default function PressMedia() {
         {/* Top Section */}
         <div
           className={`mb-12 sm:mb-16 md:mb-20 w-full md:w-5/6 mx-auto transform transition-all duration-1000 ease-[cubic-bezier(0.42,0,0.58,1)]
-            ${visibleIndexes.length ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
+            ${
+              visibleIndexes.length
+                ? "translate-y-0 opacity-100"
+                : "translate-y-12 opacity-0"
+            }`}
         >
           <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 md:gap-10 mb-4">
-            <h2 className="text-base sm:text-lg uppercase tracking-widest">In The Spotlight</h2>
+            <h2 className="text-base sm:text-lg uppercase tracking-widest">
+              In The Spotlight
+            </h2>
             <div className="border-b-2 w-16 sm:w-[100px] border-foreground/50"></div>
           </div>
 
           <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight">
-            At Ten11 Hospitality, we redefine journeys with innovation, efficiency, and passenger care.
+            At Ten11 Hospitality, we redefine journeys with innovation,
+            efficiency, and passenger care.
           </h3>
         </div>
 
@@ -83,7 +90,11 @@ export default function PressMedia() {
               <div
                 key={card.id}
                 className={`flex flex-col overflow-hidden transform transition-all duration-1000
-                  ${isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"}`}
+                  ${
+                    isVisible
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-12 opacity-0"
+                  }`}
               >
                 {/* Image Section with Curtain Reveal */}
                 <div className="relative w-full h-56 sm:h-64 md:h-72 lg:h-80 overflow-hidden rounded-xl">
@@ -121,10 +132,15 @@ export default function PressMedia() {
 
         {/* Explore Coverage Button */}
         <div className="mt-8 sm:mt-12 text-center">
-          <Button variant="outline" className="group inline-flex items-center">
-            <span>Explore Coverage</span>
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <Link href="/press">
+            <Button
+              variant="outline"
+              className="group inline-flex items-center"
+            >
+              <span>Explore Coverage</span>
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

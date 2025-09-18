@@ -37,7 +37,7 @@ export default function BrandPurposeSection() {
       ref={sectionRef}
       className="w-full py-16 sm:py-20 md:py-24 lg:py-32 overflow-hidden"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl flex flex-col items-center text-center space-y-6 sm:space-y-8 md:space-y-10">
+      <div className="w-full container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center space-y-6 sm:space-y-8 md:space-y-10">
         {/* Title */}
         <h3
           className={`text-2xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-gray-900 leading-snug sm:leading-tight transform transition-all duration-700 ease-out

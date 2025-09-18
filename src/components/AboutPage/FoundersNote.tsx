@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import FounderImage from "@/assets/images/FounderImg.jpg";
 
 export default function FoundersNote() {
   return (
@@ -9,13 +10,13 @@ export default function FoundersNote() {
         {/* Left Side - Image (40%) */}
         <div className="md:col-span-2 relative w-full aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-lg shadow-lg">
           {/* Replace the div below with Image component when image is ready */}
-          {/* <Image
-            src="/images/AboutUS/founders.jpg"
+          <Image
+            src={FounderImage}
             alt="Founders"
             fill
             className="object-cover"
-          /> */}
-          <div className="absolute inset-0 bg-background"></div>
+          />
+          {/* <div className="absolute inset-0 bg-background"></div> */}
         </div>
 
         {/* Right Side - Content (60%) */}

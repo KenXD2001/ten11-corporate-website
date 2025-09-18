@@ -98,11 +98,11 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         }}
         className="flex flex-col min-h-screen"
       >
-        <header className="sticky top-0 z-40">
+        <header className="sticky top-0 z-50">
           <Header />
         </header>
 
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow z-0">{children}</main>
 
         <Footer />
       </div>

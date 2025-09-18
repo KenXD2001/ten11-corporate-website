@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, easeOut } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import HomeProjects01 from "@/assets/images/Home/HomeProjects01.webp";
 import HomeProjects02 from "@/assets/images/Home/HomeProjects02.webp";
@@ -82,16 +82,16 @@ export default function OurPresence() {
   };
 
   const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.7,
-        ease: "easeOut",
-      },
+  hidden: { y: 30, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.7,
+      ease: easeOut,
     },
-  };
+  },
+};
 
   return (
     <section className="w-full bg-gradient-to-b from-white to-gray-50 text-[var(--foreground)] py-16 sm:py-24 px-4 sm:px-6 lg:px-12 relative overflow-hidden">
@@ -231,7 +231,7 @@ export default function OurPresence() {
           transition={{ delay: 0.5, duration: 0.7 }}
         >
           <Link
-            href="/projects"
+            href="/presence"
             className="px-8 py-4 bg-[var(--primary)] text-white rounded-xl font-medium hover:bg-[var(--primary-dark)] transition-colors duration-300 shadow-lg hover:shadow-xl inline-flex items-center mx-auto"
           >
             View All Projects

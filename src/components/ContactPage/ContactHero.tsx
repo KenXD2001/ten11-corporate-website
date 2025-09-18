@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import HomeCoreImage from "@/assets/images/Home/HomeCore0101.webp";
 
 export default function ContactHero() {
   const [offsetY, setOffsetY] = useState(0);
@@ -20,14 +21,15 @@ export default function ContactHero() {
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-center bg-cover transition-transform duration-500 ease-out"
-        // style={{
-        //   backgroundImage: "url('/images/AboutUS/Warmloungeinterior.jpeg')",
-        //   transform: `translateY(${offsetY}px)`,
-        // }}
+        style={{
+          backgroundImage: `url(${HomeCoreImage.src})`,
+          transform: `translateY(${offsetY}px)`,
+          height: "110%",
+        }}
       />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/30"></div>
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/50"></div>
 
       {/* Text */}
       <div className="relative text-center px-6 z-10">

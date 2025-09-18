@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, easeOut } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import HomeProjects01 from "@/assets/images/Home/HomeProjects01.webp";
 import HomeProjects02 from "@/assets/images/Home/HomeProjects02.webp";
@@ -9,19 +10,7 @@ import HomeProjects03 from "@/assets/images/Home/HomeProjects03.webp";
 
 const projects = [
   {
-    location: "New Delhi",
-    title: "New Delhi – IRCTC Executive Lounge",
-    description: "Premium service and comfort in India's busiest station.",
-    imgSrc: HomeProjects01,
-    alt: "New Delhi IRCTC Executive Lounge",
-    features: [
-      "Beds & Recliners",
-      "Unlimited Buffet",
-      "Shower Facilities",
-      "Massage Chairs",
-    ],
-  },
-  {
+    slug: "chennai-inej-lounge",
     location: "Chennai",
     title: "Chennai Central – INEJ Lounge",
     description: "Contemporary and spacious, crafted for today's travelers.",
@@ -35,6 +24,7 @@ const projects = [
     ],
   },
   {
+    slug: "mumbai-inej-lounge",
     location: "Mumbai",
     title: "Mumbai Central – INEJ Digital Lounge",
     description:
@@ -49,11 +39,12 @@ const projects = [
     ],
   },
   {
+    slug: "vadodara-inej-lounge",
     location: "Vadodara Junction",
     title: "Vadodara Junction – INEJ Digital Lounge",
     description:
       "Modelled after airport lounges, providing a productive and comfortable space for travellers.",
-    imgSrc: HomeProjects01, // You might want to add a specific image for this project
+    imgSrc: HomeProjects01,
     alt: "Vadodara Junction INEJ Digital Lounge",
     features: [
       "Wi-Fi & Charging",
@@ -75,7 +66,7 @@ export default function ProjectListings() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: 0.15, // safe here
       },
     },
   };
@@ -87,48 +78,31 @@ export default function ProjectListings() {
       opacity: 1,
       transition: {
         duration: 0.7,
-        ease: "easeOut",
+        ease: easeOut, // <-- fixed here
       },
     },
   };
 
   return (
-    <section className="w-full bg-gradient-to-b from-white to-gray-50 text-[var(--foreground)] py-16 sm:py-24 px-4 sm:px-6 lg:px-12 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 w-72 h-72 bg-[var(--primary)]/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[var(--secondary)]/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
-
-      <div className="max-w-7xl mx-auto space-y-16 sm:space-y-20 relative z-10">
+    <section className="w-full py-16 sm:py-20 md:py-24 lg:py-28 px-4 sm:px-6 lg:px-8 bg-gray-50 text-foreground overflow-hidden relative">
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Top Section */}
         <motion.div
-          className="mb-12 sm:mb-20 w-full mx-auto text-center"
           ref={ref}
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
+          className="mb-12 sm:mb-16 md:mb-20 w-full mx-auto"
         >
-          <div className="flex flex-col items-center mb-8">
-            <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-[var(--primary)]/10 text-[var(--primary)] text-xs sm:text-sm uppercase tracking-widest font-medium mb-4">
-              Our Projects
-            </div>
-            <div className="flex items-center gap-4 sm:gap-6 mb-6 justify-center">
-              <h2 className="text-sm sm:text-base md:text-lg uppercase tracking-widest text-[var(--foreground)]/90">
-                FLAGSHIP LOUNGES
-              </h2>
-              <div className="border-b-2 border-[var(--primary)]/50 w-12 sm:w-16 md:w-20"></div>
-            </div>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 md:gap-10 mb-4">
+            <h2 className="text-base sm:text-lg uppercase tracking-widest text-gray-700">
+              Our Flagship Lounges
+            </h2>
+            <div className="border-b-2 w-16 sm:w-[100px] border-gray-300"></div>
           </div>
 
-          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light leading-tight text-[var(--foreground)] max-w-5xl mx-auto">
-            Discover our flagship lounges across India — where{" "}
-            <span className="font-semibold text-[var(--primary)]">comfort</span>
-            ,{" "}
-            <span className="font-semibold text-[var(--primary)]">design</span>,
-            and{" "}
-            <span className="font-semibold text-[var(--primary)]">
-              technology
-            </span>{" "}
-            converge.
+          <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight text-gray-900 max-w-5xl">
+            Redefining hospitality across India with comfort, design, and technology.
           </h3>
         </motion.div>
 
@@ -179,6 +153,7 @@ export default function ProjectListings() {
                       ))}
                     </div>
                     <button className="self-start flex items-center text-white font-medium text-sm group-hover:underline">
+                      <Link href={`/presence/${item.slug}`} className="flex items-center">
                       Learn More
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -192,6 +167,7 @@ export default function ProjectListings() {
                           clipRule="evenodd"
                         />
                       </svg>
+                      </Link>
                     </button>
                   </div>
                 </div>

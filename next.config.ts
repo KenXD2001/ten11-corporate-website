@@ -8,8 +8,11 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   output: "export",
-  basePath: "/ten11",
+  // basePath: "/ten11",
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

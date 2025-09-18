@@ -21,7 +21,7 @@ const Button = ({
 }: ButtonProps) => {
   
   // Base styles for all buttons
-  const baseStyles = "inline-block px-8 py-3 font-medium transition-all duration-300 text-center";
+  const baseStyles = "inline-block px-8 py-3 font-medium transition-all duration-300 text-center rounded-xl";
   
   // Variant styles
   const variantStyles = {

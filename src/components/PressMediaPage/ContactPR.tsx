@@ -1,72 +1,56 @@
 "use client";
 
-import { useState } from "react";
-import { motion, Variants } from "framer-motion";
+import Link from "next/link";
 import { Mail } from "lucide-react";
 
-export default function ContactPR() {
-  const [hovered, setHovered] = useState(false);
-
-  // Motion variants
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.2 },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 14 } },
-  };
-
-  const buttonVariants: Variants = {
-    hover: { scale: 1.05, transition: { type: "spring", stiffness: 300 } },
-  };
-
+export default function ExtraSections() {
   return (
-    <motion.section
-      className="w-full bg-gray-50 py-24"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={containerVariants}
-    >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 text-center space-y-6">
-        {/* Heading */}
-        <motion.h2
-          className="text-3xl md:text-4xl font-bold text-primary mb-3"
-          variants={itemVariants}
-        >
-          Contact Our PR Team
-        </motion.h2>
+    <section className="relative w-full py-16 sm:py-20 md:py-24 lg:py-28 px-4 sm:px-6 lg:px-8 bg-background text-foreground overflow-hidden">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
+          {/* Left Section */}
+          <div className="flex flex-col justify-start">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight">
+              Contact Our PR Team
+            </h2>
+          </div>
 
-        {/* Description */}
-        <motion.p
-          className="text-lg text-muted mb-10 max-w-2xl mx-auto"
-          variants={itemVariants}
-        >
-          For media inquiries, collaborations, or press opportunities, please reach out to our communications team.
-        </motion.p>
+          {/* Right Section */}
+          <div className="flex flex-col justify-between">
+            {/* Top Description */}
+            <p className="text-lg sm:text-xl text-muted-foreground">
+              For media inquiries, collaborations, or press opportunities,
+              please reach out to our communications team.
+            </p>
 
-        {/* Email Button */}
-        <motion.div
-          variants={itemVariants}
-          onHoverStart={() => setHovered(true)}
-          onHoverEnd={() => setHovered(false)}
-        >
-          <motion.a
-            href="mailto:pr@ten11hospitality.com"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-white font-semibold text-lg rounded-2xl shadow-md hover:shadow-lg transition-all"
-            variants={buttonVariants}
-            whileHover="hover"
-          >
-            <Mail size={20} />
-            Email PR Team
-          </motion.a>
-        </motion.div>
+            {/* Bottom Button */}
+            <div className="mt-8">
+              <Link
+                href="/careers"
+                className="
+                  relative inline-block px-6 py-3 rounded-xl font-medium
+                  border border-primary text-primary
+                  overflow-hidden transition-colors duration-300
+                  hover:text-white
+                  group
+                "
+              >
+                <span
+                  className="
+                    absolute inset-0 bg-primary
+                    translate-y-full group-hover:translate-y-0
+                    transition-transform duration-300 ease-in-out
+                  "
+                ></span>
+                <span className="relative z-10 flex gap-2">
+                  <Mail size={20} />
+                  Email PR Team
+                </span>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

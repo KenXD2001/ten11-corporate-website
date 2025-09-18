@@ -28,7 +28,7 @@ export default function AboutPage() {
       <Differentiators />
 
       {/*Our Presence Section*/}
-      <OurPresence />
+      {/* <OurPresence /> */}
     </div>
   );
 }

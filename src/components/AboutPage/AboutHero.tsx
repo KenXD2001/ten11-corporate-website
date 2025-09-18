@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import HomeCoreImage from "@/assets/images/Home/HomeCore0101.webp";
 
 export default function AboutHero() {
   const [offsetY, setOffsetY] = useState(0);
@@ -16,18 +17,19 @@ export default function AboutHero() {
   }, []);
 
   return (
-    <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative w-full h-[100vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-center bg-cover transition-transform duration-500 ease-out"
         style={{
-          backgroundImage: "url('/images/AboutUS/Warmloungeinterior.jpeg')",
+          backgroundImage: `url(${HomeCoreImage.src})`,
           transform: `translateY(${offsetY}px)`,
+          height: "110%",
         }}
       />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/30"></div>
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/60"></div>
 
       {/* Text */}
       <div className="relative z-10 px-4 sm:px-6 md:px-12 text-center">

@@ -1,14 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import HomePurposeBG from "@/assets/images/Home/HomeCore0301.webp";
+import HomePurposeBG from "@/assets/images/Team.jpeg";
 import { useEffect, useRef, useState } from "react";
 import Button from "../common/Button";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function AboutSnapshot() {
   const content = {
-    title: "About Snapshot",
+    title: "About Us",
     paragraph:
       "At Ten11 Hospitality, every moment of your journey matters. Our lounges blend comfort, hygiene, and innovation, transforming waiting into a relaxing experience. With elegant interiors, attentive service, and thoughtful amenities, we turn pauses into memorable moments — creating spaces where travelers can unwind, recharge, and truly enjoy the journey.",
     button: "Discover Our Story",
@@ -39,7 +40,7 @@ export default function AboutSnapshot() {
         <div className="flex flex-col lg:flex-row justify-center items-center gap-8 sm:gap-10 lg:gap-12">
           
           {/* Left Section - Image with Curtain Reveal */}
-          <div className="w-full sm:w-3/4 md:w-2/3 lg:w-[440px] relative aspect-[3/4] overflow-hidden mx-auto lg:mx-0">
+          <div className="w-full sm:w-3/4 md:w-2/3 lg:w-[440px] relative aspect-[3/4] overflow-hidden mx-auto lg:mx-0 rounded-2xl">
             {/* White Curtain */}
             <div
               className={`absolute inset-0 bg-primary z-30 transform transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)]
@@ -86,6 +87,7 @@ export default function AboutSnapshot() {
               {content.paragraph}
             </p>
 
+            <Link href="/about">
             <Button
               variant="outline"
               className={`group inline-flex items-center transition-transform duration-1000 delay-400 !border-1 !border-background !text-background !hover:bg-background !hover:text-primary
@@ -94,6 +96,7 @@ export default function AboutSnapshot() {
               <span>{content.button}</span>
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
+            </Link>
           </div>
         </div>
       </div>

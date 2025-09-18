@@ -14,10 +14,11 @@ export default function ContactForm() {
     country: "",
     interest: "",
     message: "",
+    mobile: "",
+    mobileCode: "+91", // default country code
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
 
   const addNotification = (type: "success" | "error", message: string) => {
     const id = Date.now().toString();
@@ -27,7 +28,6 @@ export default function ContactForm() {
   const removeNotification = (id: string) => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
   };
-
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -48,36 +48,36 @@ export default function ContactForm() {
       const response = await fetch(scriptUrl, {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded", // avoids preflight
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: new URLSearchParams(form).toString(), // converts {key: value} → key=value&...
+        body: new URLSearchParams(form).toString(),
       });
 
       const result = await response.json();
 
       if (response.ok && result.result === "success") {
-        // alert("Thank you for reaching out! We'll get back to you soon.");
-        addNotification("success", "Thank you for reaching out! We'll get back to you soon.");
+        addNotification(
+          "success",
+          "Thank you for reaching out! We'll get back to you soon."
+        );
 
-        // Reset form
         setForm({
           name: "",
           email: "",
           country: "",
           interest: "",
           message: "",
+          mobile: "",
+          mobileCode: "+91",
         });
       } else {
-        // alert(
-        //   `Error: ${
-        //     result?.message || "There was an error submitting the form."
-        //   }`
-        // );
-        addNotification("error", result?.message || "There was an error submitting the form.");
+        addNotification(
+          "error",
+          result?.message || "There was an error submitting the form."
+        );
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      // alert("Network error. Please try again later.");
       addNotification("error", "Network error. Please try again later.");
     } finally {
       setIsSubmitting(false);
@@ -123,6 +123,33 @@ export default function ContactForm() {
             required
             disabled={isSubmitting}
           />
+
+          {/* Mobile number input with country code */}
+          <div className="flex gap-3 items-center border-b border-gray-300 py-2 sm:py-3">
+            <select
+              name="mobileCode"
+              value={form.mobileCode}
+              onChange={handleChange}
+              className="bg-transparent border-none focus:outline-none text-base sm:text-lg md:text-xl"
+              disabled={isSubmitting}
+            >
+              <option value="+91">+91 (India)</option>
+              <option value="+1">+1 (USA)</option>
+              <option value="+44">+44 (UK)</option>
+              <option value="+61">+61 (Australia)</option>
+              <option value="+Other">Other</option>
+            </select>
+            <input
+              type="tel"
+              name="mobile"
+              placeholder="Mobile Number"
+              value={form.mobile}
+              onChange={handleChange}
+              className="w-full focus:outline-none text-base sm:text-lg md:text-xl placeholder-gray-500"
+              required
+              disabled={isSubmitting}
+            />
+          </div>
 
           <select
             name="country"

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import HeroBG from "@/assets/images/Home/HomeHeroBG.webp";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function HeroSection() {
   const heroRef = useRef<HTMLElement>(null);
@@ -100,16 +101,18 @@ export default function HeroSection() {
           Redefining Transit Hospitality, One Lounge at a Time.
         </p>
 
-        <p className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-10">
+        {/* <p className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl mb-6 sm:mb-10">
           Beyond Transit, An Experience to Remember.
-        </p>
+        </p> */}
 
-        <button className="group px-[10vw] py-[3vw] sm:px-6 sm:py-3 md:px-8 md:py-4 bg-background text-foreground text-xs sm:text-sm md:text-base uppercase hover:bg-primary hover:text-background transition duration-300">
+        <Link href="/presence">
+        <button className="group px-[10vw] py-[3vw] sm:px-6 sm:py-3 md:px-8 md:py-4 bg-background text-foreground text-xs sm:text-sm md:text-base uppercase hover:bg-primary hover:text-background transition duration-300 rounded-xl">
           <div className="flex items-center justify-center">
             <span>Explore Projects</span>
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
           </div>
         </button>
+        </Link>
       </div>
 
       {/* Scroll Indicator */}

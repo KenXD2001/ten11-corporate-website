@@ -1,395 +1,252 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { gsap } from "gsap";
-import IndianMapSVG from "@/assets/svgs/IndianMapSVG2.svg";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import DynamicMap, { Project } from "./DynamicMap";
 
-// Project Data with manual zoom coordinates
-const projects = [
+// Project data
+const projects: Project[] = [
   {
-    id: "delhi",
-    location: "New Delhi",
-    title: "IRCTC Executive Lounge",
-    description: "Premium service and comfort in India's busiest station.",
-    coords: [347, 315],
-    zoomCoords: { x: 220, y: 250, scale: 3 },
-    features: [
-      "Beds & Recliners",
-      "Unlimited Buffet (Veg/Non Veg)",
-      "Shower & Change",
-      "Massage Chair",
-    ],
+    id: 1,
+    name: "Mumbai Project",
+    location: [19.076, 72.8777],
+    description: "Our flagship project in the financial capital of India.",
+    fullDescription:
+      "Located in the heart of Mumbai, this project represents our commitment to excellence in urban development. With state-of-the-art facilities and sustainable design principles, we are creating a landmark that will redefine luxury living in the city.",
   },
   {
-    id: "mumbai",
-    location: "Mumbai",
-    title: "INEJ Digital Lounge",
-    description:
-      "India's first all-digital lounge, changing hospitality with technology.",
-    coords: [230, 610],
-    zoomCoords: { x: 400, y: -100, scale: 3 },
-    features: [
-      "Co-Working Desks",
-      "Collaborative Meeting Nooks",
-      "High Speed Internet",
-      "Premium Coffee / Tea",
-    ],
+    id: 2,
+    name: "Chennai Project",
+    location: [13.0827, 80.2707],
+    description: "A modern development in the cultural hub of South India.",
+    fullDescription:
+      "Embracing the rich cultural heritage of Chennai, this development combines traditional architectural elements with modern amenities. The project focuses on creating community spaces that foster connection while providing residents with unparalleled comfort.",
   },
   {
-    id: "chennai",
-    location: "Chennai",
-    title: "INEJ Lounge",
-    description:
-      "Contemporary and spacious, crafted for today's modern travelers.",
-    coords: [426, 779],
-    zoomCoords: { x: 600, y: -450, scale: 3 },
-    features: [
-      "Sleeping Pods",
-      "Unlimited Buffet (Veg/Non Veg)",
-      "Shower & Change",
-    ],
-  },
-  {
-    id: "vadodara",
-    location: "Vadodara Junction",
-    title: "INEJ Digital Lounge",
-    description:
-      "Modelled after airport lounges, providing a productive and comfortable space for travellers at Vadodara Junction.",
-    coords: [230, 510],
-    zoomCoords: { x: 400, y: -100, scale: 3 },
-    features: [
-      "Wi-Fi & Charging Stations",
-      "Comfortable Seating & Work-Friendly Environment",
-      "Food & Beverage Service",
-    ],
+    id: 3,
+    name: "Delhi Project",
+    location: [28.7041, 77.1025],
+    description: "An innovative project in the heart of the nation's capital.",
+    fullDescription:
+      "Our Delhi project is a testament to innovation in urban planning. Designed with smart city principles, it incorporates green spaces, energy-efficient systems, and cutting-edge technology to create a sustainable living environment in the bustling capital.",
   },
 ];
 
 export default function ProjectsOverview() {
-  const mapWrapperRef = useRef<SVGGElement | null>(null);
-  const mapContainerRef = useRef<HTMLDivElement | null>(null);
-  const [active, setActive] = useState("delhi");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const pinRefs = useRef<Array<SVGGElement | null>>([]);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const [activeProject, setActiveProject] = useState<number | null>(null);
+  const [mapZoom, setMapZoom] = useState(5);
+  const [viewMode, setViewMode] = useState<"selection" | "detail">("selection");
+  const sectionRef = useRef<HTMLElement | null>(null);
 
-  // Set active project when currentIndex changes
-  useEffect(() => {
-    const projectId = projects[currentIndex].id;
-    setActive(projectId);
+  const handleProjectSelect = (index: number) => {
+    setActiveProject(index);
+    setMapZoom(15);
+    setViewMode("detail");
+  };
 
-    // Animate the card
-    if (cardRef.current) {
-      gsap.fromTo(
-        cardRef.current,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }
-      );
+  const handleResetView = () => {
+    setActiveProject(null);
+    setMapZoom(5);
+    setViewMode("selection");
+  };
+
+  const goToNextProject = () => {
+    if (activeProject !== null) {
+      setActiveProject((activeProject + 1) % projects.length);
     }
-  }, [currentIndex]);
-
-  // Animate pins when active changes
-  useEffect(() => {
-    pinRefs.current.forEach((pin, index) => {
-      if (pin) {
-        const isActive = projects[index].id === active;
-
-        gsap.killTweensOf(pin); // stop any ongoing animations
-
-        if (isActive) {
-          // Small pop effect once
-          gsap.fromTo(
-            pin,
-            { scale: 0.8 },
-            { scale: 1.2, duration: 0.3, ease: "power2.out" }
-          );
-          gsap.to(pin, {
-            scale: 1,
-            duration: 0.2,
-            delay: 0.3,
-            ease: "power2.inOut",
-          });
-        } else {
-          // Reset non-active pins smoothly
-          gsap.to(pin, {
-            scale: 1,
-            duration: 0.3,
-            ease: "power2.out",
-          });
-        }
-      }
-    });
-  }, [active]);
-
-  const ZOOM_OUT_DURATION = 0.8;
-  const PAN_DURATION = 1.2;
-  const ZOOM_IN_DURATION = 0.8;
-
-  // Overlap controls
-  // const PAN_START_AT_ZOOM_OUT_PROGRESS = 0.3;
-  // const ZOOM_IN_OVERLAP_WITH_PAN = 0.3;
-
-  const zoomToProject = (projectId: string) => {
-    const wrapper = mapWrapperRef.current;
-    if (!wrapper || isAnimating) return;
-
-    setIsAnimating(true);
-
-    const project = projects.find((p) => p.id === projectId);
-    if (!project) return;
-
-    const { x, y, scale } = project.zoomCoords;
-
-    const tl = gsap.timeline({
-      defaults: { ease: "power2.inOut", overwrite: "auto" },
-      onComplete: () => setIsAnimating(false),
-    });
-
-    tl.set(wrapper, { transformOrigin: "50% 50%" });
-
-    tl.to(
-      wrapper,
-      { scale: 2, x: x / 2, y: y / 2, duration: ZOOM_OUT_DURATION },
-      0
-    );
-
-    tl.to(wrapper, { x, y, duration: PAN_DURATION }, 0.2);
-
-    tl.to(wrapper, { scale, duration: ZOOM_IN_DURATION }, 0.5);
   };
 
-  const handlePinClick = (cityId: string) => {
-    const index = projects.findIndex((p) => p.id === cityId);
-    setCurrentIndex(index);
-  };
-
-  const nextProject = () => {
-    if (isAnimating) return;
-
-    setCurrentIndex((prevIndex) =>
-      prevIndex === projects.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const prevProject = () => {
-    if (isAnimating) return;
-
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? projects.length - 1 : prevIndex - 1
-    );
-  };
-
-  useEffect(() => {
-    if (active) {
-      zoomToProject(active);
+  const goToPrevProject = () => {
+    if (activeProject !== null) {
+      setActiveProject((activeProject - 1 + projects.length) % projects.length);
     }
-  }, [active]);
+  };
 
   return (
-    <section className="w-full bg-[var(--background)] text-[var(--foreground)] py-12 sm:py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
-        {/* Header */}
-        <div className="mx-auto max-w-3xl text-center space-y-3 sm:space-y-4">
-          <h2 className="text-xs sm:text-sm uppercase tracking-widest text-[var(--foreground)]/70">
-            Projects
-          </h2>
-          <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light leading-snug">
-            Discover our flagship lounges across India
+    <section
+      ref={sectionRef}
+      className="w-full py-12 sm:py-16 lg:py-20 px-4 sm:px-12 lg:px-20 bg-gray-50"
+    >
+      <div className="max-w-6xl mx-auto">
+        {/* Section Header */}
+        <div className="mb-12 sm:mb-14 text-center">
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <h2 className="text-base sm:text-lg uppercase tracking-widest text-gray-600">
+              Our Presence
+            </h2>
+          </div>
+          <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight text-gray-900">
+            Discover our landmark projects across India.
           </h3>
         </div>
 
-        {/* Main Content - Split Layout */}
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
-          {/* Left Section - Project Details Card */}
-          <div className="w-full lg:w-2/5 flex flex-col justify-center">
-            {/* Carousel Controls */}
-            <div className="flex justify-between items-center mb-3 sm:mb-4">
-              <div className="flex space-x-1.5 sm:space-x-2 items-center">
-                {projects.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => !isAnimating && setCurrentIndex(index)}
-                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                      index === currentIndex
-                        ? "bg-[var(--primary)] scale-110"
-                        : "bg-gray-300 hover:bg-gray-400"
-                    }`}
-                    aria-label={`Go to project ${index + 1}`}
-                  />
-                ))}
-              </div>
-              <div className="flex space-x-2">
-                <button
-                  onClick={prevProject}
-                  className="p-1.5 sm:p-2 rounded-full bg-white shadow hover:bg-gray-50 transition-all duration-300 hover:shadow-md disabled:opacity-50 border border-gray-200"
-                  aria-label="Previous project"
-                  disabled={isAnimating}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 sm:h-5 sm:w-5 text-gray-700"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
-                </button>
-                <button
-                  onClick={nextProject}
-                  className="p-1.5 sm:p-2 rounded-full bg-white shadow hover:bg-gray-50 transition-all duration-300 hover:shadow-md disabled:opacity-50 border border-gray-200"
-                  aria-label="Next project"
-                  disabled={isAnimating}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 sm:h-5 sm:w-5 text-gray-700"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </div>
+        {/* Map Container */}
+        <div className="h-[90vh] sm:h-[80vh] lg:h-[70vh] rounded-2xl overflow-hidden shadow-xl relative">
+          {/* Map */}
+          <div className="absolute inset-0 z-0">
+            <DynamicMap
+              projects={projects}
+              activeProject={activeProject}
+              setActiveProject={handleProjectSelect}
+              mapZoom={mapZoom}
+            />
+          </div>
 
-            <div
-              ref={cardRef}
-              className="bg-white rounded-xl shadow-xl p-5 sm:p-6 border border-gray-100"
-            >
-              {projects
-                .filter((p) => p.id === active)
-                .map((p) => (
-                  <div key={p.id} className="space-y-4 sm:space-y-5">
-                    <div>
-                      <span className="text-[10px] sm:text-xs font-semibold text-[var(--primary)] uppercase tracking-wide">
-                        Featured Project
-                      </span>
-                      <h4 className="text-lg sm:text-xl font-bold text-gray-900 mt-1">
-                        {p.location}
+          {/* --- Desktop Layout: Selection & Detail Cards Side-by-Side --- */}
+          <AnimatePresence>
+            {viewMode === "selection" && (
+              <motion.div
+                className="hidden lg:block absolute bottom-6 left-6 z-20 w-80 bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100"
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 20, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="p-4 bg-gradient-to-r from-primary to-primary/90 text-background">
+                  <h3 className="text-lg font-semibold">Our Projects</h3>
+                  <p className="text-background/90 text-sm mt-0.5">
+                    Select a project to view details
+                  </p>
+                </div>
+                <div className="max-h-80 overflow-y-auto p-3 space-y-2">
+                  {projects.map((project, index) => (
+                    <motion.div
+                      key={project.id}
+                      className="p-3 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-all border border-gray-200/60"
+                      onClick={() => handleProjectSelect(index)}
+                      whileHover={{ y: -1, scale: 1.01 }}
+                      whileTap={{ scale: 0.99 }}
+                    >
+                      <h4 className="font-medium text-gray-900 text-sm">
+                        {project.name}
                       </h4>
-                      <p className="text-sm sm:text-base text-[var(--primary)] font-medium mt-0.5">
-                        {p.title}
+                      <p className="text-xs text-gray-600 mt-1 leading-tight">
+                        {project.description}
                       </p>
-                    </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                      {p.description}
-                    </p>
-
-                    <div>
-                      <h5 className="font-semibold text-gray-900 mb-1.5 sm:mb-2">
-                        Key Features
-                      </h5>
-                      <ul className="space-y-1.5">
-                        {p.features.map((feature, index) => (
-                          <li
-                            key={index}
-                            className="flex items-start text-xs sm:text-sm"
-                          >
-                            <svg
-                              className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[var(--primary)] mr-1.5 mt-0.5"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M5 13l4 4L19 7"
-                              />
-                            </svg>
-                            <span className="text-gray-600">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <button className="mt-2.5 sm:mt-3 px-4 sm:px-5 py-2 sm:py-2.5 bg-[var(--primary)] text-white rounded-md font-medium hover:opacity-90 transition-opacity shadow text-xs sm:text-sm">
-                      Explore This Project →
+          <AnimatePresence>
+            {viewMode === "detail" && activeProject !== null && (
+              <motion.div
+                className="hidden lg:block absolute top-1/2 right-6 transform -translate-y-1/2 z-20 w-80 bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100"
+                initial={{ x: 100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: 100, opacity: 0 }}
+                transition={{ type: "spring", damping: 25 }}
+              >
+                <div className="p-4 bg-gradient-to-r from-primary to-primary/90 text-background">
+                  <h3 className="text-lg font-semibold">
+                    {projects[activeProject].name}
+                  </h3>
+                  <p className="text-background/90 text-sm mt-0.5">
+                    Project Details
+                  </p>
+                </div>
+                <div className="p-4">
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                    {projects[activeProject].fullDescription}
+                  </p>
+                  <div className="flex gap-2 mt-2">
+                    <button
+                      onClick={goToPrevProject}
+                      className="flex-1 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors font-medium text-sm"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      onClick={goToNextProject}
+                      className="flex-1 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors font-medium text-sm"
+                    >
+                      Next
                     </button>
                   </div>
-                ))}
-            </div>
-          </div>
+                  <button
+                    onClick={handleResetView}
+                    className="w-full py-1.5 text-gray-500 hover:text-gray-700 transition-colors text-xs mt-2"
+                  >
+                    View All Projects
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-          {/* Right Section - Map */}
-          <div className="w-full lg:w-3/5 relative rounded-xl overflow-hidden h-72 sm:h-80 md:h-96 lg:h-[24rem]">
-            <div
-              ref={mapContainerRef}
-              className="relative w-full h-full"
-              style={{
-                padding: "0px",
-                maskImage: `linear-gradient(to top, transparent, black 8%), linear-gradient(to bottom, transparent, black 8%), linear-gradient(to left, transparent, black 8%), linear-gradient(to right, transparent, black 8%)`,
-                WebkitMaskImage: `linear-gradient(to top, transparent, black 5%), linear-gradient(to bottom, transparent, black 5%), linear-gradient(to left, transparent, black 5%), linear-gradient(to right, transparent, black 5%)`,
-                maskComposite: "intersect",
-                WebkitMaskComposite: "destination-in",
-              }}
-            >
-              <svg viewBox="0 0 1000 1100" className="w-full h-full">
-                <g
-                  ref={mapWrapperRef}
-                  className="origin-center"
-                  transform="scale(1) translate(0, 0)"
-                >
-                  <IndianMapSVG />
-
-                  {projects.map((p, index) => (
-                    <g
-                      key={p.id}
-                      ref={(el) => {
-                        pinRefs.current[index] = el;
-                      }}
-                      transform={`translate(${p.coords[0]}, ${p.coords[1]})`}
-                      className="cursor-pointer group"
-                      onClick={() => handlePinClick(p.id)}
+          {/* --- Tablet & Mobile Layout: Bottom Overlay Cards --- */}
+          {/* Selection Card */}
+          <AnimatePresence>
+            {viewMode === "selection" && (
+              <motion.div
+                className="lg:hidden absolute bottom-0 left-0 w-full z-20 p-4 bg-white rounded-t-xl shadow-lg"
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 100, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <h3 className="text-lg font-semibold mb-2">Our Projects</h3>
+                <div className="flex overflow-x-auto gap-3">
+                  {projects.map((project, index) => (
+                    <div
+                      key={project.id}
+                      className="flex-shrink-0 w-48 p-3 bg-gray-50 rounded-lg cursor-pointer border border-gray-200"
+                      onClick={() => handleProjectSelect(index)}
                     >
-                      {active === p.id && (
-                        <>
-                          <circle
-                            r="14"
-                            fill="var(--primary)"
-                            opacity="0.2"
-                            className="animate-pulse"
-                          />
-                          <circle r="10" fill="var(--primary)" opacity="0.4" />
-                        </>
-                      )}
-                      <circle
-                        r="8"
-                        fill={active === p.id ? "var(--primary)" : "#4B5563"}
-                        className="transition-all duration-300 group-hover:scale-110 group-hover:fill-[var(--primary)]"
-                        stroke="white"
-                        strokeWidth="1.5"
-                      />
-                      <circle r="3" fill="white" />
-                      <text
-                        y="-20"
-                        textAnchor="middle"
-                        className="text-[10px] sm:text-xs font-bold fill-gray-800 group-hover:fill-[var(--primary)] transition-colors"
-                        filter="url(#textOutline)"
-                      >
-                        {p.location}
-                      </text>
-                    </g>
+                      <h4 className="font-medium">{project.name}</h4>
+                      <p className="text-xs text-gray-600 mt-1">{project.description}</p>
+                    </div>
                   ))}
-                </g>
-              </svg>
-            </div>
-          </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Detail Card */}
+          <AnimatePresence>
+            {viewMode === "detail" && activeProject !== null && (
+              <motion.div
+                className="lg:hidden absolute bottom-0 left-0 w-full z-20 p-4 bg-white rounded-t-xl shadow-lg"
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 100, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-lg font-semibold">{projects[activeProject].name}</h3>
+                  <button
+                    onClick={handleResetView}
+                    className="text-gray-500 hover:text-gray-700 text-xl"
+                  >
+                    ✕
+                  </button>
+                </div>
+                <p className="text-sm text-gray-600 mb-4">{projects[activeProject].fullDescription}</p>
+                <div className="flex gap-2 mb-2">
+                  <button
+                    onClick={goToPrevProject}
+                    className="flex-1 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 text-sm"
+                  >
+                    Previous
+                  </button>
+                  <button
+                    onClick={goToNextProject}
+                    className="flex-1 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 text-sm"
+                  >
+                    Next
+                  </button>
+                </div>
+                <button
+                  onClick={handleResetView}
+                  className="w-full py-2 text-gray-500 text-sm hover:text-gray-700"
+                >
+                  View All Projects
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </section>

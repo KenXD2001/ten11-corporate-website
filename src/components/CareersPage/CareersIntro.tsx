@@ -10,18 +10,15 @@ export default function CareersIntro() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
 
-  const text = `At Ten 11 Hospitality LLP, we’re not just building luxury lounges,
-  we’re building a team of passionate individuals who are shaping
-  the future of hospitality. If you’re driven by excellence,
-  inspired by innovation, and motivated to make a difference, we’d
-  love to hear from you.`;
+  const text = `At Ten 11 Hospitality LLP, we’re not just building luxury lounges, we’re building a team of passionate individuals who are shaping the future of hospitality. If you’re driven by excellence, inspired by innovation, and motivated to make a difference, we’d love to hear from you.
+
+  We believe in cultivating a workplace culture that celebrates creativity, rewards performance, and nurtures personal and professional growth.`;
 
   useEffect(() => {
     if (!sectionRef.current || !textRef.current) return;
 
     const words = textRef.current.querySelectorAll("span");
 
-    // Fade in + slide up section
     gsap.fromTo(
       sectionRef.current,
       { opacity: 0, y: 50 },
@@ -32,7 +29,7 @@ export default function CareersIntro() {
         ease: "power3.out",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 90%",
+          start: "top 110%", // Changed to trigger earlier
           toggleActions: "play none none none",
         },
       }
@@ -40,12 +37,12 @@ export default function CareersIntro() {
 
     // Animate words color on scroll
     gsap.to(words, {
-      color: "rgba(0,0,0,1)", // full black for clarity
-      stagger: 0.05,
+      color: "rgba(0,0,0,1)",
+      stagger: 0.06,
       ease: "none",
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top center",
+        start: "top 110%", // Changed to trigger earlier
         end: "bottom center",
         scrub: true,
       },
@@ -64,7 +61,7 @@ export default function CareersIntro() {
       <div className="max-w-6xl mx-auto">
         <p
           ref={textRef}
-          className="text-2xl md:text-5xl leading-relaxed text-justify"
+          className="text-2xl md:text-5xl font-light leading-relaxed text-justify"
         >
           {text.split(" ").map((word, i) => (
             <span

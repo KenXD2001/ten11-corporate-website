@@ -113,3 +113,15 @@ button, a {
   animation-timing-function: ease-out;
 }
 
+.accordion-content {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@import 'leaflet/dist/leaflet.css';
+
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}

@@ -10,7 +10,7 @@ import { Menu, X } from "lucide-react";
 const navLeft = [
   { name: "Home", path: "/" },
   { name: "About Us", path: "/about" },
-  { name: "Projects", path: "/projects" },
+  { name: "Our Presence", path: "/presence" },
   // { name: "Investors", path: "/investors" },
 ];
 

@@ -3,6 +3,7 @@
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Ten11Logo from "@/assets/images/Logos/Ten11-LOGO-BIG.png";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -33,16 +34,22 @@ export default function Footer() {
             Quick Links
           </h3>
           <ul className="space-y-2 text-sm sm:text-base">
-            {["About", "Projects", "Careers", "Press", "Contact"].map(
-              (item) => (
-                <li
-                  key={item}
+            {[
+              { name: "About", href: "/about" },
+              { name: "Our Presence", href: "/presence" },
+              { name: "Careers", href: "/careers" },
+              { name: "Press", href: "/press" },
+              { name: "Contact", href: "/contact" },
+            ].map((item) => (
+              <li key={item.name}>
+                <Link
+                  href={item.href}
                   className="hover:text-primary cursor-pointer transition-colors"
                 >
-                  {item}
-                </li>
-              )
-            )}
+                  {item.name}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -77,7 +84,7 @@ export default function Footer() {
           </div>
 
           <p className="text-sm sm:text-base text-background/70">
-            123 Corporate Street, City, Country
+            Dr. MGR Chennai Central Railway Station, Chennai 600003
           </p>
         </div>
       </div>
