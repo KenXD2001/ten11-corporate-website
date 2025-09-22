@@ -2,14 +2,39 @@
 
 import { Star, Users, Coffee, Shield } from "lucide-react";
 
-const highlights = [
-  { icon: Star, title: "Premium Service" },
-  { icon: Users, title: "Customer Satisfaction" },
-  { icon: Coffee, title: "Relaxing Environment" },
-  { icon: Shield, title: "Safety & Hygiene" },
-];
+interface Highlight {
+  icon: string;
+  title: string;
+}
 
-export default function QuickHighlights() {
+interface Project {
+  slug: string;
+  location: string;
+  title: string;
+  description: string;
+  highlights: Highlight[];
+}
+
+interface QuickHighlightsProps {
+  project: Project;
+}
+
+export default function QuickHighlights({ project }: QuickHighlightsProps) {
+  // Map icon strings to actual icon components
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case "Star":
+        return Star;
+      case "Users":
+        return Users;
+      case "Coffee":
+        return Coffee;
+      case "Shield":
+        return Shield;
+      default:
+        return Star;
+    }
+  };
   return (
     <section className="w-full py-16 sm:py-20 md:py-24 lg:py-28 px-4 sm:px-6 lg:px-8 bg-primary text-background overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -29,8 +54,8 @@ export default function QuickHighlights() {
 
         {/* Cards Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
-          {highlights.map((highlight, idx) => {
-            const Icon = highlight.icon;
+          {project.highlights.map((highlight, idx) => {
+            const Icon = getIcon(highlight.icon);
             return (
               <div
                 key={idx}

@@ -69,7 +69,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden">
+    <div className="flex flex-col min-h-screen">
       {/* Fullscreen overlays */}
       {showLoadingScreen && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background">

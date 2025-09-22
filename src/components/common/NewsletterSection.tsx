@@ -1,17 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
-import { Mail } from "lucide-react";
+import { motion, Variants } from "framer-motion";
+import { Linkedin, Users, TrendingUp, Briefcase } from "lucide-react";
 
-export default function NewsletterSection() {
-  const [email, setEmail] = useState("");
-  const isInputEmpty = email.trim() === "";
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert(`Subscribed with: ${email}`);
-    setEmail("");
+export default function LinkedInSection() {
+  const handleLinkedInClick = () => {
+    // Replace with your actual LinkedIn company page URL
+    window.open("https://linkedin.com/company/ten11-hospitality", "_blank");
   };
 
   // Motion variants
@@ -28,69 +23,91 @@ export default function NewsletterSection() {
     visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 120, damping: 14 } },
   };
 
-  const buttonVariants: Variants = {
-    hidden: { opacity: 0, x: -40 },
-    visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 300, damping: 25 } },
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { type: "spring", stiffness: 100, damping: 12 } 
+    },
   };
+
+  const benefits = [
+    {
+      icon: <TrendingUp className="w-6 h-6" />,
+      title: "Industry Insights",
+      description: "Stay ahead with the latest trends in hospitality and transit sector"
+    },
+    {
+      icon: <Briefcase className="w-6 h-6" />,
+      title: "Career Opportunities",
+      description: "Discover exciting career opportunities and company updates"
+    },
+    {
+      icon: <Users className="w-6 h-6" />,
+      title: "Professional Network",
+      description: "Connect with industry professionals and thought leaders"
+    }
+  ];
 
   return (
     <motion.section
-      className="w-full bg-primary py-16"
+      className="w-full bg-primary py-20"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
       variants={containerVariants}
     >
-      <div className="max-w-7xl mx-auto px-6 text-center">
-        <motion.h2
-          variants={itemVariants}
-          className="text-3xl md:text-4xl font-serif font-light text-background mb-3"
-        >
-          Subscribe to Our Newsletter
-        </motion.h2>
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <motion.h2
+            variants={itemVariants}
+            className="text-4xl md:text-5xl font-serif font-light text-white mb-4"
+          >
+            Connect with Us on LinkedIn
+          </motion.h2>
 
-        <motion.p
-          variants={itemVariants}
-          className="text-background/80 mb-10 max-w-2xl mx-auto text-sm"
-        >
-          Stay updated with our latest insights, media coverage, and
-          innovations. Join our community of brand enthusiasts.
-        </motion.p>
+          <motion.p
+            variants={itemVariants}
+            className="text-white/90 mb-8 max-w-3xl mx-auto text-lg leading-relaxed"
+          >
+            Join our professional network and stay connected with Ten11 Hospitality. 
+            Follow us for industry insights, company updates, and career opportunities.
+          </motion.p>
 
-        <motion.form
-          onSubmit={handleSubscribe}
-          className="relative max-w-3xl mx-auto"
-          variants={itemVariants}
-        >
-          <div className="relative flex items-center">
-            <motion.input
-              type="email"
-              required
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={`flex-1 px-5 py-3 ring-1 ring-background focus:outline-none focus:ring-2 focus:ring-background text-white placeholder-white caret-white shadow-sm font-sans transition-all duration-500 ${isInputEmpty ? "text-center" : "text-left"
-                }`}
-              variants={itemVariants}
-            />
+          <motion.button
+            variants={itemVariants}
+            onClick={handleLinkedInClick}
+            className="inline-flex items-center gap-3 px-8 py-4 bg-white text-primary font-semibold rounded-lg hover:bg-white/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+          >
+            <Linkedin className="w-5 h-5" />
+            Follow Us on LinkedIn
+          </motion.button>
+        </div>
 
-            <AnimatePresence>
-              {!isInputEmpty && (
-                <motion.button
-                  variants={buttonVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="hidden"
-                  type="submit"
-                  className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center justify-center gap-2 px-5 py-2 bg-background text-primary font-semibold shadow-md hover:shadow-lg font-serif"
-                >
-                  <Mail size={18} />
-                  Subscribe
-                </motion.button>
-              )}
-            </AnimatePresence>
-          </div>
-        </motion.form>
+        {/* Benefits Grid */}
+        <motion.div
+          variants={containerVariants}
+          className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto"
+        >
+          {benefits.map((benefit, index) => (
+            <motion.div
+              key={index}
+              variants={cardVariants}
+              className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:bg-white/15 transition-all duration-300"
+            >
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-white/20 rounded-full mb-4 text-white">
+                {benefit.icon}
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-3">
+                {benefit.title}
+              </h3>
+              <p className="text-white/80 text-sm leading-relaxed">
+                {benefit.description}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </motion.section>
   );

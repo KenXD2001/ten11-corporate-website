@@ -3,67 +3,32 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-const accommodations = [
-  {
-    title: "Sleeping Pods",
-    description: "Private, comfortable sleeping pods with premium bedding for restful naps between journeys.",
-    imgSrc: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-  },
-  {
-    title: "Executive Lounge",
-    description: "Exclusive lounge area with premium seating, workstations, and personalized service for business travelers.",
-    imgSrc: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
-  },
-  {
-    title: "Gourmet Dining",
-    description: "Curated menu featuring local Chennai specialties and international cuisine in a sophisticated setting.",
-    imgSrc: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-  },
-  {
-    title: "Business Center",
-    description: "Fully equipped business facilities with high-speed internet, printing services, and meeting spaces.",
-    imgSrc: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-  },
-  {
-    title: "Shower Facilities",
-    description: "Premium shower rooms with luxury amenities, towels, and toiletries for refreshing during layovers.",
-    imgSrc: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-  },
-  {
-    title: "Entertainment Zone",
-    description: "Relaxation area with premium TV channels, reading materials, and comfortable seating arrangements.",
-    imgSrc: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
-  },
-  {
-    title: "Concierge Services",
-    description: "Dedicated staff assistance for travel arrangements, bookings, and local information in Chennai.",
-    imgSrc: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-  },
-  {
-    title: "Luggage Storage",
-    description: "Secure luggage storage facilities with 24/7 monitoring for hassle-free city exploration.",
-    imgSrc: "https://images.unsplash.com/photo-1598488033097-9cb5ae8049b8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80",
-  },
-  {
-    title: "Premium Lounge Access",
-    description: "Exclusive access to premium areas with enhanced privacy, comfort, and personalized services.",
-    imgSrc: "https://images.unsplash.com/photo-1582582621959-48d27397dc69?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80",
-  },
-  {
-    title: "Digital Connectivity",
-    description: "High-speed Wi-Fi, charging stations, and tech support throughout the lounge facility.",
-    imgSrc: "https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80",
-  },
-];
+interface Accommodation {
+  title: string;
+  description: string;
+  imgSrc: string;
+}
 
-export default function AccommodationSection() {
+interface Project {
+  slug: string;
+  location: string;
+  title: string;
+  description: string;
+  accommodations: Accommodation[];
+}
+
+interface AccommodationSectionProps {
+  project: Project;
+}
+
+export default function AccommodationSection({ project }: AccommodationSectionProps) {
   const [activeIndex, setActiveIndex] = useState(4);
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     const calculateVisibleCards = () => {
-      const totalCards = accommodations.length;
+      const totalCards = project.accommodations.length;
       const cards = [];
       
       for (let i = -2; i <= 2; i++) {
@@ -77,19 +42,19 @@ export default function AccommodationSection() {
     };
     
     calculateVisibleCards();
-  }, [activeIndex]);
+  }, [activeIndex, project.accommodations.length]);
 
   const handlePrev = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setActiveIndex((prev) => (prev > 0 ? prev - 1 : accommodations.length - 1));
+    setActiveIndex((prev) => (prev > 0 ? prev - 1 : project.accommodations.length - 1));
     setTimeout(() => setIsTransitioning(false), 500);
   };
 
   const handleNext = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setActiveIndex((prev) => (prev < accommodations.length - 1 ? prev + 1 : 0));
+    setActiveIndex((prev) => (prev < project.accommodations.length - 1 ? prev + 1 : 0));
     setTimeout(() => setIsTransitioning(false), 500);
   };
 
@@ -126,7 +91,7 @@ export default function AccommodationSection() {
           {/* Cards Container */}
           <div className="flex items-end justify-center gap-4 md:gap-6 w-full max-w-5xl mx-auto h-96">
             {visibleCards.map((cardIndex, idx) => {
-              const acc = accommodations[cardIndex];
+              const acc = project.accommodations[cardIndex];
               const isActive = cardIndex === activeIndex;
               const position = idx;
 
@@ -151,7 +116,7 @@ export default function AccommodationSection() {
                   <div
                     className={`
                       relative w-full overflow-hidden rounded-t-lg
-                      ${isActive ? "h-2/5" : "h-4/5"}
+                      ${isActive ? "h-3/5" : "h-4/5"}
                       transition-all duration-500 ease-in-out
                     `}
                   >
@@ -168,7 +133,7 @@ export default function AccommodationSection() {
                   <div
                     className={`
                       w-full rounded-b-lg p-4 flex flex-col justify-center
-                      ${isActive ? "h-3/5" : "h-1/5"}
+                      ${isActive ? "h-2/5" : "h-1/5"}
                       transition-all duration-500 ease-in-out
                     `}
                   >
@@ -207,7 +172,7 @@ export default function AccommodationSection() {
 
         {/* Indicators */}
         <div className="flex justify-center mt-8 space-x-2">
-          {accommodations.map((_, index) => (
+          {project.accommodations.map((_, index) => (
             <button
               key={index}
               className={`h-3 rounded-full transition-all duration-300 ${

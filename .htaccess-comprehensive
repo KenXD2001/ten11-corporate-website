@@ -1,0 +1,34 @@
+RewriteEngine On
+
+# Handle Next.js static export routing for clean URLs
+# If the requested file doesn't exist, try adding .html extension
+
+# Specific rule for career job pages (e.g., /ten11/careers/job/10)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ten11/careers/job/([0-9]+)$ /ten11/careers/job/$1.html [L]
+
+# Specific rule for presence pages (e.g., /ten11/presence/chennai-inej-lounge)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ten11/presence/([a-zA-Z0-9-]+)$ /ten11/presence/$1.html [L]
+
+# General rule for all other pages under /ten11/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ten11/(.*)$ /ten11/$1.html [L]
+
+# Handle trailing slashes - redirect to clean URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ten11/(.*)/$ /ten11/$1 [R=301,L]
+
+# Ensure proper MIME types for static assets
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$">
+    Header set Cache-Control "public, max-age=31536000"
+</FilesMatch>
+
+# Security headers
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set X-XSS-Protection "1; mode=block"

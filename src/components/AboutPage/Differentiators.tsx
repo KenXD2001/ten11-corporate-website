@@ -177,7 +177,7 @@ export default function DifferentiatorsAccordion() {
                 </button>
 
                 <div
-                  ref={el => contentRefs.current[index] = el}
+                  ref={el => { contentRefs.current[index] = el; }}
                   className="overflow-hidden transition-all duration-500 ease-in-out"
                   style={{ maxHeight: "0px" }}
                 >

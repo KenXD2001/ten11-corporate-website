@@ -22,8 +22,7 @@ export default function Footer() {
             />
           </div>
           <p className="text-sm sm:text-base text-background/70 leading-relaxed max-w-md">
-            Ten11 Hospitality is committed to excellence in real estate and
-            hospitality ventures. We build experiences that inspire trust and
+            Ten11 Hospitality is committed to excellence in hospitality ventures. We build experiences that inspire trust and
             long-term relationships.
           </p>
         </div>
@@ -84,7 +83,7 @@ export default function Footer() {
           </div>
 
           <p className="text-sm sm:text-base text-background/70">
-            Dr. MGR Chennai Central Railway Station, Chennai 600003
+            Dr. MGR Chennai Central Transit Hub, Chennai 600003
           </p>
         </div>
       </div>

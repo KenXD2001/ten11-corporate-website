@@ -62,7 +62,8 @@ export default function DynamicMap({
           const L = await import("leaflet");
           const { MapContainer, TileLayer, Marker, useMap } = await import("react-leaflet");
 
-          delete L.Icon.Default.prototype._getIconUrl;
+          // Fix for Leaflet default icons in Next.js
+          delete (L.Icon.Default.prototype as any)._getIconUrl;
 
           const redIcon = new L.Icon({
             iconUrl:

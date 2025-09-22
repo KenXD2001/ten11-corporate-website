@@ -38,10 +38,12 @@ export default function ProjectsOverview() {
   const [viewMode, setViewMode] = useState<"selection" | "detail">("selection");
   const sectionRef = useRef<HTMLElement | null>(null);
 
-  const handleProjectSelect = (index: number) => {
+  const handleProjectSelect = (index: number | null) => {
     setActiveProject(index);
-    setMapZoom(15);
-    setViewMode("detail");
+    if (index !== null) {
+      setMapZoom(15);
+      setViewMode("detail");
+    }
   };
 
   const handleResetView = () => {
@@ -81,7 +83,7 @@ export default function ProjectsOverview() {
         </div>
 
         {/* Map Container */}
-        <div className="h-[90vh] sm:h-[80vh] lg:h-[70vh] rounded-2xl overflow-hidden shadow-xl relative">
+        <div className="h-[90vh] sm:h-[80vh] lg:h-[70vh] rounded-2xl overflow-hidden shadow-xl relative  border-6 border-primary/60">
           {/* Map */}
           <div className="absolute inset-0 z-0">
             <DynamicMap
@@ -89,6 +91,7 @@ export default function ProjectsOverview() {
               activeProject={activeProject}
               setActiveProject={handleProjectSelect}
               mapZoom={mapZoom}
+              
             />
           </div>
 

@@ -11,7 +11,7 @@ export default function AboutSnapshot() {
   const content = {
     title: "About Us",
     paragraph:
-      "At Ten11 Hospitality, every moment of your journey matters. Our lounges blend comfort, hygiene, and innovation, transforming waiting into a relaxing experience. With elegant interiors, attentive service, and thoughtful amenities, we turn pauses into memorable moments — creating spaces where travelers can unwind, recharge, and truly enjoy the journey.",
+      "Ten 11 Hospitality LLP is a leading hospitality company committed to enhancing passenger experiences across India's transit hubs. Established in 2019, we specialize in designing and managing premium lounges that integrate comfort, hygiene, and innovation. Guided by our core values of adaptability, teamwork, and service excellence, we deliver world-class environments where travelers can relax and recharge. With successful operations at New Delhi, Chennai, and Mumbai transit hubs, Ten 11 Hospitality continues to set new standards in redefining lounge experiences.",
     button: "Discover Our Story",
     alt: "Ten 11 Hospitality Founders",
   };

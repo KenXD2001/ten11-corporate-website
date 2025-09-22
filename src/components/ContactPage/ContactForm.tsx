@@ -43,7 +43,7 @@ export default function ContactForm() {
 
     try {
       const scriptUrl =
-        "https://script.google.com/macros/s/AKfycbwLcM8-zBlVxLZIAzMlOxd46beBLM5d5FdSB06Q802pJjH17mU3z0clSpJIPAggo8gw/exec";
+        "https://script.google.com/macros/s/AKfycbzdp6mR8kSvub6i06KTdwmjySV9kUXxK8bOecJcuJEIMUasnk70KGoUv0U5dReQ74C0/exec";
 
       const response = await fetch(scriptUrl, {
         method: "POST",

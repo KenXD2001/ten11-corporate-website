@@ -16,6 +16,7 @@ const redHatDisplay = Red_Hat_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ten11.com"),
   title: "Ten11 Hospitality",
   description: "Corporate Website for Ten11 Hospitality",
   icons: {

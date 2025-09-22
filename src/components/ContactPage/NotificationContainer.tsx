@@ -19,7 +19,7 @@ export default function NotificationContainer({
   removeNotification,
 }: NotificationContainerProps) {
   return (
-    <div className="fixed top-6 right-6 z-50 flex flex-col gap-4">
+    <div className="fixed top-6 right-6 z-[9999] flex flex-col gap-4">
       <AnimatePresence initial={false}>
         {notifications.map((n) => (
           <motion.div key={n.id} layout>

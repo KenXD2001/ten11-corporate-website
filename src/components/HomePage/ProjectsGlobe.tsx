@@ -18,7 +18,7 @@ const projects: Project[] = [
 ];
 
 export default function ProjectsGlobe() {
-  const globeRef = useRef<any>();
+  const globeRef = useRef<any>(null);
   const [selectedProject, setSelectedProject] = useState<Project>(projects[0]);
 
   // Handle globe animation when project changes
@@ -43,9 +43,9 @@ export default function ProjectsGlobe() {
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-dark.jpg"
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
         pointsData={projects}
-        pointLat={(d: Project) => d.lat}
-        pointLng={(d: Project) => d.lng}
-        pointColor={(d: Project) => d.color}
+        pointLat={(d: any) => d.lat}
+        pointLng={(d: any) => d.lng}
+        pointColor={(d: any) => d.color}
         pointAltitude={0.05}
         pointRadius={0.3}
         atmosphereColor="lightskyblue"

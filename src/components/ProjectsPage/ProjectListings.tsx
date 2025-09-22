@@ -43,7 +43,7 @@ const projects = [
     location: "Vadodara Junction",
     title: "Vadodara Junction – INEJ Digital Lounge",
     description:
-      "Modelled after airport lounges, providing a productive and comfortable space for travellers.",
+      "Modelled after transit lounges, providing a productive and comfortable space for travellers.",
     imgSrc: HomeProjects01,
     alt: "Vadodara Junction INEJ Digital Lounge",
     features: [

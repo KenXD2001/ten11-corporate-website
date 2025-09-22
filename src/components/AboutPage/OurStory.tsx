@@ -19,7 +19,7 @@ const steps = [
   },
   {
     title: "Redefining Hospitality",
-    desc: "What started as Ten 11 Lounges soon became Ten 11 Hospitality, a name now known for redefining travel comfort. Today, we're on a mission to leave a strong mark in the railway and airport lounge sector – blending innovation, luxury, and heartfelt service.",
+    desc: "What started as Ten 11 Lounges soon became Ten 11 Hospitality, a name now known for redefining travel comfort. Today, we're on a mission to leave a strong mark in the transit lounge sector – blending innovation, luxury, and heartfelt service.",
     img: CardOneImage,
   },
 ];

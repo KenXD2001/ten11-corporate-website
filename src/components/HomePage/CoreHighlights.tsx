@@ -13,7 +13,7 @@ const cards = [
     id: 1,
     img: HomePillar01,
     title: "Lounge digital kiosk → Innovation in Design",
-    subtitle: "India’s first all-digital railway lounge sets new industry standards.",
+    subtitle: "India's first all-digital transit lounge sets new industry standards.",
   },
   {
     id: 2,

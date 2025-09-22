@@ -6,9 +6,9 @@ import { useEffect, useRef, useState } from "react";
 
 export default function BrandPurposeSection() {
   const content = {
-    title: "Beyond Transit, An Experience to Remember",
+    title: "Innovating comfort and care for modern travellers",
     paragraph:
-      "Travel is more than just moving from one place to another — it’s a journey of emotions, expectations, and moments in between.",
+      "Every journey deserves more than movement , it deserves thoughtful spaces that enrich the experience.",
     button: "Our Story",
     alt: "Lounge ambience with warm lighting and staff serving",
   };

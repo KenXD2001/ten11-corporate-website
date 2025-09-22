@@ -12,7 +12,7 @@ export default function VisionMission() {
           </div>
 
           <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light leading-snug sm:leading-tight md:leading-tight text-foreground mb-4">
-            To become the most trusted and widely loved passenger-focused lounge operator across the railway and airport sector.
+            To become the most trusted and widely loved passenger-focused lounge operator across the transit sector.
           </h3>
         </div>
       </div>

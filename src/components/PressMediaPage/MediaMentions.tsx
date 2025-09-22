@@ -8,9 +8,6 @@ import {
   ExternalLink,
   Newspaper,
 } from "lucide-react";
-import Media1 from "@/assets/images/Home/HomePress04.webp";
-import Media2 from "@/assets/images/Home/HomePress02.webp";
-import Media3 from "@/assets/images/Home/HomePress03.webp";
 
 export default function MediaMentions() {
   const [ref, inView] = useInView({
@@ -20,43 +17,13 @@ export default function MediaMentions() {
 
   const mentions = [
     {
-      title: "Ten11 launches India's first fully digital railway lounge",
-      date: "Aug 15, 2023",
-      image: Media1,
-      link: "#",
-      source: "Business Today",
+      title: "Executive lounge opens at Central transit hub",
+      date: "Jan 23, 2024",
+      image: "https://th-i.thgim.com/public/incoming/ub9jvh/article67770101.ece/alternates/LANDSCAPE_1200/4871_7_1_2023_11_34_41_1_05_CENTRALMADRAS.JPG",
+      link: "https://www.thehindu.com/news/cities/chennai/executive-lounge-opens-at-central-transit-hub/article67769260.ece",
+      source: "The Hindu",
       excerpt:
-        "Revolutionizing travel hospitality with cutting-edge technology at Mumbai Central station.",
-      readTime: "4 min read",
-    },
-    {
-      title: "Transforming railway stations into world-class hospitality hubs",
-      date: "Sep 2, 2023",
-      image: Media2,
-      link: "#",
-      source: "Economic Times",
-      excerpt:
-        "Ten11 Hospitality redefines passenger experience with premium lounge services across major Indian stations.",
-      readTime: "6 min read",
-    },
-    {
-      title: "Innovation in travel comfort: Ten11 Hospitality",
-      date: "Oct 5, 2023",
-      image: Media3,
-      link: "#",
-      source: "Forbes India",
-      excerpt:
-        "How Ten11 is blending technology with luxury to create exceptional travel experiences.",
-      readTime: "5 min read",
-    },
-    {
-      title: "Ten11 secures $15M funding for expansion across India",
-      date: "Nov 12, 2023",
-      image: Media1,
-      link: "#",
-      source: "Startup Daily",
-      excerpt:
-        "Strategic investment to fuel growth and bring premium lounge services to 15 new locations.",
+        "The Southern Railway launched an executive lounge for passengers at Puratchi Thalaivar Dr. M.G. Ramachandran Central Transit Hub. The lounge, maintained and operated by Ten 11 Hospitality, offers various amenities including Wi-Fi, snacks, and sleeping pods.",
       readTime: "3 min read",
     },
   ];
@@ -106,13 +73,14 @@ export default function MediaMentions() {
           </h3>
         </motion.div>
 
-        {/* Media Grid - Compact corporate style */}
+        {/* Media Grid - Centered single article */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="flex justify-center"
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
         >
+          <div className="max-w-2xl w-full">
           {mentions.map((mention, index) => (
             <motion.a
               key={index}
@@ -130,13 +98,14 @@ export default function MediaMentions() {
                   alt={mention.title}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  unoptimized
                 />
               </div>
 
               {/* Content */}
-              <div className="p-4 flex flex-col flex-1">
+              <div className="p-6 flex flex-col flex-1">
                 {/* Source + Date */}
-                <div className="flex items-center text-[13px] text-gray-500 mb-1">
+                <div className="flex items-center text-[13px] text-gray-500 mb-2">
                   <span className="font-medium text-primary">
                     {mention.source}
                   </span>
@@ -145,23 +114,24 @@ export default function MediaMentions() {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 line-clamp-2 group-hover:text-primary transition-colors">
+                <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-3 line-clamp-2 group-hover:text-primary transition-colors">
                   {mention.title}
                 </h3>
 
                 {/* Excerpt */}
-                <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                <p className="text-base text-gray-600 mb-4 line-clamp-3">
                   {mention.excerpt}
                 </p>
 
                 {/* Read more */}
                 <div className="mt-auto inline-flex items-center text-primary text-sm font-medium group-hover:underline">
-                  Read more
+                  Read full article
                   <ExternalLink className="h-4 w-4 ml-1" />
                 </div>
               </div>
             </motion.a>
           ))}
+          </div>
         </motion.div>
 
         {/* Featured Quote Section */}
@@ -173,14 +143,14 @@ export default function MediaMentions() {
         >
           <div className="text-center max-w-3xl mx-auto">
             <p className="text-xl italic text-white mb-4">
-              &ldquo;Ten11 Hospitality is redefining the travel experience in
-              India with their innovative approach to lounge services, combining
-              technology with luxury in ways we haven&rsquo;t seen
-              before.&rdquo;
+              &ldquo;The Southern Railway launched an executive lounge for passengers 
+              at Puratchi Thalaivar Dr. M.G. Ramachandran Central Transit Hub. 
+              The lounge, maintained and operated by Ten 11 Hospitality, offers 
+              various amenities to train passengers while charging a nominal entry fee of ₹200.&rdquo;
             </p>
 
             <p className="font-semibold text-white">
-              - Travel & Hospitality Magazine
+              - The Hindu
             </p>
           </div>
         </motion.div>

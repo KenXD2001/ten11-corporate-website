@@ -24,7 +24,7 @@ export default function PressReleases() {
       title: "Ten11 Hospitality secures strategic investment for expansion",
       date: "January 28, 2025",
       file: "/pdfs/investment-announcement.pdf",
-      excerpt: "Company secures $15M in Series A funding to expand lounge network across major Indian railway stations and airports.",
+      excerpt: "Company secures $15M in Series A funding to expand lounge network across major Indian transit hubs.",
       readTime: "7 min read",
       author: "Finance Department"
     },
@@ -32,7 +32,7 @@ export default function PressReleases() {
       title: "Ten11 Hospitality partners with IRCTC for premium lounge services",
       date: "November 5, 2024",
       file: "/pdfs/irctc-partnership.pdf",
-      excerpt: "Exclusive partnership announced to operate premium executive lounges at 10 major railway stations across India.",
+      excerpt: "Exclusive partnership announced to operate premium executive lounges at 10 major transit hubs across India.",
       readTime: "6 min read",
       author: "Partnerships Team"
     },

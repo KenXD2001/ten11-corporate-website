@@ -12,7 +12,9 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   output: "export",
-  // basePath: "/ten11",
+  basePath: "/ten11",
+  trailingSlash: true,
+  assetPrefix: "/ten11/",
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
